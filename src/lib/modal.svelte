@@ -4,11 +4,11 @@
 </script>
 
 <div
-	transition:fade={{ duration: 200 }}
+	transition:fade={{ duration: 60 }}
 	class="container"
 	on:click|self={() => showModal.set(false)}
 >
-	<div class="modal" transition:scale={{ duration: 200 }}>
+	<div class="modal" transition:scale>
 		<div class="cancel" on:click={() => showModal.set(false)}>
 			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
 				><path

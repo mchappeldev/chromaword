@@ -13,7 +13,6 @@ const getBoard = () => {
 const getRandom = (source, quantity) => {
 	const results = [];
 	for (var i = 0; i < quantity; i++) {
-		// const randomNumber = ;
 		const nextValue = source[Math.floor(Math.random() * source.length)];
 		source = source.filter((letter) => letter != nextValue);
 		results.push(nextValue);

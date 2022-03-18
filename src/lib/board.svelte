@@ -10,12 +10,9 @@
 	import { getBoard, getRandom } from '../utils/boardGenerator.js';
 	const boardWords = getBoard();
 	const uniqueLetters = [...new Set(boardWords.flat().join(''))];
-	console.log(uniqueLetters);
 	const answers = getRandom(uniqueLetters, 6);
 	const colors = ['color1', 'color2', 'color3', 'color4', 'color5', 'color6'];
 	let guess1 = '';
-
-	console.log(uniqueLetters);
 </script>
 
 <div class="container">
