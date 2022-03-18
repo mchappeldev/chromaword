@@ -73,7 +73,6 @@
 				{/each}
 			</div>
 		{/each}
-		
 	</div>
 	<!-- <input class="tile" type="text" bind:value={$guesses[1]} /> -->
 	<ColorSelector />
@@ -93,7 +92,7 @@
 		align-items: center;
 		height: 100vh;
 		width: 100vw;
-		background-color: #ddd;
+		background-color: white;
 	}
 	.board {
 		display: flex;
@@ -120,13 +119,15 @@
 		height: 100%;
 		max-width: 100px;
 		max-height: 100px;
-		background-color: #fff;
+		background-color: rgb(128, 128, 128);
 		border: 2px solid #777;
 		box-sizing: border-box;
 		text-transform: uppercase;
 		font-family: 'Open Sans';
 		font-weight: 900;
-		color: #333;
+		color: white;
+		-webkit-text-stroke-width: 2px;
+		-webkit-text-stroke-color: rgb(68, 68, 68);
 	}
 	.color1 {
 		/* background-color: hsl(0, 100%, 100%); */
