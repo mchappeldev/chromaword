@@ -43,6 +43,7 @@
 		gap: 2rem;
 		background-color: white;
 		width: 40rem;
+		max-width: 90vw;
 		border-radius: 0.3rem;
 		box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
 		color: #444;
