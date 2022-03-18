@@ -73,6 +73,7 @@
 				{/each}
 			</div>
 		{/each}
+		
 	</div>
 	<!-- <input class="tile" type="text" bind:value={$guesses[1]} /> -->
 	<ColorSelector />

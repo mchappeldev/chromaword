@@ -26,14 +26,20 @@
 	.container {
 		display: flex;
 		flex-direction: row;
-		margin-top: 50px;
+		flex: 0 1;
+		margin-top: 5vw;
+		max-width: 10vw;
+		height: 10vw;
+		justify-content: center;
+		align-items: center;
 	}
 	.colorSelector {
 		display: flex;
 		position: relative;
-		height: 75px;
-		width: 75px;
-		border-radius: 50px;
+		flex: 0 1;
+		max-height: 7vh;
+		max-width: 7vh;
+		border-radius: 100px;
 		border: 2px solid #333;
 		justify-content: center;
 		align-items: center;
@@ -44,7 +50,7 @@
 		font-family: 'Open Sans';
 		font-weight: 900;
 		color: #fff;
-		margin: 5px;
+		margin: 2vw;
 		cursor: pointer;
 		-webkit-text-stroke-width: 2px;
 		-webkit-text-stroke-color: #333;
@@ -53,7 +59,10 @@
 		transition: all 0.25s ease-in-out;
 		box-sizing: border-box;
 		text-align: center;
+		caret-color: transparent;		
 	}
+
+
 	.colorSelector:hover {
 		box-shadow: 0px 7px 7px #666;
 		top: -3px;
@@ -81,4 +90,8 @@
 	.color5 {
 		background-color: rgb(149, 0, 255);
 	}
+
+	*:focus {
+    outline: none;
+}
 </style>
