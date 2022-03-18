@@ -119,34 +119,31 @@
 		height: 100%;
 		max-width: 100px;
 		max-height: 100px;
-		background-color: rgb(128, 128, 128);
-		border: 2px solid #777;
+		background-color: hsl(0, 0%, 57%);
 		box-sizing: border-box;
 		text-transform: uppercase;
 		font-family: 'Open Sans';
 		font-weight: 900;
 		color: white;
-		-webkit-text-stroke-width: 2px;
-		-webkit-text-stroke-color: rgb(68, 68, 68);
+		text-shadow: 2px 8px 6px rgba(0, 0, 0, 0.2), 0px -5px 16px rgba(255, 255, 255, 0.3);
 	}
 	.color1 {
-		/* background-color: hsl(0, 100%, 100%); */
-		background-color: rgb(255, 0, 0);
+		background-color: hsl(0, 51%, 57%);
 	}
 	.color2 {
-		background-color: rgb(255, 128, 0);
+		background-color: hsl(30, 51%, 57%);
 	}
 	.color3 {
-		background-color: rgb(255, 255, 0);
+		background-color: hsl(60, 51%, 57%);
 	}
 	.color4 {
-		background-color: rgb(0, 255, 0);
+		background-color: hsl(120, 51%, 57%);
 	}
 	.color5 {
-		background-color: rgb(0, 0, 255);
+		background-color: hsl(240, 51%, 57%);
 	}
 	.color6 {
-		background-color: rgb(149, 0, 255);
+		background-color: hsl(275, 51%, 57%);
 	}
 
 	.hideText {

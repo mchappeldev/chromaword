@@ -59,9 +59,8 @@
 		transition: all 0.25s ease-in-out;
 		box-sizing: border-box;
 		text-align: center;
-		caret-color: transparent;		
+		caret-color: transparent;
 	}
-
 
 	.colorSelector:hover {
 		box-shadow: 0px 7px 7px #666;
@@ -73,25 +72,25 @@
 		top: -3px;
 	}
 	.color0 {
-		background-color: rgb(255, 0, 0);
+		background-color: hsl(0, 51%, 57%);
 	}
 	.color1 {
-		background-color: rgb(255, 128, 0);
+		background-color: hsl(30, 51%, 57%);
 	}
 	.color2 {
-		background-color: rgb(255, 255, 0);
+		background-color: hsl(60, 51%, 57%);
 	}
 	.color3 {
-		background-color: rgb(0, 255, 0);
+		background-color: hsl(120, 51%, 57%);
 	}
 	.color4 {
-		background-color: rgb(0, 0, 255);
+		background-color: hsl(240, 51%, 57%);
 	}
 	.color5 {
-		background-color: rgb(149, 0, 255);
+		background-color: hsl(275, 51%, 57%);
 	}
 
 	*:focus {
-    outline: none;
-}
+		outline: none;
+	}
 </style>
