@@ -1,18 +1,42 @@
 <script>
 	import { get } from 'svelte/store';
 	import Modal from '../lib/modal.svelte';
-	import { showModal, modalData } from '../store.js';
+	import { showModal, modalData, guesses } from '../store.js';
+	import { getBoard, getRandom, selectAnswers, getWords } from '../utils/boardGenerator.js';
+	import ColorSelector from './colorPicker.svelte';
 
 	let boardHeight;
 	let tileHeight;
 	let rows = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }, { id: 6 }];
 	let columns = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }];
-	import { getBoard, getRandom } from '../utils/boardGenerator.js';
-	const boardWords = getBoard();
-	const uniqueLetters = [...new Set(boardWords.flat().join(''))];
-	const answers = getRandom(uniqueLetters, 6);
+	const { wordArray, answers } = getBoard();
+	// const { wordArray } = board;
+	const uniqueLetters = [...new Set(wordArray.flat().join(''))];
+	// const answers = getRandom(uniqueLetters, 6);
 	const colors = ['color1', 'color2', 'color3', 'color4', 'color5', 'color6'];
 	let guess1 = '';
+
+	const checkAnswers = () => {
+		console.log(answers);
+		console.log($guesses);
+		console.log(wordArray);
+
+		if (answers.join('') == $guesses.join('')) {
+			modalData.set({
+				header: 'You won!',
+				message: `You correctly guessed the following: ${answers}`
+			});
+			showModal.set(!$showModal);
+		} else {
+			modalData.set({
+				header: 'You Failed!',
+				message: `You guessed the following: ${$guesses} and it was actually: ${answers}! The words were ${wordArray.map(
+					(x) => x.join('')
+				)}`
+			});
+			showModal.set(!$showModal);
+		}
+	};
 </script>
 
 <div class="container">
@@ -21,7 +45,7 @@
 		bind:clientHeight={boardHeight}
 		style="width: {boardHeight * (columns.length / rows.length)}px"
 	>
-		<button
+		<!-- <button
 			on:click={() => {
 				modalData.set({
 					header: 'This is a header',
@@ -30,8 +54,8 @@
 				});
 				showModal.set(!$showModal);
 			}}>Toggle Modal</button
-		>
-		{#each boardWords as word}
+		> -->
+		{#each wordArray as word}
 			<div class="row">
 				{#each word as letter}
 					<div
@@ -41,7 +65,7 @@
 					>
 						<!-- {#if !answers.includes(letter)}{letter}{/if} -->
 						{#if answers.includes(letter)}
-							{guess1}
+							{$guesses[answers.indexOf(letter)]}
 						{:else}
 							{letter}
 						{/if}
@@ -50,7 +74,9 @@
 			</div>
 		{/each}
 	</div>
-	<!-- <input class="tile" type="text" bind:value={guess1} /> -->
+	<!-- <input class="tile" type="text" bind:value={$guesses[1]} /> -->
+	<ColorSelector />
+	<button on:click={checkAnswers}>Submit</button>
 </div>
 
 {#if $showModal}
@@ -61,6 +87,7 @@
 	@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@800&display=swap');
 	.container {
 		display: flex;
+		flex-direction: column;
 		justify-content: center;
 		align-items: center;
 		height: 100vh;
