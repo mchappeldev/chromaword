@@ -39,13 +39,13 @@
 		flex: 0 1;
 		max-height: 7vh;
 		max-width: 7vh;
-		border-radius: 100px;
+		border-radius: 150px;
 		border: 2px solid #333;
 		justify-content: center;
 		align-items: center;
 		box-shadow: 2px;
 		background-color: white;
-		font-size: 2.75rem;
+		font-size: 5vh;
 		text-transform: uppercase;
 		font-family: 'Open Sans';
 		font-weight: 900;

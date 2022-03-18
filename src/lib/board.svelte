@@ -21,7 +21,7 @@
 		console.log($guesses);
 		console.log(wordArray);
 
-		if (answers.join('') == $guesses.join('')) {
+		if (answers.join('') == $guesses.join('').toLowerCase()) {
 			modalData.set({
 				header: 'You won!',
 				message: `You correctly guessed the following: ${answers}`
