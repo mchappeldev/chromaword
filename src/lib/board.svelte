@@ -1,7 +1,7 @@
 <script>
 	import { get } from 'svelte/store';
 	import Modal from '../lib/modal.svelte';
-	import { showModal, modalData, guesses } from '../store.js';
+	import { showModal, modalData, guesses, variance } from '../store.js';
 	import { getBoard, getRandom, selectAnswers, getWords } from '../utils/boardGenerator.js';
 	import ColorSelector from './colorPicker.svelte';
 
@@ -77,6 +77,7 @@
 	<!-- <input class="tile" type="text" bind:value={$guesses[1]} /> -->
 	<ColorSelector />
 	<button on:click={checkAnswers}>Submit</button>
+	<div>{$variance}</div>
 </div>
 
 {#if $showModal}

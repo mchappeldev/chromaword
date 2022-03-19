@@ -1,14 +1,26 @@
 import { data as completeWordList } from './wordList.json';
+import { variance } from '../store.js';
 import _ from 'lodash';
 
-const boardValidation = (boardRowsLetterArray, answersLetterArray) => {
-	const boardDetails = getBoardDetails(boardRowsLetterArray, answersLetterArray);
-	console.log(boardDetails);
-	var variantsRequired = 0;
-	var remainingUnknownAnswersLetterArray = [...answersLetterArray];
-	var remainingBoardDetails = _.cloneDeep(boardDetails);
-	for (let i = 0; i < boardDetails.length; i++) {
+var invalidBoard = false; // If the board fails to meet quality standard at any point, it will be marked invalid
+var variantsRequired = 0; // Indicates how many times players would have to guess. Anything over 0 indicates a difficult board
+var alphabet; // ['A','B','C'...] - Just an array of the alphabet that's needed occasionally
+var boardRowsLetterArray; // [['T','A','C','O','S'],['B','A','C','O','N']]
+var answersLetterArray; // ['G','L','A','W','B','R'] - An array of the letters that are the answers
+var originalBoardDetails;
+var remainingBoardDetails;
+var remainingPossibleLetters;
+var knownLetters;
+var remainingUnknownAnswersLetterArray;
+
+const boardValidation = (boardRowsLetterArrayParam, answersLetterArrayParam) => {
+	initalizeBoardInfo(boardRowsLetterArrayParam, answersLetterArrayParam);
+
+	for (let i = 0; i < originalBoardDetails.length; i++) {
+		if (variantsRequired === 0 && remainingBoardDetails[0].possibilities.length > 1)
+			verifyBoardUnique(remainingBoardDetails);
 		variantsRequired += remainingBoardDetails[0].possibilities.length - 1;
+		remainingPossibleLetters.concat(remainingBoardDetails[0].missingLetters);
 		remainingUnknownAnswersLetterArray = remainingUnknownAnswersLetterArray.filter(
 			(letter) => !remainingBoardDetails[0].missingLetters.includes(letter)
 		);
@@ -18,10 +30,29 @@ const boardValidation = (boardRowsLetterArray, answersLetterArray) => {
 		);
 		remainingBoardDetails = getBoardDetails(rowsLetterArray, remainingUnknownAnswersLetterArray);
 	}
+	variance.set(variantsRequired);
+};
 
-	// const allRowPossibilities = wordArray
-	// 	.map((word) => getRowPossibilites(word, answers))
-	// 	.sort((a, b) => (a.length < b.length ? -1 : 1));
+const initalizeBoardInfo = (boardRowsLetterArrayParam, answersLetterArrayParam) => {
+	boardRowsLetterArray = boardRowsLetterArrayParam;
+	answersLetterArray = answersLetterArrayParam;
+
+	alphabet = Array(26)
+		.fill()
+		.map((x, i) => String.fromCharCode(97 + i));
+	knownLetters = [...boardRowsLetterArray]
+		.flat()
+		.filter(onlyUnique)
+		.filter((letter) => !answersLetterArray.includes(letter));
+	remainingPossibleLetters = alphabet.filter((letter) => !knownLetters.includes(letter));
+	originalBoardDetails = getBoardDetails(boardRowsLetterArray, answersLetterArray);
+	remainingBoardDetails = _.cloneDeep(originalBoardDetails);
+	remainingUnknownAnswersLetterArray = [...answersLetterArray];
+};
+
+const verifyBoardUnique = (remainingBoardDetails) => {
+	// console.log(remainingBoardDetails);
+	// invalidBoard = true;
 };
 
 const getBoardDetails = (boardRowsLetterArray, answersLetterArray) => {
@@ -52,7 +83,7 @@ const getRowPossibilites = (word, answers) => {
 	const possibilitesRegex = [...word];
 	for (let i = 0; i < word.length; i++) {
 		if (answers.includes(word[i])) {
-			possibilitesRegex[i] = '[a-z]';
+			possibilitesRegex[i] = `[${remainingPossibleLetters.join('')}]`;
 		}
 	}
 	const re = new RegExp(possibilitesRegex.join(''));

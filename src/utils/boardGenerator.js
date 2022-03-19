@@ -41,13 +41,54 @@ const getWords = (answers) => {
 		const word = getRandom(plausibleWords, 1);
 		words.push(word.toString());
 	}
+	everyColorAppearsInMultipleRows(words, answers);
 	return words;
+};
+
+const everyColorAppearsInMultipleRows = (words, answers) => {
+	var lettersInLessThanTwoRows = [];
+	const updateLettersInLessThanTwoRows = () => {
+		lettersInLessThanTwoRows = [];
+		answers.forEach((letter) => {
+			const rowsContainingLetter = words.filter((row) => row.includes(letter));
+			if (rowsContainingLetter.length < 2) lettersInLessThanTwoRows.push(letter);
+		});
+	};
+	updateLettersInLessThanTwoRows();
+
+	while (lettersInLessThanTwoRows.length != 0) {
+		const rowsWithoutLetter = words.filter((word) => !word.includes(lettersInLessThanTwoRows[0]));
+		const wordToReplace = rowsWithoutLetter[Math.floor(Math.random() * rowsWithoutLetter.length)];
+		const indexOfWordToReplace = words.indexOf(wordToReplace);
+		const re = new RegExp(
+			`(?=.*${lettersInLessThanTwoRows[0]}.*)(?=.*${answers[indexOfWordToReplace]}.*)`
+		);
+		const plausibleWords = completeWordList.filter((word) => re.test(word));
+		const newWord = getRandom(plausibleWords, 1);
+		words.splice(indexOfWordToReplace, 1, newWord[0]);
+		updateLettersInLessThanTwoRows();
+	}
+};
+
+const getRandomWordWithLetter = (letter) => {
+	const re = new RegExp(`[${letter}]`);
+	const plausibleWords = completeWordList.filter((word) => re.test(word));
+	const word = getRandom(plausibleWords, 1);
+	return word.toString();
 };
 
 const getBoard = () => {
 	const answers = selectAnswers();
+
+	var boardIsValid = false;
+	var executionCount = 0;
+	// var wordArray;
+	// while (!boardIsValid && executionCount < 50) {
+	// 	executionCount++;
 	const wordArray = getWords(answers).map((word) => word.split(''));
-	const test = boardValidation(wordArray, answers);
+	boardValidation(wordArray, answers);
+	// }
+
 	return {
 		wordArray,
 		answers
