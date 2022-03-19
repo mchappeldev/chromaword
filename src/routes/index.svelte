@@ -2,10 +2,10 @@
 	import Board from '../lib/board.svelte';
 </script>
 
-<div class="main">
-<h1> Svelte Word</h1>
+
+
 <Board />
-</div>
+
 
 <svelte:head>
 	<style>
@@ -15,13 +15,6 @@
 		body {
 			font-family: 'Open Sans', sans-serif;
 		}
-		main {
-			display: flex;
-			align-items: center;
-			flex-direction: column;
-		}
-		
-
 	</style>
 </svelte:head>
 
