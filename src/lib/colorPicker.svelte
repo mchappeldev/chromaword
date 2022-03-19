@@ -39,8 +39,8 @@
 		flex: 0 1;
 		max-height: 7vh;
 		max-width: 7vh;
-		border-radius: 150px;
-		border: 2px solid #333;
+		border-radius: 10px;
+		border: 0px solid #333;
 		justify-content: center;
 		align-items: center;
 		box-shadow: 2px;
@@ -68,26 +68,26 @@
 	}
 	.selected {
 		box-shadow: 0px 7px 7px #666;
-		border: 6px solid #333;
+		border: 3px solid #666;
 		top: -3px;
 	}
 	.color0 {
-		background-color: hsl(0, 51%, 57%);
+		background-color: #E67878;
 	}
 	.color1 {
-		background-color: hsl(30, 51%, 57%);
+		background-color: #E59978;
 	}
 	.color2 {
-		background-color: hsl(60, 51%, 57%);
+		background-color: #E5DA78;
 	}
 	.color3 {
-		background-color: hsl(120, 51%, 57%);
+		background-color: #6FCF96;
 	}
 	.color4 {
-		background-color: hsl(240, 51%, 57%);
+		background-color: #78B7E5;
 	}
 	.color5 {
-		background-color: hsl(275, 51%, 57%);
+		background-color: #BF7DD6;
 	}
 
 	*:focus {
