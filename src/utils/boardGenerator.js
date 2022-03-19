@@ -1,4 +1,5 @@
 import { data as completeWordList } from './wordList.json';
+import { boardValidation } from './boardValidation';
 
 const alphabet = Array(26)
 	.fill()
@@ -46,6 +47,7 @@ const getWords = (answers) => {
 const getBoard = () => {
 	const answers = selectAnswers();
 	const wordArray = getWords(answers).map((word) => word.split(''));
+	const test = boardValidation(wordArray, answers);
 	return {
 		wordArray,
 		answers
