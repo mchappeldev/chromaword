@@ -70,13 +70,6 @@ const everyColorAppearsInMultipleRows = (words, answers) => {
 	}
 };
 
-const getRandomWordWithLetter = (letter) => {
-	const re = new RegExp(`[${letter}]`);
-	const plausibleWords = completeWordList.filter((word) => re.test(word));
-	const word = getRandom(plausibleWords, 1);
-	return word.toString();
-};
-
 const getBoard = () => {
 	const answers = selectAnswers();
 
