@@ -13,7 +13,7 @@
 	// const { wordArray } = board;
 	const uniqueLetters = [...new Set(wordArray.flat().join(''))];
 	// const answers = getRandom(uniqueLetters, 6);
-	const colors = ['color1', 'color2', 'color3', 'color4', 'color5', 'color6'];
+	const colors = ['#E67878', '#E59978', '#E5DA78', '#6FCF96', '#78B7E5', '#BF7DD6','#A9A9A9'];
 	let guess1 = '';
 
 	const checkAnswers = () => {
@@ -40,6 +40,7 @@
 </script>
 
 <div class="container">
+	<h1>Svelte Word</h1>
 	<div
 		class="board"
 		bind:clientHeight={boardHeight}
@@ -59,9 +60,9 @@
 			<div class="row">
 				{#each word as letter}
 					<div
-						class="tile {colors[answers.indexOf(letter)] ?? ''}"
+						class="tile"
 						bind:clientHeight={tileHeight}
-						style="font-size: {tileHeight * 0.5}px;"
+						style="font-size: {tileHeight * 0.5}px; --tile-color: {colors[answers.indexOf(letter)] ?? colors[6]}"
 					>
 						<!-- {#if !answers.includes(letter)}{letter}{/if} -->
 						{#if answers.includes(letter)}
@@ -86,6 +87,34 @@
 
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@800&display=swap');
+	button {
+		font-family: 'Open Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 24px;
+line-height: 100%;
+display: flex;
+justify-content: center;
+align-items: center;
+padding: 20px;
+/* identical to box height, or 24px */
+border: none;
+text-align: center;
+letter-spacing: 0.245em;
+text-transform: uppercase;
+
+color: #FFFFFF;
+
+width: 150px;
+height: 40px;
+left: 120px;
+top: 549px;
+
+background: linear-gradient(90deg, #E57878 0%, #E59978 21.35%, #E5DA78 40.63%, #6FCF96 61.46%, #78B7E5 80.73%, #BF7DD6 100%);
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+border-radius: 11px;
+	}
+
 	.container {
 		display: flex;
 		flex-direction: column;
@@ -99,7 +128,7 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-		gap: 5px;
+		gap: 15px;
 		height: 100%;
 		width: 100%;
 		max-height: 60vh;
@@ -107,7 +136,7 @@
 	.row {
 		display: flex;
 		justify-content: center;
-		gap: 5px;
+		gap: 10px;
 		max-height: 100px;
 		height: 100%;
 		width: 100%;
@@ -126,28 +155,60 @@
 		font-family: 'Open Sans';
 		font-weight: 900;
 		color: white;
-		text-shadow: 2px 8px 6px rgba(0, 0, 0, 0.2), 0px -5px 16px rgba(255, 255, 255, 0.3);
+		background-color: var(--tile-color);
+		filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+		transition: top .25s ease-in-out;
+		border-radius: 5px;
 	}
-	.color1 {
-		background-color: hsl(0, 51%, 57%);
-	}
-	.color2 {
-		background-color: hsl(30, 51%, 57%);
-	}
-	.color3 {
-		background-color: hsl(60, 51%, 57%);
-	}
-	.color4 {
-		background-color: hsl(120, 51%, 57%);
-	}
-	.color5 {
-		background-color: hsl(240, 51%, 57%);
-	}
-	.color6 {
-		background-color: hsl(275, 51%, 57%);
-	}
+	.tile:before {
+  content: '';
+  position: absolute;
+  top:3px;
+  left: -3px;
+  height:98%;
+  width:5px;
+  background: var(--tile-color);
+  filter: brightness(85%);
+  transform: .5s;
+  transform: rotate(0deg) skewY(-45deg);
+ 
+}
+.tile:after {
+  content: '';
+  position: absolute;
+  bottom:-4px;
+  left:-1px;
+  height:5px;
+  width:98%;
+  background: var(--tile-color);
+  transform: .5s;
+  filter: brightness(75%);
+  transform: rotate(0deg) skewX(-45deg);
+}
+.tile:hover {
+  top:-10px;
+}
 
-	.hideText {
-		visibility: hidden;
-	}
+
+	h1 {
+			
+		width: 390px;
+height: 50px;
+left: 0px;
+top: 44px;
+
+font-family: 'Passion One';
+font-style: normal;
+font-weight: 400;
+font-size: 48px;
+line-height: 53px;
+text-align: center;
+text-transform: uppercase;
+
+background: linear-gradient(90deg, #E57878 24.62%, #E59978 34.09%, #E5DA78 44.08%, #6FCF96 54.34%, #78B7E5 64.34%, #BF7DD6 75.13%);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+
+		}
 </style>
