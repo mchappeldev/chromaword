@@ -13,7 +13,7 @@
 	const rows = [
 		['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
 		['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
-		['enter', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'back']
+		['Tab', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'Back']
 	];
 	import { createEventDispatcher } from 'svelte';
 	const dispatch = createEventDispatcher();
@@ -22,15 +22,17 @@
 
 	const handlePress = (key, event) => {
 		if (key === 'Tab' && $selectedColor < 5) {
-			event.preventDefault();
+			event?.preventDefault();
 			$selectedColor = $selectedColor + 1;
-		} else if (key === 'Tab' && $selectedColor === 5) {
-			event.preventDefault();
+		} else if (key === 'Tab' && ($selectedColor === 5 || $selectedColor === 7)) {
+			event?.preventDefault();
 			$selectedColor = 0;
 		} else if (key.match(/^[a-z]$/i)) {
 			$guesses[$selectedColor] = key;
 		} else if (key === 'Enter' && boardFilled) {
 			dispatch('checkAnswers');
+		} else if (key === 'Backspace' || key === 'Back') {
+			$guesses[$selectedColor] = '';
 		}
 	};
 </script>
