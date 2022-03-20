@@ -28,14 +28,14 @@
 	<h1>ChromaWord</h1>
 	<Board />
 	<button on:click={checkAnswers}>Submit</button>
-	<Keyboard />
+	<Keyboard on:checkAnswers={checkAnswers} />
 	{#if $showModal}
 		<Modal />
 	{/if}
 </div>
 <svelte:head>
 	<style>
-		@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@800&display=swap');
+		@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 		@import url('https://fonts.googleapis.com/css2?family=Pavanam&display=swap');
 		@import url('https://fonts.googleapis.com/css2?family=Passion+One&display=swap');
 		body {
@@ -85,7 +85,7 @@
 	button {
 		font-family: 'Open Sans';
 		font-style: normal;
-		font-weight: 400;
+		font-weight: 600;
 		font-size: 24px;
 		line-height: 100%;
 		display: flex;

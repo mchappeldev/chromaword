@@ -1,7 +1,17 @@
 <script>
 	import { get } from 'svelte/store';
 	import Modal from '../lib/modal.svelte';
-	import { showModal, modalData, guesses, variance, wordArray, answers } from '../store.js';
+	import {
+		showModal,
+		modalData,
+		guesses,
+		variance,
+		wordArray,
+		answers,
+		selectedColor,
+		colors,
+		knownLetters
+	} from '../store.js';
 	import { getBoard, getRandom, selectAnswers, getWords } from '../utils/boardGenerator.js';
 	import ColorSelector from './colorPicker.svelte';
 
@@ -13,30 +23,40 @@
 	answers.set(boardData.answers);
 	wordArray.set(boardData.wordArray);
 
+	$knownLetters = [...new Set($wordArray.flat())].filter((letter) => !$answers.includes(letter));
+
 	// const { wordArray } = board;
 	const uniqueLetters = [...new Set($wordArray.flat().join(''))];
 	// const answers = getRandom(uniqueLetters, 6);
-	const colors = ['#E67878', '#E59978', '#E5DA78', '#6FCF96', '#78B7E5', '#BF7DD6', '#A9A9A9']; // red, orange, yellow, green, blue, purple, grey
-	let guess1 = '';
+
+	const selectGuessable = (letter) => {
+		selectedColor.set($answers.indexOf(letter));
+	};
 </script>
 
 <div class="board">
 	{#each $wordArray as word}
 		<div class="row">
 			{#each word as letter}
-				<div class="tile" style="--tile-color: {colors[$answers.indexOf(letter)] ?? colors[6]}">
-					<!-- {#if !answers.includes(letter)}{letter}{/if} -->
-					{#if $answers.includes(letter)}
+				{#if $answers.includes(letter)}
+					<div
+						on:click={() => selectGuessable(letter)}
+						class="tile guessable"
+						class:selected={$selectedColor === $answers.indexOf(letter)}
+						style="--tile-color: {$colors[$answers.indexOf(letter)] ?? $colors[6]}"
+					>
 						{$guesses[$answers.indexOf(letter)]}
-					{:else}
+					</div>
+				{:else}
+					<div class="tile" style="--tile-color: {$colors[$answers.indexOf(letter)] ?? $colors[6]}">
 						{letter}
-					{/if}
-				</div>
+					</div>
+				{/if}
 			{/each}
 		</div>
 	{/each}
 </div>
-<!-- <input class="tile" type="text" bind:value={$guesses[1]} /> -->
+<!-- <input class="tile" type="text" bind:value={$guesses[$answers.indexOf(letter)]} /> -->
 
 <!-- <div>{$variance}</div> -->
 <style>
@@ -75,7 +95,7 @@
 		color: white;
 		background-color: var(--tile-color);
 		filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-		transition: top 0.25s ease-in-out;
+		transition: all 0.25s ease-in-out;
 	}
 	.tile:before {
 		content: '';
@@ -101,7 +121,11 @@
 		filter: brightness(75%);
 		transform: rotate(0deg) skewX(-45deg);
 	}
-	.tile:hover {
-		top: -10px;
+	.guessable {
+		cursor: pointer;
+	}
+	.selected {
+		transform: translateY(-5px);
+		filter: brightness(110%) drop-shadow(0px 8px 8px rgba(0, 0, 0, 0.25));
 	}
 </style>
