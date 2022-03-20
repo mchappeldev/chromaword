@@ -1,7 +1,7 @@
 <script>
 	import Keyboard from '$lib/keyboard.svelte';
 	import Modal from '../lib/modal.svelte';
-	import { showModal, modalData, guesses, answers, wordArray } from '../store.js';
+	import { showModal, modalData, guesses, answers, wordArray, variance } from '../store.js';
 	import Board from '../lib/board.svelte';
 	import GameComplete from '../lib/gameComplete.svelte';
 
@@ -9,15 +9,15 @@
 		if ($answers.join('') == $guesses.join('').toLowerCase()) {
 			modalData.set({
 				header: 'You won!',
-				message: `You correctly guessed the following: ${answers}`
+				message: `You correctly guessed the following: ${$answers} That is awesome! This was a board with a difficulty of ${$variance}!`
 			});
 			showModal.set(!$showModal);
 		} else {
 			modalData.set({
 				header: 'You Failed!',
-				message: `You guessed the following: ${$guesses} and it was actually: ${answers}! The words were ${$wordArray.map(
+				message: `You guessed the following: ${$guesses} and it was actually: ${$answers}! The words were ${$wordArray.map(
 					(x) => x.join('')
-				)}`
+				)}. But that's okay! This was a board with a difficulty of ${$variance}!`
 			});
 			showModal.set(!$showModal);
 		}
@@ -97,7 +97,7 @@
 		letter-spacing: 0.245em;
 		text-transform: uppercase;
 		margin-top: 40px;
-
+		cursor: pointer;
 		color: #ffffff;
 
 		width: 150px;
