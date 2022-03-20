@@ -38,13 +38,13 @@
 <svelte:window on:keydown={(e) => handlePress(e.key, e)} />
 
 <div class="keyboard">
-	{#each rows as row}
-		<div class="row">
+	{#each rows as row, i}
+		<div class="row" class:middleRow={i === 1}>
 			{#each row as key}
 				<div
 					class="key"
 					class:known={$knownLetters.includes(key)}
-					style="--key-color:{$colors[$guesses.indexOf(key)] ?? $colors[6]}"
+					style="--key-color:{$colors[$guesses.indexOf(key)] ?? '#fff'}"
 					on:click={() => handlePress(key)}
 				>
 					{key}
@@ -67,6 +67,8 @@
 		flex-shrink: 3;
 		margin-top: 30px;
 		gap: 10px;
+		padding: 15px;
+		border-radius: 10px;
 	}
 	.row {
 		display: flex;
@@ -78,6 +80,9 @@
 		height: 100%;
 		gap: 5px;
 	}
+	.middleRow {
+		width: 90%;
+	}
 	.key {
 		position: relative;
 		display: flex;
@@ -88,13 +93,17 @@
 		background: var(--key-color);
 		font-family: 'Open Sans';
 		font-weight: 900;
-		color: white;
-		border-radius: 5px;
-		text-transform: uppercase;
+		color: #333;
+		border-radius: 3px;
 		font-size: 1.5vh;
 		cursor: pointer;
+		border: 1px solid #aaa;
+		box-shadow: 0px 3px 3px rgba(200, 200, 200, 0.5);
+		padding-left: 5px;
+		padding-right: 5px;
 	}
 	.known {
-		background: #797979;
+		background: #ccc;
+		color: black;
 	}
 </style>
