@@ -100,8 +100,8 @@
 	.tile:before {
 		content: '';
 		position: absolute;
-		top: 0.16vh;
-		left: -3px;
+		top: 2.25px;
+		left: -4.75px;
 		height: 100%;
 		width: 5px;
 		background: var(--tile-color);
@@ -112,8 +112,8 @@
 	.tile:after {
 		content: '';
 		position: absolute;
-		bottom: -4px;
-		left: -1px;
+		bottom: -5px;
+		left: -2.5px;
 		height: 5px;
 		width: 100%;
 		background: var(--tile-color);
