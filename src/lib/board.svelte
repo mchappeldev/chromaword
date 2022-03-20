@@ -159,7 +159,6 @@ border-radius: 11px;
 		filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 		transition: top .25s ease-in-out;
 		border-radius: 5px;
-		z-index: 5;
 	}
 	.tile:before {
   content: '';
@@ -172,7 +171,7 @@ border-radius: 11px;
   filter: brightness(85%);
   transform: .5s;
   transform: rotate(0deg) skewY(-45deg);
-  z-index: 1;
+ 
 }
 .tile:after {
   content: '';
