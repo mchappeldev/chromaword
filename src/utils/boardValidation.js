@@ -18,7 +18,7 @@ const boardValidation = (boardRowsLetterArrayParam, answersLetterArrayParam) => 
 
 	for (let i = 0; i < originalBoardDetails.length; i++) {
 		if (variantsRequired === 0 && remainingBoardDetails[0].possibilities.length > 1)
-			verifyBoardUnique(remainingBoardDetails);
+			verifyBoardUnique();
 		variantsRequired += remainingBoardDetails[0].possibilities.length - 1;
 		remainingPossibleLetters.concat(remainingBoardDetails[0].missingLetters);
 		remainingUnknownAnswersLetterArray = remainingUnknownAnswersLetterArray.filter(
@@ -50,10 +50,7 @@ const initalizeBoardInfo = (boardRowsLetterArrayParam, answersLetterArrayParam) 
 	remainingUnknownAnswersLetterArray = [...answersLetterArray];
 };
 
-const verifyBoardUnique = (remainingBoardDetails) => {
-	// console.log(remainingBoardDetails);
-	// invalidBoard = true;
-};
+const verifyBoardUnique = () => {};
 
 const getBoardDetails = (boardRowsLetterArray, answersLetterArray) => {
 	const wordArrayDetails = boardRowsLetterArray.map((word) => {

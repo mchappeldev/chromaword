@@ -27,7 +27,7 @@
 		} else if (key === 'Tab' && ($selectedColor === 5 || $selectedColor === 7)) {
 			event?.preventDefault();
 			$selectedColor = 0;
-		} else if (key.match(/^[a-z]$/i)) {
+		} else if (key.match(/^[a-z]$/i) && $selectedColor != 7) {
 			$guesses[$selectedColor] = key;
 		} else if (key === 'Enter' && boardFilled) {
 			dispatch('checkAnswers');
