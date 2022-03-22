@@ -12,7 +12,7 @@
 <div class="board">
 	{#each wordArray as word}
 		<div class="row">
-			{#each word as letter}
+			{#each word.split('') as letter}
 				{#if answersLetterArray.includes(letter)}
 					<div
 						on:click={() => selectGuessable(letter)}

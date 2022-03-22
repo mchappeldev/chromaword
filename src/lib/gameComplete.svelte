@@ -1,6 +1,12 @@
 <script>
 	import { guesses, boardData } from '../store.js';
+	import { collection, getDocs, addDoc } from 'firebase/firestore';
+	import { db } from '../utils/firebase';
 	$: correct = $boardData.answersLetterArray.join('') == $guesses.join('').toLowerCase();
+
+	const saveBoard = async () => {
+		const docRef = await addDoc(collection(db, 'boards'), $boardData);
+	};
 </script>
 
 <div class="header">{correct ? 'You won!' : 'You lost!'}</div>
@@ -11,12 +17,11 @@
 		</p>
 	{:else}
 		<p>
-			{`You guessed the following: ${$guesses} and it was actually: ${
-				$boardData.answersLetterArray
-			}! The words were ${$boardData.wordArray.map((x) => x.join(''))}.`}
+			{`You guessed the following: ${$guesses} and it was actually: ${$boardData.answersLetterArray}! The words were ${$boardData.wordArray}.`}
 		</p>
 	{/if}
 </div>
+<button on:click={saveBoard}>Save Board</button>
 
 <style>
 	.header {

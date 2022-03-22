@@ -56,7 +56,6 @@ const verifyBoardUnique = (correctWords, possibleMatches, answersArray) => {
 			throw { type: 'Invalid Board', message: 'Not unique' }; //Board has more than one solution
 		}
 	});
-	console.log('test');
 };
 
 const cartesian = (...a) => a.reduce((a, b) => a.flatMap((d) => b.map((e) => [d, e].flat())));

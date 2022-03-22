@@ -90,7 +90,7 @@ const getBoard = () => {
 	// const wordArray = getWords(answers).map((word) => word.split(''));
 
 	return {
-		wordArray,
+		wordArray: wordArray.map((word) => word.join('')),
 		answersLetterArray
 	};
 };
