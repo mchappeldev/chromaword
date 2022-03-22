@@ -71,7 +71,7 @@ const everyColorAppearsInMultipleRows = (words, answers) => {
 };
 
 const getBoard = () => {
-	const answers = selectAnswers();
+	const answersLetterArray = selectAnswers();
 
 	var boardIsValid = false;
 	var executionCount = 0;
@@ -80,8 +80,8 @@ const getBoard = () => {
 	while (!boardIsValid && executionCount < 50) {
 		executionCount++;
 		try {
-			wordArray = getWords(answers).map((word) => word.split(''));
-			boardValidation(wordArray, answers);
+			wordArray = getWords(answersLetterArray).map((word) => word.split(''));
+			boardValidation(wordArray, answersLetterArray);
 			boardIsValid = true;
 		} catch (error) {
 			if (error.type != 'Invalid Board') throw error;
@@ -91,7 +91,7 @@ const getBoard = () => {
 
 	return {
 		wordArray,
-		answers
+		answersLetterArray
 	};
 };
 

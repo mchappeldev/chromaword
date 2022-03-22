@@ -6,6 +6,10 @@ export const selectedColor = writable(7);
 export const guesses = writable(Array(6).fill(''));
 export const wordArray = writable([]);
 export const answers = writable([]);
+export const boardData = writable({
+	wordArray: [],
+	answersLetterArray: []
+});
 export const knownLetters = writable([]);
 export const variance = writable(0);
 export const colors = readable([

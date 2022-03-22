@@ -1,15 +1,5 @@
 <script>
-	import { prevent_default } from 'svelte/internal';
-
-	import {
-		guesses,
-		variance,
-		wordArray,
-		answers,
-		selectedColor,
-		colors,
-		knownLetters
-	} from '../store.js';
+	import { guesses, selectedColor, colors, knownLetters } from '../store.js';
 	const rows = [
 		['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
 		['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],

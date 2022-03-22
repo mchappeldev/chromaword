@@ -1,23 +1,18 @@
 <script>
-	import { showModal, modalData } from '../store.js';
 	import { fade, scale } from 'svelte/transition';
+	export let visible = true;
 </script>
 
-<div
-	transition:fade={{ duration: 60 }}
-	class="container"
-	on:click|self={() => showModal.set(false)}
->
+<div transition:fade={{ duration: 60 }} class="container" on:click|self={() => (visible = false)}>
 	<div class="modal" transition:scale>
-		<div class="cancel" on:click={() => showModal.set(false)}>
+		<div class="cancel" on:click={() => (visible = false)}>
 			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
 				><path
 					d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"
 				/></svg
 			>
 		</div>
-		<div class="header">{$modalData.header}</div>
-		<div class="message">{$modalData.message}</div>
+		<slot />
 	</div>
 </div>
 
@@ -47,21 +42,6 @@
 		border-radius: 0.3rem;
 		box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
 		color: #444;
-	}
-	.header {
-		font-family: 'Open Sans';
-		font-weight: 600;
-		font-size: 1.75rem;
-		margin-top: 1.5rem;
-		margin-left: 1rem;
-		margin-right: 1rem;
-	}
-	.message {
-		font-family: 'Open Sans';
-		font-weight: 400;
-		margin-left: 1rem;
-		margin-right: 1rem;
-		margin-bottom: 3rem;
 	}
 	.cancel {
 		position: absolute;
