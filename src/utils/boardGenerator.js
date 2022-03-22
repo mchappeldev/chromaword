@@ -41,7 +41,7 @@ const getWords = (answers) => {
 		const word = getRandom(plausibleWords, 1);
 		words.push(word.toString());
 	}
-	everyColorAppearsInMultipleRows(words, answers);
+	// everyColorAppearsInMultipleRows(words, answers);
 	return words;
 };
 
@@ -75,12 +75,19 @@ const getBoard = () => {
 
 	var boardIsValid = false;
 	var executionCount = 0;
-	// var wordArray;
-	// while (!boardIsValid && executionCount < 50) {
-	// 	executionCount++;
-	const wordArray = getWords(answers).map((word) => word.split(''));
-	boardValidation(wordArray, answers);
-	// }
+	var wordArray;
+	// console.log(executionCount);
+	while (!boardIsValid && executionCount < 50) {
+		executionCount++;
+		try {
+			wordArray = getWords(answers).map((word) => word.split(''));
+			boardValidation(wordArray, answers);
+			boardIsValid = true;
+		} catch (error) {
+			if (error.type != 'Invalid Board') throw error;
+		}
+	}
+	// const wordArray = getWords(answers).map((word) => word.split(''));
 
 	return {
 		wordArray,
