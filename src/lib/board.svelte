@@ -73,6 +73,7 @@
 		filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 		transition: all 0.25s ease-in-out;
 		user-select: none;
+		aspect-ratio: 1/1;
 	}
 	.tile:before {
 		content: '';
