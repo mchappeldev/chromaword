@@ -15,7 +15,7 @@
 	<Keyboard on:checkAnswers={checkAnswers} />
 	{#if showGameComplete}
 		<Modal bind:visible={showGameComplete}>
-			<GameComplete />
+			<GameComplete bind:visible={showGameComplete} />
 		</Modal>
 	{/if}
 </div>

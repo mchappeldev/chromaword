@@ -2,10 +2,12 @@
 	import { guesses, boardData } from '../store.js';
 	import { collection, getDocs, addDoc } from 'firebase/firestore';
 	import { db } from '../utils/firebase';
+	export let visible = true;
 	$: correct = $boardData.answersLetterArray.join('') == $guesses.join('').toLowerCase();
 
 	const saveBoard = async () => {
 		const docRef = await addDoc(collection(db, 'boards'), $boardData);
+		visible = false;
 	};
 </script>
 
@@ -20,6 +22,7 @@
 			{`You guessed the following: ${$guesses} and it was actually: ${$boardData.answersLetterArray}! The words were ${$boardData.wordArray}.`}
 		</p>
 	{/if}
+	<p>If you liked this board please consider adding it to our database below!</p>
 </div>
 <button on:click={saveBoard}>Save Board</button>
 
