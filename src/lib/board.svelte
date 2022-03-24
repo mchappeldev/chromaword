@@ -1,31 +1,31 @@
 <script>
 	import { guesses, selectedColor, colors, boardData } from '../store.js';
 
-	$: wordArray = $boardData.wordArray;
-	$: answersLetterArray = $boardData.answersLetterArray;
+	$: boardWords = $boardData.boardWords;
+	$: boardAnswers = $boardData.boardAnswers;
 
 	const selectGuessable = (letter) => {
-		selectedColor.set(answersLetterArray.indexOf(letter));
+		selectedColor.set(boardAnswers.indexOf(letter));
 	};
 </script>
 
 <div class="board">
-	{#each wordArray as word}
+	{#each boardWords as word}
 		<div class="row">
 			{#each word.split('') as letter}
-				{#if answersLetterArray.includes(letter)}
+				{#if boardAnswers.includes(letter)}
 					<div
 						on:click={() => selectGuessable(letter)}
 						class="tile guessable"
-						class:selected={$selectedColor === answersLetterArray.indexOf(letter)}
-						style="--tile-color: {$colors[answersLetterArray.indexOf(letter)] ?? $colors[6]}"
+						class:selected={$selectedColor === boardAnswers.indexOf(letter)}
+						style="--tile-color: {$colors[boardAnswers.indexOf(letter)] ?? $colors[6]}"
 					>
-						{$guesses[answersLetterArray.indexOf(letter)]}
+						{$guesses[boardAnswers.indexOf(letter)]}
 					</div>
 				{:else}
 					<div
 						class="tile"
-						style="--tile-color: {$colors[answersLetterArray.indexOf(letter)] ?? $colors[6]}"
+						style="--tile-color: {$colors[boardAnswers.indexOf(letter)] ?? $colors[6]}"
 					>
 						{letter}
 					</div>

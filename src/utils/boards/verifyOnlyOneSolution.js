@@ -33,7 +33,7 @@ const verifyBoardUnique = (correctWords, possibleMatches, answersArray) => {
 	combinations.forEach((combo) => {
 		var valid = true;
 		var replacementLetters = [];
-		const comboBoardString = combo.join('');
+		var comboBoardString = combo.join('');
 		answersArray.every((answer, answerIndex) => {
 			const suggestedReplacementLetter = comboBoardString[correctBoardString.indexOf(answer)];
 			let letterPositions = [];
@@ -53,7 +53,7 @@ const verifyBoardUnique = (correctWords, possibleMatches, answersArray) => {
 			!hasDuplicates(replacementLetters) &&
 			replacementLetters.toString() != answersArray.toString()
 		) {
-			throw { type: 'Invalid Board', message: 'Not unique' }; //Board has more than one solution
+			throw 'Invalid'; //Board has more than one solution
 		}
 	});
 };

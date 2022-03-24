@@ -1,5 +1,5 @@
 <script>
-	import { getBoard } from '../utils/boardGenerator.js';
+	import { getBoard } from '../utils/boards/boardGenerator.js';
 	let boards = [];
 	const createNewBoard = () => {
 		const board = getBoard();
@@ -27,7 +27,5 @@
 	.container {
 		height: 100vh;
 		width: 100vw;
-	}
-	.table {
 	}
 </style>

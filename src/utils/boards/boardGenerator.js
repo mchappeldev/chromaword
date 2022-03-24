@@ -1,17 +1,67 @@
-import { data as completeWordList } from './wordList.json';
-import { boardValidation } from './boardValidation';
+import { data as completeWordList } from '../wordList.json';
+import { boardValidation as boardAnalysis } from './validateBoard';
 
-const alphabet = Array(26)
-	.fill()
-	.map((x, i) => String.fromCharCode(97 + i));
-const uncommonLetters = ['j', 'q', 'v', 'x', 'z'];
-const oddsOfReplacingUncommonLetters = 0.85;
+const uncommonLetters = ['j', 'q', 'v', 'x', 'z']; // Indicates which letters should be avoided as answers
+const oddsOfReplacingUncommonLetters = 0.85; // Specifies how aggressively we should be avoiding selecting an uncommon letter as answer
+var alphabet; // ['a', 'b', 'c', etc] Array of the whole alphabet
+var targetDifficulty; // Number 1-5 specifies what difficulty level of board is being created
+var maxIsolatedColors; // Number 0-6 specifies how many colors are permitted to be on only one row
+var boardAnswers; // ['g', 'm', 's', etc] Array of the letters that make up the answers to the board
+var boardWords; // ['tacos', 'bacon', 'llama'] Array of the words on the board
+
+
+
+
+const getBoard = (targetDifficultyParam, maxIsolatedColorsParam = 6) => {
+	initializeSettings(targetDifficultyParam, maxIsolatedColorsParam);
+	boardAnswers = selectAnswers();
+	generateUntilValidBoardCreated();
+	return {
+		boardWords,
+		boardAnswers
+	};
+};
+
+
+
+
+const initializeSettings = (targetDifficultyParam, maxIsolatedColorsParam) => {
+	alphabet = Array(26)
+		.fill()
+		.map((x, i) => String.fromCharCode(97 + i));
+	targetDifficulty = targetDifficultyParam;
+	maxIsolatedColors = maxIsolatedColorsParam;
+};
+
+
+
 
 const selectAnswers = () => {
 	const tentativeAnswers = getRandom([...alphabet], 6);
 	const answers = rollToReplaceUncommonLetters(tentativeAnswers);
 	return answers;
 };
+
+
+
+
+const generateUntilValidBoardCreated = () => {
+	var boardIsValid = false;
+	var executionCount = 0;
+	while (!boardIsValid && executionCount < 50) {
+		executionCount++;
+		try {
+			boardWords = getWords(boardAnswers);
+			boardAnalysis(boardWords, boardAnswers);
+			boardIsValid = true;
+		} catch (error) {
+			if (error != 'Invalid') throw error;
+		}
+	}
+};
+
+
+
 
 const rollToReplaceUncommonLetters = (previousAnswers) => {
 	let availableReplacementLetters = alphabet.filter(
@@ -33,6 +83,9 @@ const rollToReplaceUncommonLetters = (previousAnswers) => {
 	return newAnswers;
 };
 
+
+
+
 const getWords = (answers) => {
 	let words = [];
 	for (let i = 0; i < answers.length; i++) {
@@ -45,6 +98,9 @@ const getWords = (answers) => {
 	return words;
 };
 
+
+
+
 const everyColorAppearsInMultipleRows = (words, answers) => {
 	var lettersInLessThanTwoRows = [];
 	const updateLettersInLessThanTwoRows = () => {
@@ -55,7 +111,6 @@ const everyColorAppearsInMultipleRows = (words, answers) => {
 		});
 	};
 	updateLettersInLessThanTwoRows();
-
 	while (lettersInLessThanTwoRows.length != 0) {
 		const rowsWithoutLetter = words.filter((word) => !word.includes(lettersInLessThanTwoRows[0]));
 		const wordToReplace = rowsWithoutLetter[Math.floor(Math.random() * rowsWithoutLetter.length)];
@@ -70,30 +125,8 @@ const everyColorAppearsInMultipleRows = (words, answers) => {
 	}
 };
 
-const getBoard = () => {
-	const answersLetterArray = selectAnswers();
 
-	var boardIsValid = false;
-	var executionCount = 0;
-	var wordArray;
-	// console.log(executionCount);
-	while (!boardIsValid && executionCount < 50) {
-		executionCount++;
-		try {
-			wordArray = getWords(answersLetterArray).map((word) => word.split(''));
-			boardValidation(wordArray, answersLetterArray);
-			boardIsValid = true;
-		} catch (error) {
-			if (error.type != 'Invalid Board') throw error;
-		}
-	}
-	// const wordArray = getWords(answers).map((word) => word.split(''));
 
-	return {
-		wordArray: wordArray.map((word) => word.join('')),
-		answersLetterArray
-	};
-};
 
 const getRandom = (source, quantity) => {
 	const results = [];
@@ -102,8 +135,10 @@ const getRandom = (source, quantity) => {
 		source = source.filter((letter) => letter != nextValue);
 		results.push(nextValue);
 	}
-
 	return results;
 };
+
+
+
 
 export { getBoard, getRandom, selectAnswers, getWords };

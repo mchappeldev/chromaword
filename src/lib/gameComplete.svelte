@@ -3,7 +3,7 @@
 	import { collection, getDocs, addDoc } from 'firebase/firestore';
 	import { db } from '../utils/firebase';
 	export let visible = true;
-	$: correct = $boardData.answersLetterArray.join('') == $guesses.join('').toLowerCase();
+	$: correct = $boardData.boardAnswers.join('') == $guesses.join('').toLowerCase();
 
 	const saveBoard = async () => {
 		const docRef = await addDoc(collection(db, 'boards'), $boardData);
@@ -15,11 +15,11 @@
 <div class="message">
 	{#if correct}
 		<p>
-			{`You correctly guessed the following: ${$boardData.answersLetterArray} That is awesome!`}
+			{`You correctly guessed the following: ${$boardData.boardAnswers} That is awesome!`}
 		</p>
 	{:else}
 		<p>
-			{`You guessed the following: ${$guesses} and it was actually: ${$boardData.answersLetterArray}! The words were ${$boardData.wordArray}.`}
+			{`You guessed the following: ${$guesses} and it was actually: ${$boardData.boardAnswers}! The words were ${$boardData.boardWords}.`}
 		</p>
 	{/if}
 	<p>If you liked this board please consider adding it to our database below!</p>

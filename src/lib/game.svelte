@@ -1,4 +1,6 @@
 <script>
+	// @ts-nocheck
+
 	import Keyboard from '$lib/keyboard.svelte';
 	import Modal from '$lib/modal.svelte';
 	import Board from '$lib/board.svelte';
