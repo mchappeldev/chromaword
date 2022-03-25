@@ -1,10 +1,26 @@
 <script>
-	import { guesses, selectedColor, colors, boardData } from '../store.js';
+	import { tick } from 'svelte';
+	import { guesses, selectedColor, colors, boardData, knownLetters } from '../store.js';
 
+	let ready;
 	$: boardWords = $boardData.boardWords;
 	$: boardAnswers = $boardData.boardAnswers;
+	$: duplicates = $guesses
+		.filter((letter, index) => index !== $guesses.indexOf(letter))
+		.join('')
+		.split('');
+
+	//this deserves a comment to explain
+	$: {
+		$guesses = $guesses;
+		ready = false;
+		setTimeout(() => {
+			ready = true;
+		}, 1);
+	}
 
 	const selectGuessable = (letter) => {
+		ready = true;
 		selectedColor.set(boardAnswers.indexOf(letter));
 	};
 </script>
@@ -18,14 +34,22 @@
 						on:click={() => selectGuessable(letter)}
 						class="tile guessable"
 						class:selected={$selectedColor === boardAnswers.indexOf(letter)}
-						style="--tile-color: {$colors[boardAnswers.indexOf(letter)] ?? $colors[6]}"
+						class:shake={$knownLetters
+							.concat(duplicates)
+							.includes($guesses[boardAnswers.indexOf(letter)]) && ready}
+						style="--tile-color: {$colors[boardAnswers.indexOf(letter)] ??
+							$colors[6]}; --translate-height: {$selectedColor === boardAnswers.indexOf(letter)
+							? '-5px'
+							: '0px'}"
 					>
 						{$guesses[boardAnswers.indexOf(letter)]}
 					</div>
 				{:else}
 					<div
 						class="tile"
-						style="--tile-color: {$colors[boardAnswers.indexOf(letter)] ?? $colors[6]}"
+						class:shake={$guesses.includes(letter) && ready}
+						style="--tile-color: {$colors[boardAnswers.indexOf(letter)] ??
+							$colors[6]}; --translate-height:0px"
 					>
 						{letter}
 					</div>
@@ -35,7 +59,31 @@
 	{/each}
 </div>
 
+<!-- <div on:click={tileReflow}>GO TIME</div> -->
 <style>
+	.shake {
+		animation-name: shake;
+		animation-duration: 0.25s;
+		animation-iteration-count: 2;
+		transition: 0.25s ease-in-out;
+		animation-timing-function: ease-out;
+	}
+
+	@keyframes shake {
+		from {
+			transform: rotate(0deg) translateY(var(--translate-height));
+		}
+		33% {
+			transform: rotate(5deg) translateY(var(--translate-height));
+		}
+		66% {
+			transform: rotate(-5deg) translateY(var(--translate-height));
+		}
+		to {
+			transform: rotate(0deg) translateY(var(--translate-height));
+		}
+	}
+
 	.board {
 		display: flex;
 		flex-direction: column;
