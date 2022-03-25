@@ -9,7 +9,11 @@
 	import { db } from '../utils/firebase';
 	import { collection, getDocs } from 'firebase/firestore';
 
-	$boardData = getBoard();
+	try {
+		$boardData = getBoard();
+	} catch (error) {
+		if (error != 'debug') throw error;
+	}
 	$: boardWords = $boardData.boardWords;
 	$: boardAnswers = $boardData.boardAnswers;
 
