@@ -1,3 +1,4 @@
+import { round } from 'lodash';
 import { data as completeWordList } from '../wordList.json';
 
 const numberOfLettersMissingImpactOnDifficulty = [1, 1.9, 4.2, 7.3, 11.4, 16.9];
@@ -13,17 +14,23 @@ var lettersHidden;
 var oneLetterRows;
 var alphabet;
 var knownLetters;
+var maxGuessDifficulty = 0;
+var cumulativeGuessDifficulty = 0;
 
 
 
 
 const analyzeBoard = (boardWordsParam, boardAnswersParam) => {
+    maxGuessDifficulty = 0;
+    cumulativeGuessDifficulty = 0;
     initalize(boardWordsParam, boardAnswersParam);
     getBasicStats();
     getDifficulty();
     return {
         lettersHidden,
-        oneLetterRows
+        oneLetterRows,
+        maxGuessDifficulty: round(maxGuessDifficulty, 1),
+        cumulativeGuessDifficulty: round(cumulativeGuessDifficulty, 1),
     };
 };
 
@@ -37,15 +44,16 @@ const getDifficulty = () => {
     for (let i = 0; i < boardWords.length; i++) {
         possibleMatches = boardWords.map((word) => getWordPossibilites(word, unknownLetters));
         const rowDifficultyFactors = getRowDifficultyFactors(possibleMatches, knownWords, unknownLetters);
-        // const rowDifficulties = getRowDifficulties(rowDifficultyFactors);
         const guessDifficulty = getGuessDifficulty(rowDifficultyFactors);
+        if (guessDifficulty > maxGuessDifficulty) maxGuessDifficulty = guessDifficulty;
+        cumulativeGuessDifficulty += guessDifficulty;
         const solvedWord = rowDifficultyFactors.filter(x => x.solved === false).sort((a, b) => (a.totalDifficulty < b.totalDifficulty ? -1 : 1))[0].word;
         knownWords.push(solvedWord);
         unknownLetters = removeWordFromUnknownLetters(unknownLetters, solvedWord);
-        console.log(boardWords);
-        console.log(possibleMatches);
-        console.log(rowDifficultyFactors);
-        console.log(guessDifficulty);
+        // console.log(boardWords);
+        // console.log(possibleMatches);
+        // console.log(rowDifficultyFactors);
+        // console.log(guessDifficulty);
     }
 };
 
@@ -56,13 +64,6 @@ const getGuessDifficulty = (rowDifficulties) => {
     const sorted = [...rowDifficulties].filter(x => x.solved === false).sort((a, b) => (a.totalDifficulty < b.totalDifficulty ? -1 : 1));
     return sorted[0].totalDifficulty;
 };
-
-
-
-
-// const getRowDifficulties = (rowDifficultyFactors) => {
-//     return rowDifficultyFactors.map(x => x.solved ? 0 : x.base * x.missingLetters * x.wordDifficulty * x.letterDifficulty * x.lowerLevelWords * x.letterAppearances);
-// };
 
 
 

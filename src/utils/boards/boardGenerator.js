@@ -21,7 +21,8 @@ const getBoard = (targetDifficultyParam = 3, maxIsolatedColorsParam = 1) => {
     console.log(analysis);
     return {
         boardWords,
-        boardAnswers
+        boardAnswers,
+        analysis
     };
 };
 

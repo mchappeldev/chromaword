@@ -1,12 +1,18 @@
 <script>
 	import { guesses, boardData } from '../store.js';
-	import { collection, getDocs, addDoc } from 'firebase/firestore';
-	import { db } from '../utils/firebase';
+	import { createClient } from '@supabase/supabase-js';
 	export let visible = true;
 	$: correct = $boardData.boardAnswers.join('') == $guesses.join('').toLowerCase();
 
 	const saveBoard = async () => {
-		const docRef = await addDoc(collection(db, 'boards'), $boardData);
+		const supabaseUrl = 'https://izquajbrfmtjxoxgytor.supabase.co';
+		const supabaseKey = import.meta.env.VITE_SUPABASE_KEY.toString();
+		const supabase = createClient(supabaseUrl, supabaseKey);
+		const { data } = await supabase
+			.from('Boards')
+			.insert([
+				{ words: $boardData.boardWords, answers: $boardData.boardAnswers, ...$boardData.analysis }
+			]);
 		visible = false;
 	};
 </script>
