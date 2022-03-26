@@ -1,4 +1,4 @@
-import { round } from 'lodash';
+import _ from 'lodash';
 import { data as completeWordList } from '../wordList.json';
 
 const numberOfLettersMissingImpactOnDifficulty = [1, 1.9, 4.2, 7.3, 11.4, 16.9];
@@ -29,8 +29,8 @@ const analyzeBoard = (boardWordsParam, boardAnswersParam) => {
     return {
         lettersHidden,
         oneLetterRows,
-        maxGuessDifficulty: round(maxGuessDifficulty, 1),
-        cumulativeGuessDifficulty: round(cumulativeGuessDifficulty, 1),
+        maxGuessDifficulty: _.round(maxGuessDifficulty, 1),
+        cumulativeGuessDifficulty: _.round(cumulativeGuessDifficulty, 1),
     };
 };
 
