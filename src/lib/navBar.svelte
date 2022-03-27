@@ -3,6 +3,7 @@
 	import FaUser from 'svelte-icons/fa/FaUser.svelte';
 	import FaBars from 'svelte-icons/fa/FaBars.svelte';
 
+	// @ts-ignore
 	let loggedIn = supabase.auth.currentUser?.aud === 'authenticated';
 </script>
 

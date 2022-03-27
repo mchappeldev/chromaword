@@ -11,6 +11,7 @@
 	$: boardFilled = $guesses.filter((guess) => guess === '').length === 0;
 
 	const handlePress = (key, event) => {
+		console.log(key);
 		if (key === 'Tab' && $selectedColor < 5) {
 			event?.preventDefault();
 			$selectedColor = $selectedColor + 1;
@@ -21,7 +22,7 @@
 			$guesses[$selectedColor] = key;
 		} else if (key === 'Enter' && boardFilled) {
 			dispatch('checkAnswers');
-		} else if (key === 'Backspace' || key === 'Back') {
+		} else if (key === 'Backspace' || key === 'Back' || key === 'Delete') {
 			$guesses[$selectedColor] = '';
 		}
 	};

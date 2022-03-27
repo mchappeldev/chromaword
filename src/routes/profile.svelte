@@ -2,6 +2,7 @@
 	import supabase from '../utils/supabase';
 	import { goto } from '$app/navigation';
 
+	// @ts-ignore
 	let loggedIn = supabase.auth.currentUser?.aud === 'authenticated';
 	let logOff = async () => {
 		await supabase.auth.signOut();
