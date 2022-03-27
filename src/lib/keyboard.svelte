@@ -9,26 +9,37 @@
 	const dispatch = createEventDispatcher();
 
 	$: boardFilled = $guesses.filter((guess) => guess === '').length === 0;
+	let shiftDown = false;
 
 	const handlePress = (key, event) => {
-		console.log(key);
-		if (key === 'Tab' && $selectedColor < 5) {
+		if (key === 'Tab') {
 			event?.preventDefault();
-			$selectedColor = $selectedColor + 1;
-		} else if (key === 'Tab' && ($selectedColor === 5 || $selectedColor === 7)) {
-			event?.preventDefault();
-			$selectedColor = 0;
+			let newColorIndex = $selectedColor + (shiftDown ? -1 : 1);
+			if (newColorIndex > 5) {
+				$selectedColor = 0;
+			} else if (newColorIndex < 0) {
+				$selectedColor = 5;
+			} else {
+				$selectedColor = newColorIndex;
+			}
 		} else if (key.match(/^[a-z]$/i) && $selectedColor != 7) {
 			$guesses[$selectedColor] = key;
 		} else if (key === 'Enter' && boardFilled) {
 			dispatch('checkAnswers');
 		} else if (key === 'Backspace' || key === 'Back' || key === 'Delete') {
 			$guesses[$selectedColor] = '';
+		} else if (key === 'Shift') {
+			shiftDown = true;
+		}
+	};
+	const handleKeyup = (key) => {
+		if (key === 'Shift') {
+			shiftDown = false;
 		}
 	};
 </script>
 
-<svelte:window on:keydown={(e) => handlePress(e.key, e)} />
+<svelte:window on:keydown={(e) => handlePress(e.key, e)} on:keyup={(e) => handleKeyup(e.key)} />
 
 <div class="keyboard">
 	{#each rows as row, i}
