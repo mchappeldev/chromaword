@@ -5,12 +5,14 @@
 	import Modal from '$lib/modal.svelte';
 	import Board from '$lib/board.svelte';
 	import GameComplete from '$lib/gameComplete.svelte';
+	import NavBar from '$lib/navBar.svelte';
 
 	let showGameComplete = false;
 	const checkAnswers = () => (showGameComplete = true);
 </script>
 
 <div class="container">
+	<NavBar />
 	<h1>ChromaWord</h1>
 	<Board />
 	<button on:click={checkAnswers}>Submit</button>
@@ -26,7 +28,7 @@
 	.container {
 		display: flex;
 		flex-direction: column;
-		justify-content: center;
+		/* justify-content: center; */
 		align-items: center;
 		height: 92vh;
 		width: 100vw;

@@ -23,6 +23,7 @@
     "@supabase/supabase-js": "^1.32.1",
     "firebase": "^9.6.9",
     "lodash": "^4.17.21",
-    "rxfire": "^6.0.3"
+    "rxfire": "^6.0.3",
+    "svelte-icons": "^2.1.0"
   }
 }
