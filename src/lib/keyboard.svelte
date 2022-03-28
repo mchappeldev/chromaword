@@ -3,7 +3,7 @@
 	const rows = [
 		['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
 		['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
-		['Tab', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'Back']
+		['Back', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'Submit']
 	];
 	import { createEventDispatcher } from 'svelte';
 	const dispatch = createEventDispatcher();
@@ -24,7 +24,7 @@
 			}
 		} else if (key.match(/^[a-z]$/i) && $selectedColor != 7) {
 			$guesses[$selectedColor] = key;
-		} else if (key === 'Enter' && boardFilled) {
+		} else if ((key === 'Enter' || key === 'Submit') && boardFilled) {
 			dispatch('checkAnswers');
 		} else if (key === 'Backspace' || key === 'Back' || key === 'Delete') {
 			$guesses[$selectedColor] = '';
@@ -48,6 +48,7 @@
 				<div
 					class="key"
 					class:known={$knownLetters.includes(key)}
+					class:submit={key === 'Submit'}
 					style="--key-color:{$colors[$guesses.indexOf(key)] ?? '#fff'}"
 					on:click={() => handlePress(key)}
 				>
@@ -59,6 +60,17 @@
 </div>
 
 <style>
+	.submit {
+		background: linear-gradient(
+			to top right,
+			#e57878 0%,
+			#e59978 21.35%,
+			#e5da78 40.63%,
+			#6fcf96 61.46%,
+			#78b7e5 80.73%,
+			#bf7dd6 100%
+		) !important;
+	}
 	.keyboard {
 		display: flex;
 		flex-direction: column;
@@ -68,6 +80,7 @@
 		max-width: 350px;
 		max-height: 200px;
 		height: 40vw;
+		min-height: 150px;
 		flex-shrink: 3;
 		margin-top: 30px;
 		gap: 10px;

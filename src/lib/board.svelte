@@ -93,6 +93,7 @@
 		max-width: calc(250px * 1.25);
 		height: min(calc(6 / 5 * 80vw), calc(6 / 5 * 35vh));
 		width: min(80vw, 35vh);
+		margin-top: 1rem;
 	}
 	.row {
 		display: flex;
