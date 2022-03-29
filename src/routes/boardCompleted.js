@@ -1,4 +1,4 @@
-import supabase from '../utils/supabase';
+import { supabase } from '../utils/supabase';
 
 export async function post(event) {
     const ip = event.clientAddress;
@@ -6,7 +6,7 @@ export async function post(event) {
     await supabase
         .from('BoardsComplete')
         .insert([
-            { ipAddress: ip, deviceId: body.deviceId, userId: body.userId },
+            { ipAddress: ip, deviceId: body.deviceId, userId: body.userId, boardId: body.boardId },
         ]);
     return {
         body: 'temp'

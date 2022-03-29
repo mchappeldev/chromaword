@@ -8,7 +8,8 @@
 	import NavBar from '$lib/navBar.svelte';
 	import DailyStatus from '$lib/dailyStatus.svelte';
 	import { v4 as newGuid } from 'uuid';
-	import supabase from '../utils/supabase';
+	import { supabase } from '../utils/supabase';
+	import { boardData } from '../store';
 
 	let showGameComplete = false;
 	const checkAnswers = async () => {
@@ -20,7 +21,7 @@
 				deviceId = newGuid();
 				localStorage.setItem('deviceId', deviceId);
 			}
-			const body = { deviceId: deviceId };
+			const body = { deviceId: deviceId, boardId: $boardData.boardId };
 			if (userId) body.userId = userId;
 			await fetch('/boardCompleted', {
 				method: 'POST',

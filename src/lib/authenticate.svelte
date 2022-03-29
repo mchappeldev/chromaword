@@ -2,7 +2,7 @@
 	import FaEnvelope from 'svelte-icons/fa/FaEnvelope.svelte';
 	import FaKey from 'svelte-icons/fa/FaKey.svelte';
 	import GoX from 'svelte-icons/go/GoX.svelte';
-	import supabase from '../utils/supabase';
+	import { supabase } from '../utils/supabase';
 	import { goto } from '$app/navigation';
 
 	export let pageType;

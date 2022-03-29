@@ -2,6 +2,7 @@
 	import { getBoard } from '../utils/boards/boardGenerator.js';
 	import { knownLetters, boardData, guesses } from '../store.js';
 	import Game from '../lib/game.svelte';
+	import { supabase } from '../utils/supabase';
 
 	let boards = [];
 	let showBoard = false;
@@ -9,6 +10,17 @@
 		const board = getBoard();
 		boards = [...boards, board];
 		// boards.push(board);
+	};
+
+	const saveAllBoards = async () => {
+		const boardsToSave = boards.map((board) => {
+			return {
+				answers: board.boardAnswers,
+				words: board.boardWords,
+				...board.analysis
+			};
+		});
+		await supabase.from('Boards').insert(boardsToSave);
 	};
 
 	const playBoard = (boardIndex) => {
@@ -23,6 +35,7 @@
 
 {#if !showBoard}
 	<button on:click={() => createNewBoard()}>Create</button>
+	<button on:click={() => saveAllBoards()}>Save All</button>
 
 	<div class="container">
 		<table class="table">

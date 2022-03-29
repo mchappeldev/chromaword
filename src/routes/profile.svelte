@@ -1,5 +1,5 @@
 <script>
-	import supabase from '../utils/supabase';
+	import { supabase } from '../utils/supabase';
 	import { goto } from '$app/navigation';
 
 	// @ts-ignore

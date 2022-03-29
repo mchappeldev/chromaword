@@ -1,5 +1,5 @@
 <script>
-	import supabase from '../utils/supabase';
+	import { supabase } from '../utils/supabase';
 	import FaUser from 'svelte-icons/fa/FaUser.svelte';
 	import FaBars from 'svelte-icons/fa/FaBars.svelte';
 

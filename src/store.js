@@ -7,6 +7,7 @@ export const guesses = writable(Array(6).fill(''));
 export const wordArray = writable([]);
 export const answers = writable([]);
 export const boardData = writable({
+    boardId: null,
     boardWords: [],
     boardAnswers: [],
     analysis: {}
