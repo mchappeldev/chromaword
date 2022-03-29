@@ -1,7 +1,13 @@
 <script>
+	import FaRegFrown from 'svelte-icons/fa/FaRegFrown.svelte';
+	import FaRegMehRollingEyes from 'svelte-icons/fa/FaRegMehRollingEyes.svelte';
+	import FaRegSmileBeam from 'svelte-icons/fa/FaRegSmileBeam.svelte';
+	import FaLemon from 'svelte-icons/fa/FaLemon.svelte';
 	import { guesses, boardData } from '../store.js';
 	import { createClient } from '@supabase/supabase-js';
 	export let visible = true;
+	let difficultyStars = 0;
+	let enjoy;
 	$: correct = $boardData.boardAnswers.join('') == $guesses.join('').toLowerCase();
 
 	const saveBoard = async () => {
@@ -28,11 +34,87 @@
 			{`You guessed the following: ${$guesses} and it was actually: ${$boardData.boardAnswers}! The words were ${$boardData.boardWords}.`}
 		</p>
 	{/if}
+	<div class="ratings flex">
+		<h1>How was this board?</h1>
+		<div class="flex enjoy">
+			<div
+				on:click={() => {
+					enjoy = 1;
+				}}
+				class:filled={enjoy == 1}
+				class="reactions"
+			>
+				<FaRegFrown />
+			</div>
+			<div
+				on:click={() => {
+					enjoy = 2;
+				}}
+				class:filled={enjoy == 2}
+				class="reactions"
+			>
+				<FaRegMehRollingEyes />
+			</div>
+			<div
+				on:click={() => {
+					enjoy = 3;
+				}}
+				class:filled={enjoy == 3}
+				class="reactions"
+			>
+				<FaRegSmileBeam />
+			</div>
+		</div>
+		<h1>Was it Hard?</h1>
+		<div class="difficulty flex">
+			{#each Array(5) as lemon, i}
+				<div
+					class="lemon"
+					on:click={() => {
+						difficultyStars = i + 1;
+					}}
+					class:filled={difficultyStars >= i + 1}
+				>
+					<FaLemon />
+				</div>
+			{/each}
+		</div>
+	</div>
+
 	<p>If you liked this board please consider adding it to our database below!</p>
 </div>
 <button on:click={saveBoard}>Save Board</button>
 
 <style>
+	.ratings {
+		flex-direction: column;
+	}
+	.flex {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	.enjoy {
+		gap: 3em;
+		width: 100%;
+	}
+
+	.reactions {
+		color: #333;
+		height: 48px;
+		width: 48px;
+	}
+	.difficulty {
+		gap: 5px;
+	}
+	.lemon {
+		height: 32px;
+		width: 32px;
+		color: #333;
+	}
+	.filled {
+		color: limegreen;
+	}
 	button {
 		font-family: 'Open Sans';
 		font-style: normal;
