@@ -6,9 +6,27 @@
 	import Board from '$lib/board.svelte';
 	import GameComplete from '$lib/gameComplete.svelte';
 	import NavBar from '$lib/navBar.svelte';
+	import { v4 as newGuid } from 'uuid';
+	import supabase from '../utils/supabase';
 
 	let showGameComplete = false;
-	const checkAnswers = () => (showGameComplete = true);
+	const checkAnswers = async () => {
+		showGameComplete = true;
+		try {
+			const userId = supabase.auth.currentUser?.id;
+			var deviceId = localStorage.getItem('deviceId');
+			if (!deviceId) {
+				deviceId = newGuid();
+				localStorage.setItem('deviceId', deviceId);
+			}
+			const body = { deviceId: deviceId };
+			if (userId) body.userId = userId;
+			await fetch('/boardCompleted', {
+				method: 'POST',
+				body: JSON.stringify(body)
+			});
+		} catch (error) {}
+	};
 </script>
 
 <div class="container">

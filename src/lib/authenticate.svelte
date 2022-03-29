@@ -22,14 +22,14 @@
 	const createAccount = async () => {
 		if (password) {
 			let { user, error } = await supabase.auth.signUp({ email, password });
-			console.log(error);
-			console.log(user);
+			// console.log(error);
+			// console.log(user);
 			if (!error && user) {
 				await goto('/login');
 			}
 		} else {
 			let { user, error } = await supabase.auth.signIn({ email });
-			console.log(user);
+			// console.log(user);
 		}
 	};
 
@@ -39,7 +39,7 @@
 			if (error) {
 				errorMessage = error.message.toString();
 			} else {
-				console.log(user);
+				// console.log(user);
 				await goto('/');
 			}
 		} else {

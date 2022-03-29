@@ -18,7 +18,7 @@ const getBoard = (targetDifficultyParam = 3, maxIsolatedColorsParam = 1) => {
     boardAnswers = selectAnswers();
     generateUntilValidBoardCreated();
     const analysis = analyzeBoard(boardWords, boardAnswers);
-    console.log(analysis);
+    // console.log(analysis);
     return {
         boardWords,
         boardAnswers,
