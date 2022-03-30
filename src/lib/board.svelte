@@ -128,6 +128,7 @@
 		transition: all 0.25s ease-in-out;
 		user-select: none;
 		-webkit-transform: translate3d(0, 0, 0);
+		-webkit-tap-highlight-color: transparent;
 	}
 	.tileSide {
 		content: '';
