@@ -7,11 +7,13 @@
 	import GameComplete from '$lib/gameComplete.svelte';
 	import NavBar from '$lib/navBar.svelte';
 	import DailyStatus from '$lib/dailyStatus.svelte';
+	import Instructions from '$lib/instructions.svelte';
 	import { v4 as newGuid } from 'uuid';
 	import { supabase } from '../utils/supabase';
 	import { boardData } from '../store';
 
 	let showGameComplete = false;
+	let showInstructions = true;
 	const checkAnswers = async () => {
 		showGameComplete = true;
 		try {
@@ -40,6 +42,11 @@
 	{#if showGameComplete}
 		<Modal bind:visible={showGameComplete}>
 			<GameComplete bind:visible={showGameComplete} />
+		</Modal>
+	{/if}
+	{#if showInstructions}
+		<Modal bind:visible={showInstructions}>
+			<Instructions bind:visible={showInstructions} />
 		</Modal>
 	{/if}
 </div>

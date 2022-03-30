@@ -3,24 +3,23 @@
 	import FaRegMehRollingEyes from 'svelte-icons/fa/FaRegMehRollingEyes.svelte';
 	import FaRegSmileBeam from 'svelte-icons/fa/FaRegSmileBeam.svelte';
 	import FaLemon from 'svelte-icons/fa/FaLemon.svelte';
-	import { guesses, boardData } from '../store.js';
-	import { createClient } from '@supabase/supabase-js';
+	import { guesses, boardData, reviewEnjoyment, reviewDifficulty } from '../store.js';
+	import { supabase, userId } from '../utils/supabase';
 	export let visible = true;
-	let difficultyStars = 0;
-	let enjoy;
 	$: correct = $boardData.boardAnswers.join('') == $guesses.join('').toLowerCase();
 
-	const saveBoard = async () => {
-		const supabaseUrl = 'https://izquajbrfmtjxoxgytor.supabase.co';
-		const supabaseKey = import.meta.env.VITE_SUPABASE_KEY.toString();
-		const supabase = createClient(supabaseUrl, supabaseKey);
-		const { data } = await supabase
-			.from('Boards')
-			.insert([
-				{ words: $boardData.boardWords, answers: $boardData.boardAnswers, ...$boardData.analysis }
-			]);
-		visible = false;
-	};
+	$: {
+		$reviewEnjoyment = $reviewEnjoyment;
+		$reviewDifficulty = $reviewDifficulty;
+		(async () => {
+			await supabase.rpc('upsertboardreview', {
+				_userId: userId(),
+				_boardId: $boardData.boardId,
+				_enjoyment: $reviewEnjoyment,
+				_difficulty: $reviewDifficulty
+			});
+		})();
+	}
 </script>
 
 <div class="header">{correct ? 'You won!' : 'You lost!'}</div>
@@ -34,32 +33,33 @@
 			{`You guessed the following: ${$guesses} and it was actually: ${$boardData.boardAnswers}! The words were ${$boardData.boardWords}.`}
 		</p>
 	{/if}
+	<!-- <button on:click={sync}>Do Stuff</button> -->
 	<div class="ratings flex">
 		<h1>How was this board?</h1>
 		<div class="flex enjoy">
 			<div
 				on:click={() => {
-					enjoy = 1;
+					$reviewEnjoyment = 1;
 				}}
-				class:filled={enjoy == 1}
+				class:filled={$reviewEnjoyment == 1}
 				class="reactions"
 			>
 				<FaRegFrown />
 			</div>
 			<div
 				on:click={() => {
-					enjoy = 2;
+					$reviewEnjoyment = 2;
 				}}
-				class:filled={enjoy == 2}
+				class:filled={$reviewEnjoyment == 2}
 				class="reactions"
 			>
 				<FaRegMehRollingEyes />
 			</div>
 			<div
 				on:click={() => {
-					enjoy = 3;
+					$reviewEnjoyment = 3;
 				}}
-				class:filled={enjoy == 3}
+				class:filled={$reviewEnjoyment == 3}
 				class="reactions"
 			>
 				<FaRegSmileBeam />
@@ -71,19 +71,16 @@
 				<div
 					class="lemon"
 					on:click={() => {
-						difficultyStars = i + 1;
+						$reviewDifficulty = i + 1;
 					}}
-					class:filled={difficultyStars >= i + 1}
+					class:filled={$reviewDifficulty >= i + 1}
 				>
 					<FaLemon />
 				</div>
 			{/each}
 		</div>
 	</div>
-
-	<p>If you liked this board please consider adding it to our database below!</p>
 </div>
-<button on:click={saveBoard}>Save Board</button>
 
 <style>
 	.ratings {
