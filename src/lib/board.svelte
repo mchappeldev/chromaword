@@ -104,6 +104,7 @@
 		width: 100%;
 	}
 	.tile {
+		position: relative;
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -123,7 +124,7 @@
 		transition: all 0.25s ease-in-out;
 		user-select: none;
 	}
-	.tile:before {
+	.tile::before {
 		content: '';
 		position: absolute;
 		top: 2.25px;
@@ -135,7 +136,7 @@
 		transform: 0.5s;
 		transform: rotate(0deg) skewY(-45deg);
 	}
-	.tile:after {
+	.tile::after {
 		content: '';
 		position: absolute;
 		bottom: -5px;
