@@ -42,7 +42,9 @@
 							? '-5px'
 							: '0px'}"
 					>
+						<div class="tileSide" />
 						{$guesses[boardAnswers.indexOf(letter)]}
+						<div class="tileBottom" />
 					</div>
 				{:else}
 					<div
@@ -51,7 +53,9 @@
 						style="--tile-color: {$colors[boardAnswers.indexOf(letter)] ??
 							$colors[6]}; --translate-height:0px"
 					>
+						<div class="tileSide" />
 						{letter}
+						<div class="tileBottom" />
 					</div>
 				{/if}
 			{/each}
@@ -123,8 +127,9 @@
 		filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 		transition: all 0.25s ease-in-out;
 		user-select: none;
+		-webkit-transform: translate3d(0, 0, 0);
 	}
-	.tile::before {
+	.tileSide {
 		content: '';
 		position: absolute;
 		top: 2.25px;
@@ -136,7 +141,7 @@
 		transform: 0.5s;
 		transform: rotate(0deg) skewY(-45deg);
 	}
-	.tile::after {
+	.tileBottom {
 		content: '';
 		position: absolute;
 		bottom: -5px;
