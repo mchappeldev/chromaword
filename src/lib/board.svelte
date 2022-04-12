@@ -89,88 +89,88 @@
 	}
 
 	.board {
-		margin: auto;
+		/* margin-top: 1rem; */
 		display: flex;
 		flex-direction: column;
-		justify-content: center;
 		gap: 15px;
+		justify-content: center;
 		margin: auto;
-		/* margin-top: 1rem; */
+		margin: auto;
 	}
 	.row {
 		display: flex;
-		justify-content: center;
 		gap: 10px;
-		max-height: 100px;
 		height: 100%;
+		justify-content: center;
+		max-height: 100px;
 		width: 100%;
 	}
 	.tile {
-		position: relative;
-		display: flex;
-		justify-content: center;
+		-webkit-tap-highlight-color: transparent;
+		-webkit-transform: translate3d(0, 0, 0);
 		align-items: center;
-		width: 38px;
-		height: 38px;
 		background-color: hsl(0, 0%, 57%);
-		box-sizing: border-box;
-		text-transform: uppercase;
-		font-family: 'Open Sans';
-		font-weight: 900;
-		font-size: 1.5rem;
-		color: white;
 		background-color: var(--tile-color);
+		box-sizing: border-box;
+		color: white;
+		display: flex;
 		filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+		font-family: 'Open Sans';
+		font-size: 1.5rem;
+		font-weight: 900;
+		height: 38px;
+		justify-content: center;
+		position: relative;
+		text-transform: uppercase;
 		transition: all 0.25s ease-in-out;
 		user-select: none;
-		-webkit-transform: translate3d(0, 0, 0);
-		-webkit-tap-highlight-color: transparent;
+		width: 38px;
 	}
 	.tileSide {
+		background: var(--tile-color);
 		content: '';
+		filter: brightness(85%);
+		height: 100%;
+		left: -4.75px;
 		position: absolute;
 		top: 2.25px;
-		left: -4.75px;
-		height: 100%;
-		width: 5px;
-		background: var(--tile-color);
-		filter: brightness(85%);
 		transform: 0.5s;
 		transform: rotate(0deg) skewY(-45deg);
+		width: 5px;
 	}
 	.tileBottom {
-		content: '';
-		position: absolute;
-		bottom: -5px;
-		left: -2.5px;
-		height: 5px;
-		width: 100%;
 		background: var(--tile-color);
-		transform: 0.5s;
+		bottom: -5px;
+		content: '';
 		filter: brightness(75%);
+		height: 5px;
+		left: -2.5px;
+		position: absolute;
+		transform: 0.5s;
 		transform: rotate(0deg) skewX(-45deg);
+		width: 100%;
 	}
 	.guessable {
 		cursor: pointer;
 	}
 	.selected {
-		transform: translateY(-5px);
 		filter: brightness(105%) drop-shadow(0px 8px 8px rgba(0, 0, 0, 0.25));
+		transform: translateY(-5px);
 	}
 
 	@media only screen and (min-width: 400px) and (min-height: 650px) {
 		.tile {
-			width: 45px !important;
-			height: 45px !important;
 			font-size: 1.75rem;
+			height: 45px !important;
+			width: 45px !important;
 		}
 	}
 
 	@media only screen and (min-width: 750px) and (min-height: 750px) {
 		.tile {
-			width: 60px !important;
-			height: 60px !important;
 			font-size: 2rem;
+			height: 60px !important;
+			width: 60px !important;
 		}
 	}
 </style>

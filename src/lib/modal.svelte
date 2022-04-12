@@ -18,32 +18,33 @@
 
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;800&display=swap');
+
 	.container {
-		position: fixed;
-		display: flex;
-		justify-content: center;
 		align-items: center;
 		backdrop-filter: blur(2px);
-		left: 0;
-		top: 0;
-		height: 100vh;
-		width: 100vw;
 		background-color: rgba(0, 0, 0, 0.5);
+		display: flex;
+		height: 100vh;
+		justify-content: center;
+		left: 0;
+		position: fixed;
+		top: 0;
+		width: 100vw;
 		z-index: 1000;
 	}
 	.modal {
-		display: flex;
-		position: relative;
-		flex-direction: column;
 		align-items: center;
 		background-color: white;
-		width: 40rem;
-		max-width: 90vw;
-		max-height: 90vh;
 		border-radius: 0.3rem;
 		box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
 		color: #444;
+		display: flex;
+		flex-direction: column;
+		max-height: 90vh;
+		max-width: 90vw;
 		overflow: scroll;
+		position: relative;
+		width: 40rem;
 	}
 
 	.modal::-webkit-scrollbar {
@@ -51,11 +52,11 @@
 	}
 
 	.cancel {
-		position: absolute;
-		top: 1rem;
-		right: 1rem;
-		font-size: 1.6rem;
 		cursor: pointer;
+		font-size: 1.6rem;
+		position: absolute;
+		right: 1rem;
+		top: 1rem;
 		width: 2rem;
 	}
 </style>

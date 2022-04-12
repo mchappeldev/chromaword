@@ -29,27 +29,26 @@
 
 <style>
 	.left {
-		width: 100px;
 		margin-left: 10px;
+		width: 100px;
 	}
 	.right {
-		width: 100px;
 		display: flex;
-		justify-content: end;
 		gap: 10px;
+		justify-content: end;
 		margin-right: 10px;
+		width: 100px;
 	}
 	h1 {
-		/* width: 390px; */
 		/* height: 50px; */
-		margin-top: 0px;
-		margin-bottom: 0px;
-
+		/* line-height: 53px; */
+		/* width: 390px; */
 		font-family: 'Passion One';
+		font-size: min(10vw, 48px);
 		font-style: normal;
 		font-weight: 400;
-		font-size: min(10vw, 48px);
-		/* line-height: 53px; */
+		margin-bottom: 0px;
+		margin-top: 0px;
 		text-align: center;
 		text-transform: uppercase;
 
@@ -66,21 +65,22 @@
 		-webkit-text-fill-color: transparent;
 		background-clip: text;
 	}
+
 	.navBar {
-		position: relative;
-		z-index: 999;
+		align-items: center;
 		display: flex;
 		justify-content: space-between;
-		align-items: center;
-		max-width: 600px;
-		width: 100%;
-		margin-top: 1rem;
 		margin-bottom: 1rem;
+		margin-top: 1rem;
+		max-width: 600px;
+		position: relative;
+		width: 100%;
+		z-index: 999;
 	}
 	.icon {
-		width: 1.5rem;
-		height: 1.5rem;
 		color: #444;
 		cursor: pointer;
+		height: 1.5rem;
+		width: 1.5rem;
 	}
 </style>

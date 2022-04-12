@@ -80,102 +80,69 @@
 	a {
 		font-weight: 900;
 	}
+
 	.tile {
-		position: relative;
-		display: flex;
-		justify-content: center;
+		-webkit-tap-highlight-color: transparent;
+		-webkit-transform: translate3d(0, 0, 0);
 		align-items: center;
-		width: 2em;
-		height: 2em;
-		max-width: 100px;
-		max-height: 100px;
-		box-sizing: border-box;
-		text-transform: uppercase;
-		font-family: 'Open Sans';
-		font-weight: 900;
-		font-size: 150%;
-		color: white;
 		background-color: var(--tile-color);
+		box-sizing: border-box;
+		color: white;
+		display: flex;
 		filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+		font-family: 'Open Sans';
+		font-size: 150%;
+		font-weight: 900;
+		height: 2em;
+		justify-content: center;
+		max-height: 100px;
+		max-width: 100px;
+		position: relative;
+		text-transform: uppercase;
 		transition: all 0.25s ease-in-out;
 		user-select: none;
-		-webkit-transform: translate3d(0, 0, 0);
-		-webkit-tap-highlight-color: transparent;
+		width: 2em;
 	}
 	.tileSide {
+		background: var(--tile-color);
 		content: '';
+		filter: brightness(85%);
+		height: 100%;
+		left: -4.75px;
 		position: absolute;
 		top: 2.25px;
-		left: -4.75px;
-		height: 100%;
-		width: 5px;
-		background: var(--tile-color);
-		filter: brightness(85%);
 		transform: 0.5s;
 		transform: rotate(0deg) skewY(-45deg);
+		width: 5px;
 	}
 	.tileBottom {
-		content: '';
-		position: absolute;
-		bottom: -5px;
-		left: -2.5px;
-		height: 5px;
-		width: 100%;
 		background: var(--tile-color);
-		transform: 0.5s;
+		bottom: -5px;
+		content: '';
 		filter: brightness(75%);
+		height: 5px;
+		left: -2.5px;
+		position: absolute;
+		transform: 0.5s;
 		transform: rotate(0deg) skewX(-45deg);
+		width: 100%;
 	}
 
 	.flex {
-		display: flex;
 		align-items: center;
-		justify-content: center;
+		display: flex;
 		gap: 10px;
+		justify-content: center;
 		margin-bottom: 15px;
 	}
-	button {
-		font-family: 'Open Sans';
-		font-style: normal;
-		font-weight: 600;
-		font-size: 24px;
-		line-height: 100%;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		padding: 20px;
-		border: none;
-		text-align: center;
-		letter-spacing: 0.245em;
-		text-transform: uppercase;
-		margin-top: 40px;
-		cursor: pointer;
-		color: #ffffff;
 
-		height: 40px;
-		left: 120px;
-		top: 549px;
-		margin: 20px;
-
-		background: linear-gradient(
-			90deg,
-			#e57878 0%,
-			#e59978 21.35%,
-			#e5da78 40.63%,
-			#6fcf96 61.46%,
-			#78b7e5 80.73%,
-			#bf7dd6 100%
-		);
-		box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-		border-radius: 5px;
-	}
 	.header {
 		font-family: 'Open Sans';
-		font-weight: 600;
 		font-size: 1.75rem;
-		margin-top: 1.5rem;
+		font-weight: 600;
 		margin-left: 1rem;
 		margin-right: 1rem;
+		margin-top: 1.5rem;
 	}
 	.message {
 		font-family: 'Open Sans';
