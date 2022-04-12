@@ -34,11 +34,6 @@
 </script>
 
 <div class="container">
-	<NavBar />
-	<!-- <DailyStatus /> -->
-	<Board />
-	<!-- <button on:click={checkAnswers}>Submit</button> -->
-	<Keyboard on:checkAnswers={checkAnswers} />
 	{#if showGameComplete}
 		<Modal bind:visible={showGameComplete}>
 			<GameComplete bind:visible={showGameComplete} />
@@ -49,6 +44,11 @@
 			<Instructions bind:visible={showInstructions} />
 		</Modal>
 	{/if}
+	<NavBar />
+	<!-- <DailyStatus /> -->
+	<Board />
+	<!-- <button on:click={checkAnswers}>Submit</button> -->
+	<Keyboard on:checkAnswers={checkAnswers} />
 </div>
 
 <style>
