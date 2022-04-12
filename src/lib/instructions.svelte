@@ -71,9 +71,15 @@
 		<li>There will only be one good solution</li>
 		<li>You only have to spell words from left to right, not up and down.</li>
 	</ul>
+	<p style="text-align: center;">
+		<br />Questions? <a href="mailto:mikeandmikedevs@gmail.com"> Contact us.</a>
+	</p>
 </div>
 
 <style>
+	a {
+		font-weight: 900;
+	}
 	.tile {
 		position: relative;
 		display: flex;

@@ -95,10 +95,10 @@
 	.signupLink {
 		margin-top: 1rem;
 		font-weight: 900;
-		color: hsl(205, 10%, 60%);
+		color: hsl(205, 10%, 50%);
 	}
 	.signupLink:hover {
-		color: hsl(205, 10%, 50%);
+		color: hsl(205, 10%, 40%);
 	}
 	.cancel {
 		position: absolute;
