@@ -6,7 +6,7 @@
 	import FaLongArrowAltRight from 'svelte-icons/fa/FaLongArrowAltRight.svelte';
 	import { guesses, boardData, reviewEnjoyment, reviewDifficulty, answers } from '../store.js';
 	import { supabase, loggedIn, userId } from '../utils/supabase';
-	import loadNextBoard from '../utils/boards/loadNextBoard.js';
+	import LoadNextBoard from '../utils/boards/loadNextBoard.svelte';
 	import { map } from 'lodash';
 	export let visible = true;
 	$: correct = $boardData.boardAnswers.join('') == $guesses.join('').toLowerCase();
@@ -33,6 +33,7 @@
 			})();
 		}
 	}
+	let nextBoard;
 </script>
 
 <div class="header">{correct ? 'Nailed it!' : 'Ouch!'}</div>
@@ -117,10 +118,11 @@
 </div>
 <button
 	on:click={() => {
-		loadNextBoard();
+		nextBoard.load();
 		visible = false;
 	}}>Next Board</button
 >
+<LoadNextBoard bind:this={nextBoard} />
 
 <style>
 	.icon {

@@ -1,11 +1,18 @@
 <script>
+	import { browser } from '$app/env';
+
 	// @ts-nocheck
 	import { onMount } from 'svelte';
 	import Game from '../lib/game.svelte';
-	import loadNextBoard from '../utils/boards/loadNextBoard.js';
+	import LoadNextBoard from '../utils/boards/loadNextBoard.svelte';
+	let nextBoard;
+
 	onMount(async () => {
-		loadNextBoard();
+		if (browser) {
+			await nextBoard.load();
+		}
 	});
 </script>
 
+<LoadNextBoard bind:this={nextBoard} />
 <Game />

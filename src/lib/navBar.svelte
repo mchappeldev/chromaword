@@ -83,11 +83,4 @@
 		color: #444;
 		cursor: pointer;
 	}
-	a,
-	a:hover,
-	a:visited,
-	a:active {
-		color: inherit;
-		text-decoration: none;
-	}
 </style>

@@ -78,8 +78,7 @@
 		align-items: center;
 		width: 95vw;
 		max-width: 350px;
-		max-height: 200px;
-		height: 40vw;
+		max-height: 100px;
 		min-height: 150px;
 		flex-shrink: 3;
 		margin-top: 30px;
@@ -112,7 +111,7 @@
 		font-weight: 900;
 		color: #333;
 		border-radius: 3px;
-		font-size: 1.5vh;
+		font-size: 1rem;
 		cursor: pointer;
 		border: 1px solid #aaa;
 		box-shadow: 0px 3px 3px rgba(200, 200, 200, 0.5);

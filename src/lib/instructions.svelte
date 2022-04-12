@@ -70,7 +70,6 @@
 		</li>
 		<li>There will only be one good solution</li>
 		<li>You only have to spell words from left to right, not up and down.</li>
-		<li>There are 5 puzzles of increasing difficulty each day!</li>
 	</ul>
 </div>
 

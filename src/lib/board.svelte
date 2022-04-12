@@ -89,15 +89,13 @@
 	}
 
 	.board {
+		margin: auto;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		gap: 15px;
-		max-height: calc(300px * 1.25);
-		max-width: calc(250px * 1.25);
-		height: min(calc(6 / 5 * 80vw), calc(6 / 5 * 35vh));
-		width: min(80vw, 35vh);
-		margin-top: 1rem;
+		margin: auto;
+		/* margin-top: 1rem; */
 	}
 	.row {
 		display: flex;
@@ -112,16 +110,14 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		width: 100%;
-		height: 100%;
-		max-width: 100px;
-		max-height: 100px;
+		width: 38px;
+		height: 38px;
 		background-color: hsl(0, 0%, 57%);
 		box-sizing: border-box;
 		text-transform: uppercase;
 		font-family: 'Open Sans';
 		font-weight: 900;
-		font-size: 150%;
+		font-size: 1.5rem;
 		color: white;
 		background-color: var(--tile-color);
 		filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
@@ -160,5 +156,21 @@
 	.selected {
 		transform: translateY(-5px);
 		filter: brightness(105%) drop-shadow(0px 8px 8px rgba(0, 0, 0, 0.25));
+	}
+
+	@media only screen and (min-width: 400px) and (min-height: 650px) {
+		.tile {
+			width: 45px !important;
+			height: 45px !important;
+			font-size: 1.75rem;
+		}
+	}
+
+	@media only screen and (min-width: 750px) and (min-height: 750px) {
+		.tile {
+			width: 60px !important;
+			height: 60px !important;
+			font-size: 2rem;
+		}
 	}
 </style>
