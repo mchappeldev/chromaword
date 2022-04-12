@@ -1,8 +1,6 @@
 import { writable, readable } from 'svelte/store';
 import { browser } from '$app/env';
 
-export const showModal = writable(false);
-export const modalData = writable({ header: '', message: '' });
 export const selectedColor = writable(7);
 export const guesses = writable(Array(6).fill(''));
 export const wordArray = writable([]);
@@ -16,7 +14,6 @@ export const boardData = writable({
 export const reviewEnjoyment = writable(0);
 export const reviewDifficulty = writable(0);
 export const knownLetters = writable([]);
-export const variance = writable(0);
 export const colors = readable([
 	'#E67878',
 	'#E59978',

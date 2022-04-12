@@ -62,7 +62,7 @@
 <style>
 	.submit {
 		background: linear-gradient(
-			to top right,
+			to right,
 			#e57878 0%,
 			#e59978 21.35%,
 			#e5da78 40.63%,
@@ -118,6 +118,10 @@
 		box-shadow: 0px 3px 3px rgba(200, 200, 200, 0.5);
 		padding-left: 5px;
 		padding-right: 5px;
+	}
+	.key:active {
+		top: 2px;
+		box-shadow: 0px 2px 3px rgba(200, 200, 200, 0.7);
 	}
 	.known {
 		background: #ccc;

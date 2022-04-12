@@ -6,7 +6,7 @@
 	import Board from '$lib/board.svelte';
 	import GameComplete from '$lib/gameComplete.svelte';
 	import NavBar from '$lib/navBar.svelte';
-	import DailyStatus from '$lib/dailyStatus.svelte';
+	// import DailyStatus from '$lib/dailyStatus.svelte';
 	import Instructions from '$lib/instructions.svelte';
 	import { v4 as newGuid } from 'uuid';
 	import { supabase } from '../utils/supabase';
@@ -35,7 +35,7 @@
 
 <div class="container">
 	<NavBar />
-	<DailyStatus />
+	<!-- <DailyStatus /> -->
 	<Board />
 	<!-- <button on:click={checkAnswers}>Submit</button> -->
 	<Keyboard on:checkAnswers={checkAnswers} />

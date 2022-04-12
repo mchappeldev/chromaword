@@ -14,10 +14,10 @@
 <div class="navBar">
 	<div class="left">
 		<!-- <div class="icon"><FaBars /></div> -->
+		<div class="icon"><a href={loggedIn ? '/profile' : '/login'}><FaUser /></a></div>
 	</div>
 	<h1>ChromaWord</h1>
 	<div class="right">
-		<div class="icon"><a href={loggedIn ? '/profile' : '/login'}><FaUser /></a></div>
 		<div class="icon" on:click={() => (showInstructions = true)}><FaQuestionCircle /></div>
 	</div>
 	{#if showInstructions}
@@ -30,12 +30,14 @@
 <style>
 	.left {
 		width: 100px;
+		margin-left: 10px;
 	}
 	.right {
 		width: 100px;
 		display: flex;
 		justify-content: end;
 		gap: 10px;
+		margin-right: 10px;
 	}
 	h1 {
 		/* width: 390px; */

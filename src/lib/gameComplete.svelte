@@ -4,21 +4,32 @@
 	import FaRegSmileBeam from 'svelte-icons/fa/FaRegSmileBeam.svelte';
 	import FaLemon from 'svelte-icons/fa/FaLemon.svelte';
 	import { guesses, boardData, reviewEnjoyment, reviewDifficulty } from '../store.js';
-	import { supabase, userId } from '../utils/supabase';
+	import { supabase, loggedIn, userId } from '../utils/supabase';
+	import loadNextBoard from '../utils/boards/loadNextBoard.js';
 	export let visible = true;
 	$: correct = $boardData.boardAnswers.join('') == $guesses.join('').toLowerCase();
 
 	$: {
 		$reviewEnjoyment = $reviewEnjoyment;
 		$reviewDifficulty = $reviewDifficulty;
-		(async () => {
-			await supabase.rpc('upsertboardreview', {
-				_userId: userId(),
-				_boardId: $boardData.boardId,
-				_enjoyment: $reviewEnjoyment,
-				_difficulty: $reviewDifficulty
-			});
-		})();
+		if (loggedIn() && $reviewEnjoyment != 0) {
+			(async () => {
+				await supabase.rpc('upsertboardreview', {
+					_userId: userId(),
+					_boardId: $boardData.boardId,
+					_enjoyment: $reviewEnjoyment,
+					_difficulty: $reviewDifficulty
+				});
+			})();
+		} else if ($reviewEnjoyment === 3) {
+			(async () => {
+				await supabase.from('Boards').insert({
+					answers: $boardData.boardAnswers,
+					words: $boardData.boardWords,
+					...$boardData.analysis
+				});
+			})();
+		}
 	}
 </script>
 
@@ -65,22 +76,30 @@
 				<FaRegSmileBeam />
 			</div>
 		</div>
-		<h1>Was it Hard?</h1>
-		<div class="difficulty flex">
-			{#each Array(5) as lemon, i}
-				<div
-					class="lemon"
-					on:click={() => {
-						$reviewDifficulty = i + 1;
-					}}
-					class:filled={$reviewDifficulty >= i + 1}
-				>
-					<FaLemon />
-				</div>
-			{/each}
-		</div>
+		{#if loggedIn()}
+			<h1>Was it Hard?</h1>
+			<div class="difficulty flex">
+				{#each Array(5) as lemon, i}
+					<div
+						class="lemon"
+						on:click={() => {
+							$reviewDifficulty = i + 1;
+						}}
+						class:filled={$reviewDifficulty >= i + 1}
+					>
+						<FaLemon />
+					</div>
+				{/each}
+			</div>
+		{/if}
 	</div>
 </div>
+<button
+	on:click={() => {
+		loadNextBoard();
+		visible = false;
+	}}>Next Board</button
+>
 
 <style>
 	.ratings {
