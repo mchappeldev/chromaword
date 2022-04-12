@@ -61,38 +61,4 @@
 		height: 92vh;
 		width: 100vw;
 	}
-
-	button {
-		align-items: center;
-		background: linear-gradient(
-			90deg,
-			#e57878 0%,
-			#e59978 21.35%,
-			#e5da78 40.63%,
-			#6fcf96 61.46%,
-			#78b7e5 80.73%,
-			#bf7dd6 100%
-		);
-		border-radius: 5px;
-		border: none;
-		box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-		color: #ffffff;
-		cursor: pointer;
-		display: flex;
-		font-family: 'Open Sans';
-		font-size: 24px;
-		font-style: normal;
-		font-weight: 600;
-		height: 40px;
-		justify-content: center;
-		left: 120px;
-		letter-spacing: 0.245em;
-		line-height: 100%;
-		margin-top: 40px;
-		padding: 20px;
-		text-align: center;
-		text-transform: uppercase;
-		top: 549px;
-		width: 150px;
-	}
 </style>
