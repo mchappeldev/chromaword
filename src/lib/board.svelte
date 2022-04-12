@@ -130,7 +130,7 @@
 		background: var(--tile-color);
 		content: '';
 		filter: brightness(85%);
-		height: 100%;
+		height: 101%;
 		left: -4.75px;
 		position: absolute;
 		top: 2.25px;

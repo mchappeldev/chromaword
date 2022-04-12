@@ -15,13 +15,13 @@ export const reviewEnjoyment = writable(0);
 export const reviewDifficulty = writable(0);
 export const knownLetters = writable([]);
 export const colors = readable([
-	'#E67878',
-	'#E59978',
-	'#E5DA78',
-	'#6FCF96',
-	'#78B7E5',
-	'#BF7DD6',
-	'#A9A9A9'
+	'hsl(0, 69%, 69%)',
+	'hsl(18, 68%, 68%)',
+	'hsl(54, 68%, 68%)',
+	'hsl(144, 50%, 62%)',
+	'hsl(205, 68%, 68%)',
+	'hsl(284, 52%, 66%)',
+	'hsl(0, 0%, 66%)'
 ]); // red, orange, yellow, green, blue, purple, grey
 
 export const seenInstructions = writable(false);

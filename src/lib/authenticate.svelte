@@ -101,7 +101,7 @@
 		color: hsl(205, 10%, 40%);
 	}
 	.cancel {
-		color: #222;
+		color: #333;
 		cursor: pointer;
 		font-size: 1.6rem;
 		width: 2rem;

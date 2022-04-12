@@ -58,5 +58,6 @@
 		right: 1rem;
 		top: 1rem;
 		width: 2rem;
+		color: #333;
 	}
 </style>
