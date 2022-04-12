@@ -10,10 +10,10 @@
 	import Instructions from '$lib/instructions.svelte';
 	import { v4 as newGuid } from 'uuid';
 	import { supabase } from '../utils/supabase';
-	import { boardData } from '../store';
+	import { boardData, seenInstructions } from '../store';
 
 	let showGameComplete = false;
-	let showInstructions = true;
+	let showInstructions = !$seenInstructions;
 	const checkAnswers = async () => {
 		showGameComplete = true;
 		try {

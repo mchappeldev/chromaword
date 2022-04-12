@@ -2,18 +2,41 @@
 	import { supabase } from '../utils/supabase';
 	import FaUser from 'svelte-icons/fa/FaUser.svelte';
 	import FaBars from 'svelte-icons/fa/FaBars.svelte';
+	import FaQuestionCircle from 'svelte-icons/fa/FaQuestionCircle.svelte';
+	import Instructions from '$lib/instructions.svelte';
+	import Modal from '$lib/modal.svelte';
 
 	// @ts-ignore
 	let loggedIn = supabase.auth.currentUser?.aud === 'authenticated';
+	let showInstructions = false;
 </script>
 
 <div class="navBar">
-	<div class="icon"><FaBars /></div>
+	<div class="left">
+		<!-- <div class="icon"><FaBars /></div> -->
+	</div>
 	<h1>ChromaWord</h1>
-	<div class="icon"><a href={loggedIn ? '/profile' : '/login'}><FaUser /></a></div>
+	<div class="right">
+		<div class="icon"><a href={loggedIn ? '/profile' : '/login'}><FaUser /></a></div>
+		<div class="icon" on:click={() => (showInstructions = true)}><FaQuestionCircle /></div>
+	</div>
+	{#if showInstructions}
+		<Modal bind:visible={showInstructions}>
+			<Instructions bind:visible={showInstructions} />
+		</Modal>
+	{/if}
 </div>
 
 <style>
+	.left {
+		width: 100px;
+	}
+	.right {
+		width: 100px;
+		display: flex;
+		justify-content: end;
+		gap: 10px;
+	}
 	h1 {
 		/* width: 390px; */
 		/* height: 50px; */
@@ -42,6 +65,8 @@
 		background-clip: text;
 	}
 	.navBar {
+		position: relative;
+		z-index: 999;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
@@ -54,5 +79,13 @@
 		width: 1.5rem;
 		height: 1.5rem;
 		color: #444;
+		cursor: pointer;
+	}
+	a,
+	a:hover,
+	a:visited,
+	a:active {
+		color: inherit;
+		text-decoration: none;
 	}
 </style>

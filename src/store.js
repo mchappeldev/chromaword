@@ -1,4 +1,5 @@
 import { writable, readable } from 'svelte/store';
+import { browser } from '$app/env';
 
 export const showModal = writable(false);
 export const modalData = writable({ header: '', message: '' });
@@ -25,3 +26,11 @@ export const colors = readable([
 	'#BF7DD6',
 	'#A9A9A9'
 ]); // red, orange, yellow, green, blue, purple, grey
+
+export const seenInstructions = writable(false);
+
+if (browser) {
+	if (localStorage.seenInstructions) seenInstructions.set(localStorage.seenInstructions === 'true');
+
+	seenInstructions.subscribe((x) => (localStorage.seenInstructions = String(x)));
+}

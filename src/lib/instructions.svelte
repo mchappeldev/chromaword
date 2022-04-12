@@ -1,9 +1,11 @@
 <script>
 	export let visible = true;
-	import { colors } from '../store';
+	import { colors, seenInstructions } from '../store';
+	import { onDestroy } from 'svelte';
 	const chroma = 'chroma'.split('');
 	const cat = 'cat'.split('');
 	const tap = 'tap'.split('');
+	onDestroy(() => ($seenInstructions = true));
 </script>
 
 <div class="header">Instructions</div>
