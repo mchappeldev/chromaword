@@ -57,7 +57,7 @@
 	<div class="cancel"><a href="/"><GoX /></a></div>
 	<div class="innerContainer">
 		<div class="wrapper">
-			<img src="../static/favicon.png" />
+			<img src="favicon.png" />
 			<div class="header">
 				{pageType === 'signUp' ? 'Create an Account' : 'Sign in to Chromaword'}
 			</div>
