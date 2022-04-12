@@ -159,6 +159,6 @@
 	}
 	.selected {
 		transform: translateY(-5px);
-		filter: brightness(110%) drop-shadow(0px 8px 8px rgba(0, 0, 0, 0.25));
+		filter: brightness(105%) drop-shadow(0px 8px 8px rgba(0, 0, 0, 0.25));
 	}
 </style>

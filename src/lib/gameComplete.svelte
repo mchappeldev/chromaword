@@ -3,9 +3,11 @@
 	import FaRegMehRollingEyes from 'svelte-icons/fa/FaRegMehRollingEyes.svelte';
 	import FaRegSmileBeam from 'svelte-icons/fa/FaRegSmileBeam.svelte';
 	import FaLemon from 'svelte-icons/fa/FaLemon.svelte';
-	import { guesses, boardData, reviewEnjoyment, reviewDifficulty } from '../store.js';
+	import FaLongArrowAltRight from 'svelte-icons/fa/FaLongArrowAltRight.svelte';
+	import { guesses, boardData, reviewEnjoyment, reviewDifficulty, answers } from '../store.js';
 	import { supabase, loggedIn, userId } from '../utils/supabase';
 	import loadNextBoard from '../utils/boards/loadNextBoard.js';
+	import { map } from 'lodash';
 	export let visible = true;
 	$: correct = $boardData.boardAnswers.join('') == $guesses.join('').toLowerCase();
 
@@ -33,20 +35,39 @@
 	}
 </script>
 
-<div class="header">{correct ? 'You won!' : 'You lost!'}</div>
+<div class="header">{correct ? 'Nailed it!' : 'Ouch!'}</div>
 <div class="message">
 	{#if correct}
 		<p>
-			{`You correctly guessed the following: ${$boardData.boardAnswers} That is awesome!`}
+			{`You guessed correctly! That is awesome! Great work! :)`}
 		</p>
 	{:else}
-		<p>
-			{`You guessed the following: ${$guesses} and it was actually: ${$boardData.boardAnswers}! The words were ${$boardData.boardWords}.`}
-		</p>
+		<div class="guess-container">
+			<div class="guessed">
+				<div class="row">
+					<h3>Guessed</h3>
+					<h3>Answers</h3>
+				</div>
+				{#each $boardData.boardWords.map((word) => {
+					let newWord = word;
+					for (let i = 0; i < 6; i++) {
+						newWord = newWord.replace($boardData.boardAnswers[i], $guesses[i]);
+					}
+					return newWord;
+				}) as word, i}
+					<div class="row">
+						<div class="word">{word}</div>
+						<div class="icon"><FaLongArrowAltRight /></div>
+						<div class="word">{$boardData.boardWords[i]}</div>
+					</div>
+				{/each}
+			</div>
+		</div>
+		<!-- {`You guessed the following: ${$guesses} and it was actually: ${$boardData.boardAnswers}! The words were ${$boardData.boardWords}.`} -->
 	{/if}
 	<!-- <button on:click={sync}>Do Stuff</button> -->
 	<div class="ratings flex">
-		<h1>How was this board?</h1>
+		<h2>How was this board?</h2>
 		<div class="flex enjoy">
 			<div
 				on:click={() => {
@@ -77,7 +98,7 @@
 			</div>
 		</div>
 		{#if loggedIn()}
-			<h1>Was it Hard?</h1>
+			<h2>Was it Hard?</h2>
 			<div class="difficulty flex">
 				{#each Array(5) as lemon, i}
 					<div
@@ -102,6 +123,12 @@
 >
 
 <style>
+	.icon {
+		width: 16px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
 	.ratings {
 		flex-direction: column;
 	}
@@ -117,8 +144,8 @@
 
 	.reactions {
 		color: #333;
-		height: 48px;
-		width: 48px;
+		height: 36px;
+		width: 36px;
 	}
 	.difficulty {
 		gap: 5px;
@@ -180,5 +207,25 @@
 		margin-left: 1rem;
 		margin-right: 1rem;
 		margin-bottom: 3rem;
+	}
+	.guess-container {
+		display: flex;
+		justify-content: space-around;
+		margin-top: 15px;
+	}
+	.guessed {
+		display: flex;
+		flex-direction: column;
+	}
+	.row {
+		display: flex;
+		justify-content: space-between;
+		flex-direction: row;
+		width: 250px;
+		text-transform: capitalize;
+	}
+	.word {
+		width: 50px;
+		text-align: left;
 	}
 </style>
