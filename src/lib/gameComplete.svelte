@@ -126,19 +126,22 @@
 
 <style>
 	.icon {
-		width: 16px;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
+		width: 16px;
 	}
+
 	.ratings {
 		flex-direction: column;
 	}
+
 	.flex {
-		display: flex;
 		align-items: center;
+		display: flex;
 		justify-content: center;
 	}
+
 	.enjoy {
 		gap: 3em;
 		width: 100%;
@@ -149,40 +152,23 @@
 		height: 36px;
 		width: 36px;
 	}
+
 	.difficulty {
 		gap: 5px;
 	}
+
 	.lemon {
 		height: 32px;
 		width: 32px;
 		color: #333;
 	}
+
 	.filled {
 		color: limegreen;
 	}
+
 	button {
-		font-family: 'Open Sans';
-		font-style: normal;
-		font-weight: 600;
-		font-size: 24px;
-		line-height: 100%;
-		display: flex;
-		justify-content: center;
 		align-items: center;
-		padding: 20px;
-		border: none;
-		text-align: center;
-		letter-spacing: 0.245em;
-		text-transform: uppercase;
-		margin-top: 40px;
-		cursor: pointer;
-		color: #ffffff;
-
-		height: 40px;
-		left: 120px;
-		top: 549px;
-		margin: 20px;
-
 		background: linear-gradient(
 			90deg,
 			#e57878 0%,
@@ -192,42 +178,67 @@
 			#78b7e5 80.73%,
 			#bf7dd6 100%
 		);
-		box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 		border-radius: 5px;
+		border: none;
+		box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+		color: #ffffff;
+		cursor: pointer;
+		display: flex;
+		font-family: 'Open Sans';
+		font-size: 24px;
+		font-style: normal;
+		font-weight: 600;
+		height: 40px;
+		justify-content: center;
+		left: 120px;
+		letter-spacing: 0.245em;
+		line-height: 100%;
+		margin-top: 40px;
+		margin: 20px;
+		padding: 20px;
+		text-align: center;
+		text-transform: uppercase;
+		top: 549px;
 	}
+
 	.header {
 		font-family: 'Open Sans';
-		font-weight: 600;
 		font-size: 1.75rem;
-		margin-top: 1.5rem;
+		font-weight: 600;
 		margin-left: 1rem;
 		margin-right: 1rem;
+		margin-top: 1.5rem;
 	}
+
 	.message {
 		font-family: 'Open Sans';
 		font-weight: 400;
+		margin-bottom: 3rem;
 		margin-left: 1rem;
 		margin-right: 1rem;
-		margin-bottom: 3rem;
 	}
+
 	.guess-container {
 		display: flex;
 		justify-content: space-around;
 		margin-top: 15px;
 	}
+
 	.guessed {
 		display: flex;
 		flex-direction: column;
 	}
+
 	.row {
 		display: flex;
-		justify-content: space-between;
 		flex-direction: row;
-		width: 250px;
+		justify-content: space-between;
 		text-transform: capitalize;
+		width: 250px;
 	}
+
 	.word {
-		width: 50px;
 		text-align: left;
+		width: 50px;
 	}
 </style>

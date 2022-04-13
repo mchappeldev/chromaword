@@ -53,48 +53,12 @@
 
 <style>
 	.container {
-		display: flex;
-		flex-direction: column;
 		/* justify-content: center; */
 		align-items: center;
+		background-color: white;
+		display: flex;
+		flex-direction: column;
 		height: 92vh;
 		width: 100vw;
-		background-color: white;
-	}
-
-	button {
-		font-family: 'Open Sans';
-		font-style: normal;
-		font-weight: 600;
-		font-size: 24px;
-		line-height: 100%;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		padding: 20px;
-		border: none;
-		text-align: center;
-		letter-spacing: 0.245em;
-		text-transform: uppercase;
-		margin-top: 40px;
-		cursor: pointer;
-		color: #ffffff;
-
-		width: 150px;
-		height: 40px;
-		left: 120px;
-		top: 549px;
-
-		background: linear-gradient(
-			90deg,
-			#e57878 0%,
-			#e59978 21.35%,
-			#e5da78 40.63%,
-			#6fcf96 61.46%,
-			#78b7e5 80.73%,
-			#bf7dd6 100%
-		);
-		box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-		border-radius: 5px;
 	}
 </style>

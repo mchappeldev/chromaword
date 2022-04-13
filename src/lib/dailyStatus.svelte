@@ -30,25 +30,25 @@
 		margin-right: 1rem;
 	}
 	.outerContainer {
+		align-items: center;
 		display: flex;
 		flex-direction: row;
-		align-items: center;
 		justify-content: center;
 	}
 	.innerContainer {
+		align-items: center;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-		align-items: center;
 	}
 	.starsContainer {
 		display: flex;
 		flex-direction: row;
 	}
 	.icon {
-		width: 1.5rem;
-		height: 1.5rem;
 		color: #666;
+		height: 1.5rem;
+		width: 1.5rem;
 	}
 	.complete {
 		color: gold;

@@ -61,8 +61,8 @@
 </script>
 
 <div class="outerContainer">
-	<div class="cancel"><a href="/"><GoX /></a></div>
 	<div class="innerContainer">
+		<div class="cancel"><a href="/"><GoX /></a></div>
 		<div class="wrapper">
 			<img src="favicon.png" />
 			<div class="header">
@@ -95,21 +95,18 @@
 
 <style>
 	.signupLink {
-		margin-top: 1rem;
-		font-weight: 900;
 		color: hsl(205, 10%, 50%);
+		font-weight: 900;
+		margin-top: 1rem;
 	}
 	.signupLink:hover {
 		color: hsl(205, 10%, 40%);
 	}
 	.cancel {
-		position: absolute;
-		top: 1rem;
-		right: 1rem;
-		font-size: 1.6rem;
+		color: #333;
 		cursor: pointer;
+		font-size: 1.6rem;
 		width: 2rem;
-		color: #222;
 	}
 	.messageRow {
 		height: 1rem;
@@ -124,78 +121,76 @@
 		font-size: 24px;
 		font-weight: 900;
 		margin-top: 15px;
-		width: 100%;
 		text-align: center;
+		width: 100%;
 	}
 	.submit {
 		background: hsl(205, 68%, 68%);
 		border-radius: 0.2rem;
 		border: none;
+		box-shadow: 0 1px 3px hsla(0, 0%, 0%, 0.2);
+		box-shadow: inset 0 2px 0 hsl(205, 75%, 75%);
 		color: hsl(210, 0%, 100%);
-		width: 70%;
 		cursor: pointer;
 		font-size: 120%;
 		font-weight: bold;
 		margin-top: 2rem;
 		padding: 1rem;
-		box-shadow: inset 0 2px 0 hsl(205, 75%, 75%);
-		box-shadow: 0 1px 3px hsla(0, 0%, 0%, 0.2);
+		width: 70%;
 	}
 	.emailIcon {
-		display: flex;
-		justify-content: center;
 		align-items: center;
-		width: 1rem;
-		height: 1rem;
 		color: #888;
+		display: flex;
+		height: 1rem;
+		justify-content: center;
 		padding: 0;
+		width: 1rem;
 	}
 	.input {
-		margin-left: 0.5rem;
-		border: 1px solid #aaa;
-		background: none;
-		outline: none;
-		border-radius: 0.2rem;
 		background-color: rgba(255, 255, 255, 1);
+		background: none;
+		border-radius: 0.2rem;
+		border: 1px solid #aaa;
 		font-size: 1rem;
+		margin-left: 0.5rem;
+		outline: none;
 		padding: 0.5rem;
 		width: 100%;
 	}
 	.inputRow {
-		margin-top: 2rem;
+		align-items: center;
 		display: flex;
 		flex-direction: row;
-		align-items: center;
+		margin-top: 2rem;
 		width: 70%;
 	}
 	.outerContainer {
-		display: flex;
-		justify-content: center;
 		align-items: center;
-		height: 100vh;
-		width: 100vw;
-		background-color: rgba(0, 0, 0, 0.5);
 		backdrop-filter: blur(2px);
+		background-color: rgba(0, 0, 0, 0.5);
+		display: flex;
+		height: 100vh;
+		justify-content: center;
+		width: 100vw;
 	}
 	.innerContainer {
-		display: flex;
-		justify-content: center;
-		flex-direction: column;
-		/* justify-content: center; */
-		align-items: center;
+		align-items: flex-end;
 		background-color: hsl(100, 100%, 100%);
-		/* backdrop-filter: blur(2px); */
-		box-shadow: 0 0.75rem 2rem 0 rgba(0, 0, 0, 0.2);
 		border-radius: 0.3rem;
-		width: 400px;
+		box-shadow: 0 0.75rem 2rem 0 rgba(0, 0, 0, 0.2);
+		display: flex;
+		flex-direction: column;
 		height: 500px;
+		justify-content: flex-start;
 		padding: 10px;
+		width: 400px;
 	}
 	.wrapper {
-		width: 100%;
-		display: flex;
-		justify-content: center;
-		flex-direction: column;
 		align-items: center;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		width: 100%;
 	}
 </style>
