@@ -11,37 +11,45 @@
 	let password;
 	let errorMessage = '';
 	let infoMessage = '';
+	let buttonText;
+	let headerText;
+	let showEmailInput = true;
+	let showPasswordInput = true;
+	let submitHandler;
+
+	switch (pageType) {
+		case 'login':
+			headerText = 'Sign in to Chromaword';
+			buttonText = 'Login';
+			submitHandler = login;
+			break;
+		case 'signUp':
+			headerText = 'Create an Account';
+			buttonText = 'Create';
+			submitHandler = createAccount;
+			break;
+		case 'forgotPassword':
+			headerText = 'Reset your Password';
+			buttonText = 'Recover';
+			submitHandler = resetPassword;
+			showPasswordInput = false;
+			break;
+		case 'updatePassword':
+			headerText = 'Set a new Password';
+			buttonText = 'Update';
+			submitHandler = updatePassword;
+			showEmailInput = false;
+			break;
+		default:
+			break;
+	}
 
 	if ($page.url.searchParams.get('status') === 'accountCreatedSuccessfully')
 		infoMessage = 'Account created! You can now login!';
+	if ($page.url.searchParams.get('status') === 'resetLinkSent')
+		infoMessage = 'Check your email for a password reset link!';
 
-	const submit = async () => {
-		if (pageType === 'signUp') {
-			createAccount();
-		} else {
-			login();
-		}
-	};
-
-	const createAccount = async () => {
-		if (!email) {
-			errorMessage = 'Email is required.';
-			return;
-		}
-		if (!password) {
-			errorMessage = 'Password is required.';
-			return;
-		}
-
-		let { error } = await supabase.auth.signUp({ email, password });
-		if (error) {
-			errorMessage = error.message.toString();
-		} else {
-			await goto('/login?status=accountCreatedSuccessfully');
-		}
-	};
-
-	const login = async () => {
+	async function login() {
 		if (!email) {
 			errorMessage = 'Email is required.';
 			return;
@@ -57,7 +65,54 @@
 		} else {
 			await goto('/');
 		}
-	};
+	}
+
+	async function createAccount() {
+		if (!email) {
+			errorMessage = 'Email is required.';
+			return;
+		}
+		if (!password) {
+			errorMessage = 'Password is required.';
+			return;
+		}
+
+		let { error } = await supabase.auth.signUp({ email, password });
+		if (error) {
+			errorMessage = error.message.toString();
+		} else {
+			await goto('/login?status=accountCreatedSuccessfully');
+		}
+	}
+
+	async function resetPassword() {
+		if (!email) {
+			errorMessage = 'Email is required.';
+			return;
+		}
+		let { data, error } = await supabase.auth.api.resetPasswordForEmail(email, {
+			redirectTo: 'https://chromaword/updatePassword'
+		});
+		if (error) {
+			errorMessage = error.message.toString();
+		} else {
+			await goto('/login?status=resetLinkSent');
+		}
+	}
+
+	async function updatePassword() {
+		console.log('');
+		if (!supabase?.auth?.currentUser?.email) return;
+		const { user, error } = await supabase.auth.update({
+			email: supabase.auth.currentUser.email,
+			password
+		});
+		if (error) {
+			errorMessage = error.message.toString();
+		} else {
+			await goto('/');
+		}
+	}
 </script>
 
 <div class="outerContainer">
@@ -66,16 +121,23 @@
 		<div class="wrapper">
 			<img src="favicon.png" />
 			<div class="header">
-				{pageType === 'signUp' ? 'Create an Account' : 'Sign in to Chromaword'}
+				{headerText}
 			</div>
-			<div class="inputRow">
-				<div class="emailIcon"><FaEnvelope /></div>
-				<input class="input" type="email" placeholder="email address" bind:value={email} />
-			</div>
-			<div class="inputRow">
-				<div class="emailIcon"><FaKey /></div>
-				<input class="input" type="password" placeholder="password" bind:value={password} />
-			</div>
+			{#if showEmailInput}
+				<div class="inputRow">
+					<div class="emailIcon"><FaEnvelope /></div>
+					<input class="input" type="email" placeholder="email address" bind:value={email} />
+				</div>
+			{/if}
+			{#if showPasswordInput}
+				<div class="inputRow">
+					<div class="emailIcon"><FaKey /></div>
+					<input class="input" type="password" placeholder="password" bind:value={password} />
+				</div>
+			{/if}
+			{#if pageType === 'login'}
+				<div class="forgotPassword"><a href="/forgotPassword">Forgot password?</a></div>
+			{/if}
 			<div class="messageRow">
 				{#if errorMessage}
 					<p class="errorMessage">{errorMessage}</p>
@@ -83,9 +145,7 @@
 					<p class="infoMessage">{infoMessage}</p>
 				{/if}
 			</div>
-			<button on:click={submit} class="submit"
-				>{pageType === 'signUp' ? 'Create an Account' : 'Login'}</button
-			>
+			<button on:click={submitHandler} class="submit">{buttonText}</button>
 			{#if pageType === 'login'}
 				<div class="signupLink"><a href="/signup">Create an account</a></div>
 			{/if}
@@ -106,7 +166,7 @@
 		color: #333;
 		cursor: pointer;
 		font-size: 1.6rem;
-		width: 2rem;
+		width: 1.5rem;
 	}
 	.messageRow {
 		height: 1rem;
@@ -123,6 +183,7 @@
 		margin-top: 15px;
 		text-align: center;
 		width: 100%;
+		margin-bottom: 1rem;
 	}
 	.submit {
 		background: hsl(205, 68%, 68%);
@@ -137,6 +198,10 @@
 		margin-top: 2rem;
 		padding: 1rem;
 		width: 70%;
+	}
+	.submit:hover {
+		background: hsl(210, 68%, 68%);
+		top: -2px;
 	}
 	.emailIcon {
 		align-items: center;
@@ -157,13 +222,17 @@
 		outline: none;
 		padding: 0.5rem;
 		width: 100%;
+		transition: all 0.25s;
+	}
+	.input:focus {
+		border: 2px solid hsl(205, 68%, 68%);
 	}
 	.inputRow {
 		align-items: center;
 		display: flex;
 		flex-direction: row;
-		margin-top: 2rem;
 		width: 70%;
+		margin-top: 1.5rem;
 	}
 	.outerContainer {
 		align-items: center;
@@ -192,5 +261,17 @@
 		flex-direction: column;
 		justify-content: center;
 		width: 100%;
+	}
+
+	.forgotPassword {
+		font-size: 12px;
+		text-align: right;
+		width: 70%;
+		color: hsl(205, 10%, 50%);
+		font-weight: 900;
+		margin-top: 0.25rem;
+	}
+	.forgotPassword:hover {
+		color: hsl(205, 10%, 40%);
 	}
 </style>

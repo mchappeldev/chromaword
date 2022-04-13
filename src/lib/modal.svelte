@@ -57,7 +57,7 @@
 		position: absolute;
 		right: 1rem;
 		top: 1rem;
-		width: 2rem;
+		width: 1.5rem;
 		color: #333;
 	}
 </style>

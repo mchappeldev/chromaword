@@ -1,6 +1,7 @@
 <script>
 	import { tick } from 'svelte';
 	import { guesses, selectedColor, colors, boardData, knownLetters } from '../store.js';
+	import { fly, fade } from 'svelte/transition';
 
 	let ready;
 	$: boardWords = $boardData.boardWords;
@@ -31,6 +32,7 @@
 			{#each word.split('') as letter}
 				{#if boardAnswers.includes(letter)}
 					<div
+						in:fly={{ y: 50, duration: 2000 }}
 						on:click={() => selectGuessable(letter)}
 						class="tile guessable"
 						class:selected={$selectedColor === boardAnswers.indexOf(letter)}
@@ -48,6 +50,7 @@
 					</div>
 				{:else}
 					<div
+						in:fly={{ y: -50, duration: 2000, opacity: 0.9 }}
 						class="tile"
 						class:shake={$guesses.includes(letter) && ready}
 						style="--tile-color: {$colors[boardAnswers.indexOf(letter)] ??

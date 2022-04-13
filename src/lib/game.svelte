@@ -10,7 +10,7 @@
 	import Instructions from '$lib/instructions.svelte';
 	import { v4 as newGuid } from 'uuid';
 	import { supabase } from '../utils/supabase';
-	import { boardData, seenInstructions } from '../store';
+	import { boardData, seenInstructions, guesses } from '../store';
 
 	let showGameComplete = false;
 	let showInstructions = !$seenInstructions;
@@ -19,11 +19,12 @@
 		try {
 			const userId = supabase.auth.currentUser?.id;
 			var deviceId = localStorage.getItem('deviceId');
+			var success = $boardData.boardAnswers.join('') == $guesses.join('').toLowerCase();
 			if (!deviceId) {
 				deviceId = newGuid();
 				localStorage.setItem('deviceId', deviceId);
 			}
-			const body = { deviceId: deviceId, boardId: $boardData.boardId };
+			const body = { deviceId: deviceId, boardId: $boardData.boardId, success };
 			if (userId) body.userId = userId;
 			await fetch('/boardCompleted', {
 				method: 'POST',
