@@ -14,6 +14,7 @@ export const boardData = writable({
 export const reviewEnjoyment = writable(0);
 export const reviewDifficulty = writable(0);
 export const knownLetters = writable([]);
+export const boardFinished = writable(false);
 export const colors = readable([
 	'hsl(0, 69%, 69%)',
 	'hsl(18, 68%, 68%)',

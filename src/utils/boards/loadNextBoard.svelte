@@ -8,7 +8,8 @@
 		selectedColor,
 		guesses,
 		reviewDifficulty,
-		reviewEnjoyment
+		reviewEnjoyment,
+		boardFinished
 	} from '../../store.js';
 	import { getBoard } from './boardGenerator.js';
 
@@ -17,6 +18,7 @@
 		guesses.set(Array(6).fill(''));
 		reviewDifficulty.set(0);
 		reviewEnjoyment.set(0);
+		boardFinished.set(false);
 
 		if (loggedIn()) {
 			let { data: boards } = await supabase.from('Boards').select('*').eq('status', 'candidate');

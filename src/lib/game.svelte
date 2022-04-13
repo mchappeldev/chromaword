@@ -6,24 +6,25 @@
 	import Board from '$lib/board.svelte';
 	import GameComplete from '$lib/gameComplete.svelte';
 	import NavBar from '$lib/navBar.svelte';
-	// import DailyStatus from '$lib/dailyStatus.svelte';
 	import Instructions from '$lib/instructions.svelte';
 	import { v4 as newGuid } from 'uuid';
 	import { supabase } from '../utils/supabase';
-	import { boardData, seenInstructions, guesses } from '../store';
+	import { boardData, seenInstructions, guesses, boardFinished } from '../store';
 
 	let showGameComplete = false;
 	let showInstructions = !$seenInstructions;
 	const checkAnswers = async () => {
 		showGameComplete = true;
 		try {
+			if ($boardFinished) return;
+			$boardFinished = true;
 			const userId = supabase.auth.currentUser?.id;
 			var deviceId = localStorage.getItem('deviceId');
-			var success = $boardData.boardAnswers.join('') == $guesses.join('').toLowerCase();
 			if (!deviceId) {
 				deviceId = newGuid();
 				localStorage.setItem('deviceId', deviceId);
 			}
+			var success = $boardData.boardAnswers.join('') == $guesses.join('').toLowerCase();
 			const body = { deviceId: deviceId, boardId: $boardData.boardId, success };
 			if (userId) body.userId = userId;
 			await fetch('/boardCompleted', {
@@ -34,7 +35,7 @@
 	};
 </script>
 
-<div class="container">
+<div class="container" data-nosnippet>
 	{#if showGameComplete}
 		<Modal bind:visible={showGameComplete}>
 			<GameComplete bind:visible={showGameComplete} />

@@ -1,10 +1,13 @@
 <script>
-	import { guesses, selectedColor, colors, knownLetters } from '../store.js';
+	import { guesses, selectedColor, colors, knownLetters, boardFinished } from '../store.js';
 	const rows = [
 		['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
 		['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
 		['Back', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'Submit']
 	];
+	$: {
+		rows[2][8] = $boardFinished ? 'Results' : 'Submit';
+	}
 	import { createEventDispatcher } from 'svelte';
 	const dispatch = createEventDispatcher();
 
@@ -24,7 +27,7 @@
 			}
 		} else if (key.match(/^[a-z]$/i) && $selectedColor != 7) {
 			$guesses[$selectedColor] = key;
-		} else if ((key === 'Enter' || key === 'Submit') && boardFilled) {
+		} else if ((key === 'Enter' || key === 'Submit' || key === 'Results') && boardFilled) {
 			dispatch('checkAnswers');
 		} else if (key === 'Backspace' || key === 'Back' || key === 'Delete') {
 			$guesses[$selectedColor] = '';
@@ -41,14 +44,14 @@
 
 <svelte:window on:keydown={(e) => handlePress(e.key, e)} on:keyup={(e) => handleKeyup(e.key)} />
 
-<div class="keyboard">
+<div class="keyboard" data-nosnippet>
 	{#each rows as row, i}
 		<div class="row" class:middleRow={i === 1}>
 			{#each row as key}
 				<div
 					class="key"
 					class:known={$knownLetters.includes(key)}
-					class:submit={key === 'Submit'}
+					class:submit={key === 'Submit' || key === 'Results'}
 					style="--key-color:{$colors[$guesses.indexOf(key)] ?? '#fff'}"
 					on:click={() => handlePress(key)}
 				>
