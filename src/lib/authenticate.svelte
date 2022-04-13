@@ -4,12 +4,16 @@
 	import GoX from 'svelte-icons/go/GoX.svelte';
 	import { supabase } from '../utils/supabase';
 	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
 
 	export let pageType;
 	let email;
 	let password;
 	let errorMessage = '';
 	let infoMessage = '';
+
+	if ($page.url.searchParams.get('status') === 'accountCreatedSuccessfully')
+		infoMessage = 'Account created! You can now login!';
 
 	const submit = async () => {
 		if (pageType === 'signUp') {
@@ -20,35 +24,38 @@
 	};
 
 	const createAccount = async () => {
-		if (password) {
-			let { user, error } = await supabase.auth.signUp({ email, password });
-			// console.log(error);
-			// console.log(user);
-			if (!error && user) {
-				await goto('/login');
-			}
+		if (!email) {
+			errorMessage = 'Email is required.';
+			return;
+		}
+		if (!password) {
+			errorMessage = 'Password is required.';
+			return;
+		}
+
+		let { error } = await supabase.auth.signUp({ email, password });
+		if (error) {
+			errorMessage = error.message.toString();
 		} else {
-			let { user, error } = await supabase.auth.signIn({ email });
-			// console.log(user);
+			await goto('/login?status=accountCreatedSuccessfully');
 		}
 	};
 
 	const login = async () => {
-		if (password) {
-			let { user, error } = await supabase.auth.signIn({ email, password });
-			if (error) {
-				errorMessage = error.message.toString();
-			} else {
-				// console.log(user);
-				await goto('/');
-			}
+		if (!email) {
+			errorMessage = 'Email is required.';
+			return;
+		}
+		if (!password) {
+			errorMessage = 'Password is required.';
+			return;
+		}
+
+		let { error } = await supabase.auth.signIn({ email, password });
+		if (error) {
+			errorMessage = error.message.toString();
 		} else {
-			let { user, error } = await supabase.auth.signIn({ email });
-			if (error) {
-				errorMessage = error.message.toString();
-			} else {
-				infoMessage = 'A login link has been sent to this email';
-			}
+			await goto('/');
 		}
 	};
 </script>
@@ -67,12 +74,7 @@
 			</div>
 			<div class="inputRow">
 				<div class="emailIcon"><FaKey /></div>
-				<input
-					class="input"
-					type="password"
-					placeholder="password (optional)"
-					bind:value={password}
-				/>
+				<input class="input" type="password" placeholder="password" bind:value={password} />
 			</div>
 			<div class="messageRow">
 				{#if errorMessage}
