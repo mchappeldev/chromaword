@@ -28,11 +28,11 @@
 				$boardData.boardId = data[0].id;
 			}
 		}
+		shareMessage = 'Link Copied';
 		sharingLink = `https://www.chromaword.com/board/${$boardData.boardId}`;
 		if (localStorage.getItem('ref'))
 			sharingLink = sharingLink + '?ref=' + localStorage.getItem('ref');
 		await navigator.clipboard.writeText(sharingLink);
-		shareMessage = 'Link Copied';
 	}
 	$: {
 		sharingLink = sharingLink;
