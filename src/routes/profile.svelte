@@ -25,6 +25,7 @@
 		let { data: BoardsComplete, error } = await supabase
 			.from('BoardsComplete')
 			.select('*')
+			// @ts-ignore
 			.eq('userId', supabase.auth?.currentUser?.id);
 		console.log(BoardsComplete);
 		boardsCompleted = BoardsComplete;
@@ -44,7 +45,8 @@
 			<div class="wrapper">
 				<div class="header">Profile</div>
 				<div class="profile">
-					{supabase.auth.currentUser?.email}
+					{// @ts-ignore
+					supabase.auth.currentUser?.email}
 					<div class="forgotPassword"><a href="/updatePassword">Update Password</a></div>
 				</div>
 				<div class="header">Stats</div>
@@ -62,7 +64,7 @@
 						<div class="statItem">{correctBoards}</div>
 					</div>
 					<div class="statsRow">
-						<div class="statLabel">Failed Boards:</div>
+						<div>Failed Boards:</div>
 						<div class="statItem">{failedBoards}</div>
 					</div>
 					<div class="statsRow">
@@ -148,14 +150,7 @@
 		font-size: 1.6rem;
 		width: 1.5rem;
 	}
-	.messageRow {
-	}
-	.errorMessage {
-		color: red;
-	}
-	.infoMessage {
-		color: blue;
-	}
+
 	.header {
 		font-size: 24px;
 		font-weight: 900;
@@ -182,37 +177,6 @@
 	.submit:hover {
 		background: hsl(5, 68%, 68%);
 		top: -2px;
-	}
-	.emailIcon {
-		align-items: center;
-		color: #888;
-		display: flex;
-		height: 1rem;
-		justify-content: center;
-		padding: 0;
-		width: 1rem;
-	}
-	.input {
-		background-color: rgba(255, 255, 255, 1);
-		background: none;
-		border-radius: 0.2rem;
-		border: 1px solid #aaa;
-		font-size: 1rem;
-		margin-left: 0.5rem;
-		outline: none;
-		padding: 0.5rem;
-		width: 100%;
-		transition: all 0.25s;
-	}
-	.input:focus {
-		border: 2px solid hsl(205, 68%, 68%);
-	}
-	.inputRow {
-		align-items: center;
-		display: flex;
-		flex-direction: row;
-		width: 70%;
-		margin-top: 1.5rem;
 	}
 	.outerContainer {
 		align-items: center;
@@ -267,8 +231,6 @@
 	}
 	.statItem {
 		font-weight: 900;
-	}
-	.statLabel {
 	}
 	.statsRow {
 		display: flex;
