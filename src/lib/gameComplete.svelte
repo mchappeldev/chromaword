@@ -36,7 +36,7 @@
 	let nextBoard;
 </script>
 
-<div class="header">{correct ? 'Nailed it!' : 'Ouch!'}</div>
+<div class="header">{correct ? 'Nailed it!' : 'You Failed!'}</div>
 <div class="message">
 	{#if correct}
 		<p>
@@ -122,9 +122,38 @@
 		visible = false;
 	}}>Next Board</button
 >
+{#if !loggedIn()}
+	<p>Want to track your stats and review boards?</p>
+	<div class="loginPrompt">
+		<div class="signupLink"><a href="/signup">Login</a></div>
+		<div>or</div>
+		<div class="signupLink"><a href="/signup">Create a free account</a></div>
+	</div>
+{/if}
 <LoadNextBoard bind:this={nextBoard} />
 
 <style>
+	h2 {
+		margin: 10px;
+	}
+	p {
+		margin: 0;
+		font-size: 14px;
+	}
+	.loginPrompt {
+		margin-bottom: 2rem;
+		display: flex;
+		flex-direction: row;
+		gap: 0.5rem;
+		font-size: 14px;
+	}
+	.signupLink {
+		color: #6fcf96;
+		font-weight: 900;
+	}
+	.signupLink:hover {
+		color: hsl(205, 10%, 40%);
+	}
 	.icon {
 		display: flex;
 		flex-direction: column;
@@ -134,6 +163,7 @@
 
 	.ratings {
 		flex-direction: column;
+		margin: 20px 0px;
 	}
 
 	.flex {
@@ -152,6 +182,9 @@
 		height: 36px;
 		width: 36px;
 	}
+	.reactions:hover {
+		color: #6fcf96;
+	}
 
 	.difficulty {
 		gap: 5px;
@@ -162,9 +195,12 @@
 		width: 32px;
 		color: #333;
 	}
+	.lemon:hover {
+		color: #6fcf96;
+	}
 
 	.filled {
-		color: limegreen;
+		color: #6fcf96;
 	}
 
 	button {
@@ -213,7 +249,6 @@
 	.message {
 		font-family: 'Open Sans';
 		font-weight: 400;
-		margin-bottom: 3rem;
 		margin-left: 1rem;
 		margin-right: 1rem;
 	}
