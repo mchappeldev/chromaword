@@ -5,6 +5,14 @@
 	import { onMount } from 'svelte';
 	import { browser } from '$app/env';
 	import parser from 'ua-parser-js';
+	import { boardData, knownLetters } from '../store';
+
+	$: {
+		$boardData = $boardData;
+		$knownLetters = [...new Set($boardData.boardWords.map((word) => word.split('')).flat())].filter(
+			(letter) => !$boardData.boardAnswers.includes(letter)
+		);
+	}
 
 	onMount(async () => {
 		if (browser) {

@@ -1,6 +1,6 @@
 <script>
 	import { getBoard } from '../utils/boards/boardGenerator.js';
-	import { knownLetters, boardData, guesses } from '../store.js';
+	import { boardData, guesses } from '../store.js';
 	import Game from '../lib/game.svelte';
 	import { supabase } from '../utils/supabase';
 
@@ -25,9 +25,6 @@
 
 	const playBoard = (boardIndex) => {
 		$boardData = boards[boardIndex];
-		$knownLetters = [...new Set($boardData.boardWords.map((word) => word.split('')).flat())].filter(
-			(letter) => !$boardData.boardAnswers.includes(letter)
-		);
 		$guesses = Array(6).fill('');
 		showBoard = true;
 	};

@@ -3,7 +3,6 @@
 	import { supabase, loggedIn, userId } from '../supabase';
 
 	import {
-		knownLetters,
 		boardData,
 		selectedColor,
 		guesses,
@@ -15,11 +14,11 @@
 	import { goto } from '$app/navigation';
 
 	export const load = async (boardNumberToLoad) => {
-		selectedColor.set(7);
-		guesses.set(Array(6).fill(''));
-		reviewDifficulty.set(0);
-		reviewEnjoyment.set(0);
-		boardFinished.set(false);
+		$selectedColor = 7;
+		$guesses = Array(6).fill('');
+		$reviewDifficulty = 0;
+		$reviewEnjoyment = 0;
+		$boardFinished = false;
 
 		function loadRandomBoard() {
 			var executionCount = 0;
@@ -27,7 +26,7 @@
 			while (executionCount < 6 && !boardCreated) {
 				executionCount++;
 				try {
-					boardData.set(getBoard());
+					$boardData = getBoard();
 					boardCreated = true;
 				} catch (error) {
 					console.log(error);
@@ -39,13 +38,13 @@
 		if (boardNumberToLoad) {
 			let { data: boards } = await supabase.from('Boards').select('*').eq('id', boardNumberToLoad);
 			if (!boards.length) goto('/');
-			boardData.set({
+			$boardData = {
 				boardId: boards[0].id,
 				boardWords: boards[0].words,
 				boardAnswers: boards[0].answers
-			});
+			};
 		} else if (loggedIn()) {
-			let { data: boards } = await supabase.from('Boards').select('*').eq('status', 'candidate');
+			let { data: boards } = await supabase.from('Boards').select('*');
 			let { data: boardsComplete } = await supabase
 				.from('BoardsComplete')
 				.select('*')
@@ -63,11 +62,5 @@
 		} else {
 			loadRandomBoard();
 		}
-
-		knownLetters.set(
-			[...new Set($boardData.boardWords.map((word) => word.split('')).flat())].filter(
-				(letter) => !$boardData.boardAnswers.includes(letter)
-			)
-		);
 	};
 </script>

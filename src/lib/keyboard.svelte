@@ -43,24 +43,25 @@
 </script>
 
 <svelte:window on:keydown={(e) => handlePress(e.key, e)} on:keyup={(e) => handleKeyup(e.key)} />
-
-<div class="keyboard" data-nosnippet>
-	{#each rows as row, i}
-		<div class="row" class:middleRow={i === 1}>
-			{#each row as key}
-				<div
-					class="key"
-					class:known={$knownLetters.includes(key)}
-					class:submit={key === 'Submit' || key === 'Results'}
-					style="--key-color:{$colors[$guesses.indexOf(key)] ?? '#fff'}"
-					on:click={() => handlePress(key)}
-				>
-					{key}
-				</div>
-			{/each}
-		</div>
-	{/each}
-</div>
+{#key $knownLetters}
+	<div class="keyboard" data-nosnippet>
+		{#each rows as row, i}
+			<div class="row" class:middleRow={i === 1}>
+				{#each row as key}
+					<div
+						class="key"
+						class:known={$knownLetters.includes(key)}
+						class:submit={key === 'Submit' || key === 'Results'}
+						style="--key-color:{$colors[$guesses.indexOf(key)] ?? '#fff'}"
+						on:click={() => handlePress(key)}
+					>
+						{key}
+					</div>
+				{/each}
+			</div>
+		{/each}
+	</div>
+{/key}
 
 <style>
 	.submit {

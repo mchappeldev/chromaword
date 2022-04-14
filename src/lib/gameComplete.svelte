@@ -203,6 +203,7 @@
 		height: 32px;
 		width: 32px;
 		color: #333;
+		cursor: pointer;
 	}
 	.lemon:hover {
 		color: #6fcf96;
