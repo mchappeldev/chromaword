@@ -1,5 +1,6 @@
 <script>
 	import { browser } from '$app/env';
+	import { boardData } from '../store';
 
 	// @ts-nocheck
 	import { onMount } from 'svelte';
@@ -9,7 +10,7 @@
 
 	onMount(async () => {
 		if (browser) {
-			await nextBoard.load();
+			if (!$boardData?.boardAnswers?.length) await nextBoard.load();
 		}
 	});
 </script>

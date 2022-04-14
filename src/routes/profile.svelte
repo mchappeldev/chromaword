@@ -14,59 +14,134 @@
 	$: daysPlayed = boardsCompleted?.length
 		? [...new Set(boardsCompleted.map((x) => x.created_at.substring(0, 10)))].length
 		: 0;
+
+	// let promise;
 	let logOff = async () => {
 		await supabase.auth.signOut();
 		await goto('/login');
 	};
-	onMount(async () => {
+
+	async function getProfile() {
 		let { data: BoardsComplete, error } = await supabase
 			.from('BoardsComplete')
 			.select('*')
 			.eq('userId', supabase.auth?.currentUser?.id);
 		console.log(BoardsComplete);
 		boardsCompleted = BoardsComplete;
-	});
+	}
+
+	let promise = getProfile();
+	// onMount(async () => {
+	// });
 </script>
 
 <div class="outerContainer">
 	<div class="innerContainer">
 		<div class="cancel"><a href="/"><GoX /></a></div>
-		<div class="wrapper">
-			<div class="header">Profile</div>
-			<div class="profile">
-				{supabase.auth.currentUser?.email}
-				<div class="forgotPassword"><a href="/updatePassword">Update Password</a></div>
-			</div>
-			<div class="header">Stats</div>
-			<div class="stats">
-				<div class="statsRow">
-					<div class="statLabel">Days Played:</div>
-					<div class="statItem">{daysPlayed}</div>
+		{#await promise}
+			<div class="loader">Loading...</div>
+		{:then number}
+			<div class="wrapper">
+				<div class="header">Profile</div>
+				<div class="profile">
+					{supabase.auth.currentUser?.email}
+					<div class="forgotPassword"><a href="/updatePassword">Update Password</a></div>
 				</div>
-				<div class="statsRow">
-					<div class="statLabel">Boards Attempted:</div>
-					<div class="statItem">{boardsCompleted?.length ?? 0}</div>
+				<div class="header">Stats</div>
+				<div class="stats">
+					<div class="statsRow">
+						<div class="statLabel">Days Played:</div>
+						<div class="statItem">{daysPlayed}</div>
+					</div>
+					<div class="statsRow">
+						<div class="statLabel">Boards Attempted:</div>
+						<div class="statItem">{boardsCompleted?.length ?? 0}</div>
+					</div>
+					<div class="statsRow">
+						<div class="statLabel">Correct Boards:</div>
+						<div class="statItem">{correctBoards}</div>
+					</div>
+					<div class="statsRow">
+						<div class="statLabel">Failed Boards:</div>
+						<div class="statItem">{failedBoards}</div>
+					</div>
+					<div class="statsRow">
+						<div class="statLabel">Win Percentage:</div>
+						<div class="statItem">{winPercentage.toFixed(2)}%</div>
+					</div>
 				</div>
-				<div class="statsRow">
-					<div class="statLabel">Correct Boards:</div>
-					<div class="statItem">{correctBoards}</div>
-				</div>
-				<div class="statsRow">
-					<div class="statLabel">Failed Boards:</div>
-					<div class="statItem">{failedBoards}</div>
-				</div>
-				<div class="statsRow">
-					<div class="statLabel">Win Percentage:</div>
-					<div class="statItem">{winPercentage.toFixed(2)}%</div>
-				</div>
-			</div>
 
-			<button on:click={logOff} class="submit">Log Off</button>
-		</div>
+				<button on:click={logOff} class="submit">Log Off</button>
+			</div>
+		{:catch error}
+			<p style="color: red">{error.message}</p>
+		{/await}
 	</div>
 </div>
 
 <style>
+	/* SPINNER */
+	.loader,
+	.loader:before,
+	.loader:after {
+		background: #ffffff;
+		-webkit-animation: load1 1s infinite ease-in-out;
+		animation: load1 1s infinite ease-in-out;
+		width: 1em;
+		height: 4em;
+	}
+	.loader {
+		color: #000;
+		text-indent: -9999em;
+		margin: 88px auto;
+		position: relative;
+		font-size: 11px;
+		-webkit-transform: translateZ(0);
+		-ms-transform: translateZ(0);
+		transform: translateZ(0);
+		-webkit-animation-delay: -0.16s;
+		animation-delay: -0.16s;
+	}
+	.loader:before,
+	.loader:after {
+		position: absolute;
+		top: 0;
+		content: '';
+	}
+	.loader:before {
+		left: -1.5em;
+		-webkit-animation-delay: -0.32s;
+		animation-delay: -0.32s;
+	}
+	.loader:after {
+		left: 1.5em;
+	}
+	@-webkit-keyframes load1 {
+		0%,
+		80%,
+		100% {
+			box-shadow: 0 0;
+			height: 4em;
+		}
+		40% {
+			box-shadow: 0 -2em;
+			height: 5em;
+		}
+	}
+	@keyframes load1 {
+		0%,
+		80%,
+		100% {
+			box-shadow: 0 0;
+			height: 4em;
+		}
+		40% {
+			box-shadow: 0 -2em;
+			height: 5em;
+		}
+	}
+
+	/* SPINNER */
 	.cancel {
 		color: #333;
 		cursor: pointer;

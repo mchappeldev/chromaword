@@ -66,7 +66,6 @@
 	{/each}
 </div>
 
-<!-- <div on:click={tileReflow}>GO TIME</div> -->
 <style>
 	.shake {
 		animation-name: shake;

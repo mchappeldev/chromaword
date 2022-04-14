@@ -47,9 +47,10 @@
 		</Modal>
 	{/if}
 	<NavBar />
-	<!-- <DailyStatus /> -->
-	<Board />
-	<!-- <button on:click={checkAnswers}>Submit</button> -->
+
+	{#key $boardData}
+		<Board />
+	{/key}
 	<Keyboard on:checkAnswers={checkAnswers} />
 </div>
 
