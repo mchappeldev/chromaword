@@ -2,6 +2,7 @@
 	import FaEnvelope from 'svelte-icons/fa/FaEnvelope.svelte';
 	import FaKey from 'svelte-icons/fa/FaKey.svelte';
 	import GoX from 'svelte-icons/go/GoX.svelte';
+	import FaUserTag from 'svelte-icons/fa/FaUserTag.svelte';
 	import { supabase } from '../utils/supabase';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
@@ -9,12 +10,15 @@
 	export let pageType;
 	let email;
 	let password;
+	let firstName;
+	let lastName;
 	let errorMessage = '';
 	let infoMessage = '';
 	let buttonText;
 	let headerText;
 	let showEmailInput = true;
 	let showPasswordInput = true;
+	let showNameInput = false;
 	let submitHandler;
 
 	switch (pageType) {
@@ -27,6 +31,7 @@
 			headerText = 'Create an Account';
 			buttonText = 'Create';
 			submitHandler = createAccount;
+			showNameInput = true;
 			break;
 		case 'forgotPassword':
 			headerText = 'Reset your Password';
@@ -50,12 +55,8 @@
 		infoMessage = 'Check your email for a password reset link!';
 
 	async function login() {
-		if (!email) {
-			errorMessage = 'Email is required.';
-			return;
-		}
-		if (!password) {
-			errorMessage = 'Password is required.';
+		if (!email || !password) {
+			errorMessage = 'All fields are required.';
 			return;
 		}
 
@@ -68,19 +69,16 @@
 	}
 
 	async function createAccount() {
-		if (!email) {
-			errorMessage = 'Email is required.';
-			return;
-		}
-		if (!password) {
-			errorMessage = 'Password is required.';
+		if (!email || !password || !firstName || !lastName) {
+			errorMessage = 'All fields are required.';
 			return;
 		}
 
-		let { error } = await supabase.auth.signUp({ email, password });
+		let { user, error } = await supabase.auth.signUp({ email, password });
 		if (error) {
 			errorMessage = error.message.toString();
 		} else {
+			await supabase.from('Profile').insert([{ userId: user.id, firstName, lastName }]);
 			await goto('/login?status=accountCreatedSuccessfully');
 		}
 	}
@@ -123,18 +121,36 @@
 			<div class="header">
 				{headerText}
 			</div>
+			{#if showNameInput}
+				<div class="inputRow">
+					<div class="svgIcon"><FaUserTag /></div>
+					<input
+						class="input inputSmall"
+						type="text"
+						placeholder="first name"
+						bind:value={firstName}
+					/>
+					<input
+						class="input inputSmall"
+						type="text"
+						placeholder="last name"
+						bind:value={lastName}
+					/>
+				</div>
+			{/if}
 			{#if showEmailInput}
 				<div class="inputRow">
-					<div class="emailIcon"><FaEnvelope /></div>
+					<div class="svgIcon"><FaEnvelope /></div>
 					<input class="input" type="email" placeholder="email address" bind:value={email} />
 				</div>
 			{/if}
 			{#if showPasswordInput}
 				<div class="inputRow">
-					<div class="emailIcon"><FaKey /></div>
+					<div class="svgIcon"><FaKey /></div>
 					<input class="input" type="password" placeholder="password" bind:value={password} />
 				</div>
 			{/if}
+
 			{#if pageType === 'login'}
 				<div class="forgotPassword"><a href="/forgotPassword">Forgot password?</a></div>
 			{/if}
@@ -203,7 +219,7 @@
 		background: hsl(210, 68%, 68%);
 		top: -2px;
 	}
-	.emailIcon {
+	.svgIcon {
 		align-items: center;
 		color: #888;
 		display: flex;
@@ -223,6 +239,9 @@
 		padding: 0.5rem;
 		width: 100%;
 		transition: all 0.25s;
+	}
+	.inputSmall {
+		width: 40%;
 	}
 	.input:focus {
 		border: 2px solid hsl(205, 68%, 68%);
