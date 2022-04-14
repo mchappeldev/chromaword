@@ -3,8 +3,6 @@ import { browser } from '$app/env';
 
 export const selectedColor = writable(7);
 export const guesses = writable(Array(6).fill(''));
-export const wordArray = writable([]);
-export const answers = writable([]);
 export const boardData = writable({
 	boardId: null,
 	boardWords: [],

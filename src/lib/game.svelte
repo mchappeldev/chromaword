@@ -9,7 +9,7 @@
 	import Instructions from '$lib/instructions.svelte';
 	import { v4 as newGuid } from 'uuid';
 	import { supabase } from '../utils/supabase';
-	import { boardData, seenInstructions, guesses, boardFinished } from '../store';
+	import { boardData, seenInstructions, guesses, boardFinished, knownLetters } from '../store';
 
 	let showGameComplete = false;
 	let showInstructions = !$seenInstructions;
@@ -48,7 +48,7 @@
 	{/if}
 	<NavBar />
 
-	{#key $boardData}
+	{#key $knownLetters}
 		<Board />
 	{/key}
 	<Keyboard on:checkAnswers={checkAnswers} />

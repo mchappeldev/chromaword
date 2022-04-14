@@ -4,7 +4,7 @@
 	import FaRegSmileBeam from 'svelte-icons/fa/FaRegSmileBeam.svelte';
 	import FaLemon from 'svelte-icons/fa/FaLemon.svelte';
 	import FaLongArrowAltRight from 'svelte-icons/fa/FaLongArrowAltRight.svelte';
-	import { guesses, boardData, reviewEnjoyment, reviewDifficulty, answers } from '../store.js';
+	import { guesses, boardData, reviewEnjoyment, reviewDifficulty } from '../store.js';
 	import { supabase, loggedIn, userId } from '../utils/supabase';
 	import LoadNextBoard from '../utils/boards/loadNextBoard.svelte';
 	import { map } from 'lodash';
@@ -125,7 +125,7 @@
 {#if !loggedIn()}
 	<p>Want to track your stats and review boards?</p>
 	<div class="loginPrompt">
-		<div class="signupLink"><a href="/signup">Login</a></div>
+		<div class="signupLink"><a href="/login">Login</a></div>
 		<div>or</div>
 		<div class="signupLink"><a href="/signup">Create a free account</a></div>
 	</div>
@@ -148,11 +148,11 @@
 		font-size: 14px;
 	}
 	.signupLink {
-		color: #6fcf96;
+		color: hsl(144, 50%, 62%);
 		font-weight: 900;
 	}
 	.signupLink:hover {
-		color: hsl(205, 10%, 40%);
+		color: hsl(144, 50%, 50%);
 	}
 	.icon {
 		display: flex;
@@ -181,6 +181,7 @@
 		color: #333;
 		height: 36px;
 		width: 36px;
+		cursor: pointer;
 	}
 	.reactions:hover {
 		color: #6fcf96;

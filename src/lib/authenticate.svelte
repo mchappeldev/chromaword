@@ -216,7 +216,7 @@
 		background-color: rgba(255, 255, 255, 1);
 		background: none;
 		border-radius: 0.2rem;
-		border: 1px solid #aaa;
+		border: 2px solid #dfdfdf;
 		font-size: 1rem;
 		margin-left: 0.5rem;
 		outline: none;
@@ -226,6 +226,7 @@
 	}
 	.input:focus {
 		border: 2px solid hsl(205, 68%, 68%);
+		/* margin: -1px -1px -1px 0.5rem; */
 	}
 	.inputRow {
 		align-items: center;

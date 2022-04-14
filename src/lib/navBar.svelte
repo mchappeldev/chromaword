@@ -65,19 +65,20 @@
 
 <style>
 	.shareMessage {
-		position: absolute;
-		top: 40px;
 		background-color: hsl(0, 69%, 69%);
-		width: 5rem;
-		padding: 5px;
-		font-size: 12px;
 		border-radius: 0.3rem;
-		text-align: center;
 		color: #fff;
+		font-size: 12px;
 		font-weight: 700;
+		padding: 5px;
+		position: absolute;
+		text-align: center;
+		top: 40px;
+		width: 5rem;
 	}
 	.left {
 		margin-left: 15px;
+		width: 100px;
 	}
 	.right {
 		display: flex;
@@ -85,6 +86,7 @@
 		justify-content: end;
 		margin-right: 15px;
 		position: relative;
+		width: 100px;
 	}
 	h1 {
 		/* height: 50px; */
