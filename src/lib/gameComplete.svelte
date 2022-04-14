@@ -7,7 +7,6 @@
 	import { guesses, boardData, reviewEnjoyment, reviewDifficulty } from '../store.js';
 	import { supabase, loggedIn, userId } from '../utils/supabase';
 	import LoadNextBoard from '../utils/boards/loadNextBoard.svelte';
-	import { map } from 'lodash';
 	export let visible = true;
 	$: correct = $boardData.boardAnswers.join('') == $guesses.join('').toLowerCase();
 
@@ -23,13 +22,22 @@
 					_difficulty: $reviewDifficulty
 				});
 			})();
-		} else if ($reviewEnjoyment === 3) {
+		} else if ($reviewEnjoyment === 3 && !$boardData.boardId) {
 			(async () => {
-				await supabase.from('Boards').insert({
+				const { data } = await supabase.from('Boards').insert({
 					answers: $boardData.boardAnswers,
 					words: $boardData.boardWords,
 					...$boardData.analysis
 				});
+				$boardData.boardId = data[0].id;
+				if (loggedIn()) {
+					await supabase.rpc('upsertboardreview', {
+						_userId: userId(),
+						_boardId: $boardData.boardId,
+						_enjoyment: $reviewEnjoyment,
+						_difficulty: $reviewDifficulty
+					});
+				}
 			})();
 		}
 	}

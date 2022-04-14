@@ -89,7 +89,7 @@
 			return;
 		}
 		let { data, error } = await supabase.auth.api.resetPasswordForEmail(email, {
-			redirectTo: 'https://chromaword/updatePassword'
+			redirectTo: 'https://chromaword.com/updatePassword'
 		});
 		if (error) {
 			errorMessage = error.message.toString();
