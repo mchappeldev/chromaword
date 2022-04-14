@@ -12,15 +12,25 @@
 		boardFinished
 	} from '../../store.js';
 	import { getBoard } from './boardGenerator.js';
+	import { isNumber } from 'lodash';
+	import { goto } from '$app/navigation';
 
-	export const load = async () => {
+	export const load = async (boardNumberToLoad) => {
 		selectedColor.set(7);
 		guesses.set(Array(6).fill(''));
 		reviewDifficulty.set(0);
 		reviewEnjoyment.set(0);
 		boardFinished.set(false);
 
-		if (loggedIn()) {
+		if (boardNumberToLoad && isNumber(boardNumberToLoad)) {
+			let { data: boards } = await supabase.from('Boards').select('*').eq('id', boardNumberToLoad);
+			if (!boards.length) goto('/');
+			boardData.set({
+				boardId: boards[0].id,
+				boardWords: boards[0].words,
+				boardAnswers: boards[0].answers
+			});
+		} else if (loggedIn()) {
 			let { data: boards } = await supabase.from('Boards').select('*').eq('status', 'candidate');
 			let { data: boardsComplete } = await supabase
 				.from('BoardsComplete')
