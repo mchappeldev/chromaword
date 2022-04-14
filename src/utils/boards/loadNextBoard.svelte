@@ -12,7 +12,6 @@
 		boardFinished
 	} from '../../store.js';
 	import { getBoard } from './boardGenerator.js';
-	import { isNumber } from 'lodash';
 	import { goto } from '$app/navigation';
 
 	export const load = async (boardNumberToLoad) => {
@@ -37,7 +36,7 @@
 			}
 		}
 
-		if (boardNumberToLoad && isNumber(boardNumberToLoad)) {
+		if (boardNumberToLoad) {
 			let { data: boards } = await supabase.from('Boards').select('*').eq('id', boardNumberToLoad);
 			if (!boards.length) goto('/');
 			boardData.set({

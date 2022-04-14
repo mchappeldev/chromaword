@@ -2,13 +2,44 @@
 	import { supabase } from '../utils/supabase';
 	import FaUser from 'svelte-icons/fa/FaUser.svelte';
 	import FaBars from 'svelte-icons/fa/FaBars.svelte';
+	import FaShareAlt from 'svelte-icons/fa/FaShareAlt.svelte';
 	import FaQuestionCircle from 'svelte-icons/fa/FaQuestionCircle.svelte';
 	import Instructions from '$lib/instructions.svelte';
 	import Modal from '$lib/modal.svelte';
+	import { boardData } from '../store';
+	import { fly, fade } from 'svelte/transition';
 
 	// @ts-ignore
 	let loggedIn = supabase.auth.currentUser?.aud === 'authenticated';
 	let showInstructions = false;
+	let shareMessage;
+	let sharingLink;
+
+	async function getSharingLink() {
+		if (!$boardData.boardId) {
+			const { data, error } = await supabase.from('Boards').insert({
+				answers: $boardData.boardAnswers,
+				words: $boardData.boardWords,
+				...$boardData.analysis
+			});
+			if (error) {
+				shareMessage = 'Sorry, your connection was interrupted.';
+			} else {
+				$boardData.boardId = data[0].id;
+			}
+		}
+		sharingLink = `https://www.chromaword.com/board/${$boardData.boardId}`;
+		navigator.clipboard.writeText(sharingLink);
+		shareMessage = 'Link Copied';
+	}
+	$: {
+		sharingLink = sharingLink;
+		if (sharingLink) {
+			setTimeout(() => {
+				sharingLink = '';
+			}, 2000);
+		}
+	}
 </script>
 
 <div class="navBar">
@@ -18,8 +49,13 @@
 	</div>
 	<h1>ChromaWord</h1>
 	<div class="right">
+		<div class="icon" on:click={getSharingLink}><FaShareAlt /></div>
 		<div class="icon" on:click={() => (showInstructions = true)}><FaQuestionCircle /></div>
+		{#if sharingLink}<div class="shareMessage" transition:fade={{ duration: 1000 }}>
+				{shareMessage}
+			</div>{/if}
 	</div>
+
 	{#if showInstructions}
 		<Modal bind:visible={showInstructions}>
 			<Instructions bind:visible={showInstructions} />
@@ -28,16 +64,27 @@
 </div>
 
 <style>
+	.shareMessage {
+		position: absolute;
+		top: 40px;
+		background-color: hsl(0, 69%, 69%);
+		width: 5rem;
+		padding: 5px;
+		font-size: 12px;
+		border-radius: 0.3rem;
+		text-align: center;
+		color: #fff;
+		font-weight: 700;
+	}
 	.left {
-		margin-left: 10px;
-		width: 100px;
+		margin-left: 15px;
 	}
 	.right {
 		display: flex;
 		gap: 10px;
 		justify-content: end;
-		margin-right: 10px;
-		width: 100px;
+		margin-right: 15px;
+		position: relative;
 	}
 	h1 {
 		/* height: 50px; */
