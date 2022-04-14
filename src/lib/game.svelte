@@ -7,7 +7,6 @@
 	import GameComplete from '$lib/gameComplete.svelte';
 	import NavBar from '$lib/navBar.svelte';
 	import Instructions from '$lib/instructions.svelte';
-	import { v4 as newGuid } from 'uuid';
 	import { supabase } from '../utils/supabase';
 	import { boardData, seenInstructions, guesses, boardFinished, knownLetters } from '../store';
 
@@ -20,10 +19,6 @@
 			$boardFinished = true;
 			const userId = supabase.auth.currentUser?.id;
 			var deviceId = localStorage.getItem('deviceId');
-			if (!deviceId) {
-				deviceId = newGuid();
-				localStorage.setItem('deviceId', deviceId);
-			}
 			var success = $boardData.boardAnswers.join('') == $guesses.join('').toLowerCase();
 			const body = { deviceId: deviceId, boardId: $boardData.boardId, success };
 			if (userId) body.userId = userId;
