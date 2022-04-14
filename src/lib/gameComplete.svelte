@@ -14,7 +14,7 @@
 	$: {
 		$reviewEnjoyment = $reviewEnjoyment;
 		$reviewDifficulty = $reviewDifficulty;
-		if (loggedIn() && $reviewEnjoyment != 0) {
+		if (loggedIn() && $boardData.boardId && $reviewEnjoyment != 0) {
 			(async () => {
 				await supabase.rpc('upsertboardreview', {
 					_userId: userId(),

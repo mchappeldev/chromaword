@@ -22,6 +22,21 @@
 		reviewEnjoyment.set(0);
 		boardFinished.set(false);
 
+		function loadRandomBoard() {
+			var executionCount = 0;
+			var boardCreated = false;
+			while (executionCount < 6 && !boardCreated) {
+				executionCount++;
+				try {
+					boardData.set(getBoard());
+					boardCreated = true;
+				} catch (error) {
+					console.log(error);
+					// if (error != 'debug') throw error;
+				}
+			}
+		}
+
 		if (boardNumberToLoad && isNumber(boardNumberToLoad)) {
 			let { data: boards } = await supabase.from('Boards').select('*').eq('id', boardNumberToLoad);
 			if (!boards.length) goto('/');
@@ -39,23 +54,15 @@
 
 			const excludeBoards = boardsComplete.map((board) => board.boardId);
 			const viableBoards = boards.filter((board) => !excludeBoards.includes(board.id));
-			viableBoards.sort((a, b) => a.id < b.id);
-			const board = viableBoards[0];
-			// $boardData = { boardId: board.id, boardWords: board.words, boardAnswers: board.answers };
-			boardData.set({ boardId: board.id, boardWords: board.words, boardAnswers: board.answers });
-		} else {
-			var executionCount = 0;
-			var boardCreated = false;
-			while (executionCount < 6 && !boardCreated) {
-				executionCount++;
-				try {
-					boardData.set(getBoard());
-					boardCreated = true;
-				} catch (error) {
-					console.log(error);
-					// if (error != 'debug') throw error;
-				}
+			if (viableBoards.length) {
+				viableBoards.sort((a, b) => a.id < b.id);
+				const board = viableBoards[0];
+				$boardData = { boardId: board.id, boardWords: board.words, boardAnswers: board.answers };
+			} else {
+				loadRandomBoard();
 			}
+		} else {
+			loadRandomBoard();
 		}
 
 		knownLetters.set(
