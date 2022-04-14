@@ -45,8 +45,7 @@
 			<div class="wrapper">
 				<div class="header">Profile</div>
 				<div class="profile">
-					{// @ts-ignore
-					supabase.auth.currentUser?.email}
+					{supabase.auth.currentUser?.email}
 					<div class="forgotPassword"><a href="/updatePassword">Update Password</a></div>
 				</div>
 				<div class="header">Stats</div>
@@ -64,7 +63,7 @@
 						<div class="statItem">{correctBoards}</div>
 					</div>
 					<div class="statsRow">
-						<div>Failed Boards:</div>
+						<div class="statLabel">Failed Boards:</div>
 						<div class="statItem">{failedBoards}</div>
 					</div>
 					<div class="statsRow">

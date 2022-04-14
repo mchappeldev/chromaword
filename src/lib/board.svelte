@@ -110,6 +110,7 @@
 	.tile {
 		-webkit-tap-highlight-color: transparent;
 		-webkit-transform: translate3d(0, 0, 0);
+		transform: translate3d(0, 0, 0);
 		align-items: center;
 		background-color: hsl(0, 0%, 57%);
 		background-color: var(--tile-color);
