@@ -1,14 +1,12 @@
 <script>
 	import { supabase } from '../utils/supabase';
 	import FaUser from 'svelte-icons/fa/FaUser.svelte';
-	import FaBars from 'svelte-icons/fa/FaBars.svelte';
 	import FaShareAlt from 'svelte-icons/fa/FaShareAlt.svelte';
 	import FaQuestionCircle from 'svelte-icons/fa/FaQuestionCircle.svelte';
 	import Instructions from '$lib/instructions.svelte';
 	import Modal from '$lib/modal.svelte';
 	import { boardData } from '../store';
 	import { fly, fade } from 'svelte/transition';
-	import clipboard from 'clipboardy';
 
 	// @ts-ignore
 	let loggedIn = supabase.auth.currentUser?.aud === 'authenticated';
