@@ -5,20 +5,25 @@
 	import { onMount } from 'svelte';
 	import { browser } from '$app/env';
 	import parser from 'ua-parser-js';
-
-	console.log('hey yall');
+	import { query } from 'svelte-pathfinder';
 
 	onMount(async () => {
 		if (browser) {
-			const ua = parser(navigator.userAgent);
+			var ref;
+			if (localStorage.getItem('ref')) ref = localStorage.getItem('ref');
+			if (ref) $query.params.ref = ref;
+
 			var deviceId = localStorage.getItem('deviceId');
 			if (!deviceId) {
+				const ua = parser(navigator.userAgent);
 				deviceId = newGuid();
+				ref = $page.url.searchParams.get('ref') ?? null;
+				if (ref) localStorage.setItem('ref', ref);
 				localStorage.setItem('deviceId', deviceId);
 				const { data, error } = await supabase.from('Devices').insert([
 					{
 						id: deviceId,
-						referralSourceId: $page.url.searchParams.get('ref') ?? null,
+						referralSourceId: ref,
 						browser: `${ua.browser.name ?? ''} ${ua.browser.major ?? ''}`,
 						device: `${ua.device.vendor ?? ''} ${ua.device.model ?? ''} ${ua.device.type ?? ''}`,
 						os: `${ua.os.name ?? ''} ${ua.os.version ?? ''}`
