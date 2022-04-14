@@ -31,7 +31,7 @@
 		sharingLink = `https://www.chromaword.com/board/${$boardData.boardId}`;
 		if (localStorage.getItem('ref'))
 			sharingLink = sharingLink + '?ref=' + localStorage.getItem('ref');
-		navigator.clipboard.writeText(sharingLink);
+		await navigator.clipboard.writeText(sharingLink);
 		shareMessage = 'Link Copied';
 	}
 	$: {
