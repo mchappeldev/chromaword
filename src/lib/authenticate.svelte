@@ -118,7 +118,7 @@
 <div class="outerContainer">
 	<div class="innerContainer">
 		<div class="cancel"><a href="/"><GoX /></a></div>
-		<div class="wrapper">
+		<form on:submit|preventDefault={submitHandler} class="wrapper">
 			<img src="favicon.png" />
 			<div class="header">
 				{headerText}
@@ -145,11 +145,11 @@
 					<p class="infoMessage">{infoMessage}</p>
 				{/if}
 			</div>
-			<button on:click={submitHandler} class="submit">{buttonText}</button>
+			<button type="submit" class="submit">{buttonText}</button>
 			{#if pageType === 'login'}
 				<div class="signupLink"><a href="/signup">Create an account</a></div>
 			{/if}
-		</div>
+		</form>
 	</div>
 </div>
 
