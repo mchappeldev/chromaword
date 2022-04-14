@@ -8,6 +8,7 @@
 	import Modal from '$lib/modal.svelte';
 	import { boardData } from '../store';
 	import { fly, fade } from 'svelte/transition';
+	import clipboard from 'clipboardy';
 
 	// @ts-ignore
 	let loggedIn = supabase.auth.currentUser?.aud === 'authenticated';
@@ -32,7 +33,11 @@
 		sharingLink = `https://www.chromaword.com/board/${$boardData.boardId}`;
 		if (localStorage.getItem('ref'))
 			sharingLink = sharingLink + '?ref=' + localStorage.getItem('ref');
-		await navigator.clipboard.writeText(sharingLink);
+		try {
+			await navigator.clipboard.writeText(sharingLink);
+		} catch (error) {
+			setTimeout(async () => await navigator.clipboard.writeText(sharingLink));
+		}
 	}
 	$: {
 		sharingLink = sharingLink;
