@@ -7,6 +7,7 @@
 	import { guesses, boardData, reviewEnjoyment, reviewDifficulty } from '../store.js';
 	import { supabase, loggedIn, userId } from '../utils/supabase';
 	import LoadNextBoard from '../utils/boards/loadNextBoard.svelte';
+	import { browser } from '$app/env';
 	export let visible = true;
 	$: correct = $boardData.boardAnswers.join('') == $guesses.join('').toLowerCase();
 
@@ -37,6 +38,21 @@
 						_enjoyment: $reviewEnjoyment,
 						_difficulty: $reviewDifficulty
 					});
+				}
+				// We already recorded that you completed this board, but didn't have a boardId at the time. Must add it now.
+				if (browser) {
+					const { data: lastBoardComplete } = await supabase
+						.from('BoardsComplete')
+						.select('id')
+						.eq('deviceId', localStorage.getItem('deviceId'))
+						.is('boardId', null)
+						.order('created_at', { ascending: false })
+						.limit(1)
+						.single();
+					await supabase
+						.from('BoardsComplete')
+						.update({ boardId: $boardData.boardId })
+						.eq('id', lastBoardComplete.id);
 				}
 			})();
 		}

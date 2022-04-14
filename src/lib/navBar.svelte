@@ -5,8 +5,9 @@
 	import FaQuestionCircle from 'svelte-icons/fa/FaQuestionCircle.svelte';
 	import Instructions from '$lib/instructions.svelte';
 	import Modal from '$lib/modal.svelte';
-	import { boardData } from '../store';
+	import { boardData, boardFinished } from '../store';
 	import { fly, fade } from 'svelte/transition';
+	import { browser } from '$app/env';
 
 	// @ts-ignore
 	let loggedIn = supabase.auth.currentUser?.aud === 'authenticated';
@@ -25,6 +26,21 @@
 				shareMessage = 'Sorry, your connection was interrupted.';
 			} else {
 				$boardData.boardId = data[0].id;
+				// We already recorded that you completed this board, but didn't have a boardId at the time. Must add it now.
+				if ($boardFinished && browser) {
+					const { data: lastBoardComplete } = await supabase
+						.from('BoardsComplete')
+						.select('id')
+						.eq('deviceId', localStorage.getItem('deviceId'))
+						.is('boardId', null)
+						.order('created_at', { ascending: false })
+						.limit(1)
+						.single();
+					await supabase
+						.from('BoardsComplete')
+						.update({ boardId: $boardData.boardId })
+						.eq('id', lastBoardComplete.id);
+				}
 			}
 		}
 		shareMessage = 'Link Copied';

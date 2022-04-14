@@ -6,6 +6,7 @@
 	import { supabase } from '../utils/supabase';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
+	import { browser } from '$app/env';
 
 	export let pageType;
 	let email;
@@ -60,10 +61,11 @@
 			return;
 		}
 
-		let { error } = await supabase.auth.signIn({ email, password });
+		let { user, error } = await supabase.auth.signIn({ email, password });
 		if (error) {
 			errorMessage = error.message.toString();
 		} else {
+			await syncDeviceRecordsWithUserId(user.id);
 			await goto('/');
 		}
 	}
@@ -79,6 +81,7 @@
 			errorMessage = error.message.toString();
 		} else {
 			await supabase.from('Profile').insert([{ userId: user.id, firstName, lastName }]);
+			await syncDeviceRecordsWithUserId(user.id);
 			await goto('/login?status=accountCreatedSuccessfully');
 		}
 	}
@@ -110,6 +113,20 @@
 		} else {
 			await goto('/');
 		}
+	}
+
+	/* 
+		When you're not logged in, we don't know which user you are and therefore can't associate your activities with
+		your userId. We can and do associate them with the deviceId you're using though. Once you login, we need to
+		update the db records that are only tied to your deviceId so that they include your userId as well. This prevents
+		you from having to replay boards you already completed.
+	*/
+	async function syncDeviceRecordsWithUserId(userId) {
+		if (browser)
+			await supabase
+				.from('BoardsComplete')
+				.update({ userId: userId })
+				.eq('deviceId', localStorage.getItem('deviceId'));
 	}
 </script>
 
