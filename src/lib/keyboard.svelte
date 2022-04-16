@@ -65,15 +65,13 @@
 
 <style>
 	.submit {
-		background: linear-gradient(
-			to right,
-			#e57878 0%,
-			#e59978 21.35%,
-			#e5da78 40.63%,
-			#6fcf96 61.46%,
-			#78b7e5 80.73%,
-			#bf7dd6 100%
-		) !important;
+		background: hsl(0, 69%, 69%) !important;
+		border-radius: 0.2rem;
+		border: none !important;
+
+		cursor: pointer;
+		font-weight: bold;
+		justify-self: flex-end;
 	}
 
 	.keyboard {
@@ -111,8 +109,8 @@
 		align-items: center;
 		background: var(--key-color);
 		border-radius: 3px;
-		border: 1px solid #aaa;
-		box-shadow: 0px 3px 3px rgba(200, 200, 200, 0.5);
+		border: 1px solid #ccc;
+
 		color: #333;
 		cursor: pointer;
 		display: flex;

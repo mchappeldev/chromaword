@@ -3,6 +3,8 @@
 	import FaUser from 'svelte-icons/fa/FaUser.svelte';
 	import FaShareAlt from 'svelte-icons/fa/FaShareAlt.svelte';
 	import FaQuestionCircle from 'svelte-icons/fa/FaQuestionCircle.svelte';
+	import GiPodium from 'svelte-icons/gi/GiPodium.svelte';
+	import FaMedal from 'svelte-icons/fa/FaMedal.svelte';
 	import Instructions from '$lib/instructions.svelte';
 	import Modal from '$lib/modal.svelte';
 	import { boardData, boardFinished } from '../store';
@@ -66,9 +68,13 @@
 <div class="navBar">
 	<div class="left">
 		<!-- <div class="icon"><FaBars /></div> -->
-		<div class="icon"><a href={loggedIn ? '/profile' : '/login'}><FaUser /></a></div>
+
+		<a class={loggedIn ? 'loggedIn icon' : 'icon'} href={loggedIn ? '/profile' : '/login'}
+			><FaUser /></a
+		>
+		<a class="icon" href={loggedIn ? '/profile' : '/login'}><FaMedal /></a>
 	</div>
-	<h1>ChromaWord</h1>
+	<div class="header"><h1>ChromaWord</h1></div>
 	<div class="right">
 		<div class="icon" on:click={getSharingLink}><FaShareAlt /></div>
 		<div class="icon" on:click={() => (showInstructions = true)}><FaQuestionCircle /></div>
@@ -98,14 +104,17 @@
 		width: 5rem;
 	}
 	.left {
-		margin-left: 15px;
+		display: flex;
+		gap: 5px;
+		justify-content: start;
+		margin-left: 5px;
 		width: 100px;
 	}
 	.right {
 		display: flex;
-		gap: 10px;
+		gap: 5px;
 		justify-content: end;
-		margin-right: 15px;
+		margin-right: 5px;
 		position: relative;
 		width: 100px;
 	}
@@ -140,17 +149,57 @@
 		align-items: center;
 		display: flex;
 		justify-content: space-between;
-		margin-bottom: 1rem;
-		margin-top: 1rem;
-		max-width: 600px;
+		margin-bottom: 0.5rem;
+		margin-top: 0.5rem;
+
 		position: relative;
 		width: 100%;
 		z-index: 999;
+		border-bottom: 1px solid #eee;
 	}
 	.icon {
 		color: #444;
 		cursor: pointer;
-		height: 1.5rem;
-		width: 1.5rem;
+		height: 1rem;
+		width: 1rem;
+		background-color: #eee;
+		padding: 0.5rem;
+		border-radius: 0.5rem;
+		transition: all 0.25s ease-in-out;
+	}
+	.loggedIn {
+		color: #6fcf96;
+	}
+
+	@media only screen and (min-width: 410px) and (min-height: 650px) {
+		.icon {
+			height: 1.25rem;
+			width: 1.25rem;
+			padding: 0.5rem;
+		}
+		.left {
+			gap: 7.5px;
+			margin-left: 10px;
+		}
+		.right {
+			gap: 7.5px;
+			margin-right: 10px;
+		}
+	}
+
+	@media only screen and (min-width: 750px) and (min-height: 750px) {
+		.icon {
+			height: 1.5rem;
+			width: 1.5rem;
+			padding: 0.5rem;
+		}
+		.left {
+			gap: 10px;
+			margin-left: 15px;
+		}
+		.right {
+			gap: 10px;
+			margin-right: 15px;
+		}
 	}
 </style>

@@ -3,6 +3,7 @@
 	import FaKey from 'svelte-icons/fa/FaKey.svelte';
 	import GoX from 'svelte-icons/go/GoX.svelte';
 	import FaUserTag from 'svelte-icons/fa/FaUserTag.svelte';
+	import FaUserSecret from 'svelte-icons/fa/FaUserSecret.svelte';
 	import { supabase } from '../utils/supabase';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
@@ -21,6 +22,7 @@
 	let showPasswordInput = true;
 	let showNameInput = false;
 	let submitHandler;
+	let displayName;
 
 	switch (pageType) {
 		case 'login':
@@ -71,7 +73,7 @@
 	}
 
 	async function createAccount() {
-		if (!email || !password || !firstName || !lastName) {
+		if (!email || !password || !firstName || !lastName || !displayName) {
 			errorMessage = 'All fields are required.';
 			return;
 		}
@@ -80,7 +82,9 @@
 		if (error) {
 			errorMessage = error.message.toString();
 		} else {
-			await supabase.from('Profile').insert([{ userId: user.id, firstName, lastName }]);
+			await supabase
+				.from('Profile')
+				.insert([{ userId: user.id, firstName, lastName, displayName }]);
 			await syncDeviceRecordsWithUserId(user.id);
 			await goto('/login?status=accountCreatedSuccessfully');
 		}
@@ -140,14 +144,26 @@
 			</div>
 			{#if showNameInput}
 				<div class="inputRow">
+					<div class="svgIcon"><FaUserSecret /></div>
+					<input
+						class="input"
+						maxlength="30"
+						type="text"
+						placeholder="display name"
+						bind:value={displayName}
+					/>
+				</div>
+				<div class="inputRow">
 					<div class="svgIcon"><FaUserTag /></div>
 					<input
+						maxlength="30"
 						class="input inputSmall"
 						type="text"
 						placeholder="first name"
 						bind:value={firstName}
 					/>
 					<input
+						maxlength="30"
 						class="input inputSmall"
 						type="text"
 						placeholder="last name"
@@ -200,6 +216,7 @@
 		cursor: pointer;
 		font-size: 1.6rem;
 		width: 1.5rem;
+		margin: 10px;
 	}
 	.messageRow {
 		height: 1rem;
@@ -287,10 +304,11 @@
 		box-shadow: 0 0.75rem 2rem 0 rgba(0, 0, 0, 0.2);
 		display: flex;
 		flex-direction: column;
-		height: 500px;
+		width: 100vw;
+		height: 100vh;
 		justify-content: flex-start;
 		padding: 10px;
-		width: 400px;
+		transition: all 0.25s ease-in-out;
 	}
 	.wrapper {
 		align-items: center;
@@ -310,5 +328,12 @@
 	}
 	.forgotPassword:hover {
 		color: hsl(205, 10%, 40%);
+	}
+
+	@media only screen and (min-width: 500px) and (min-height: 650px) {
+		.innerContainer {
+			width: 400px;
+			height: 570px;
+		}
 	}
 </style>

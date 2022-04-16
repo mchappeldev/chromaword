@@ -35,16 +35,19 @@
 	.modal {
 		align-items: center;
 		background-color: white;
-		border-radius: 0.3rem;
+		border-radius: 0;
 		box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
 		color: #444;
 		display: flex;
 		flex-direction: column;
-		max-height: 90vh;
-		max-width: 90vw;
+		width: 100vw;
+		height: 100vh;
+		max-width: 100vw;
+		max-height: 100vh;
 		overflow: scroll;
 		position: relative;
 		width: 40rem;
+		transition: all 0.25s ease-in-out;
 	}
 
 	.modal::-webkit-scrollbar {
@@ -59,5 +62,12 @@
 		top: 1rem;
 		width: 1.5rem;
 		color: #333;
+	}
+	@media only screen and (min-width: 500px) and (min-height: 650px) {
+		.modal {
+			max-height: 90vh;
+			max-width: 90vw;
+			border-radius: 0.3rem;
+		}
 	}
 </style>

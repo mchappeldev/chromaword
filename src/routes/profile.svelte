@@ -2,7 +2,13 @@
 	import { supabase } from '../utils/supabase';
 	import { goto } from '$app/navigation';
 	import GoX from 'svelte-icons/go/GoX.svelte';
+	import FaPen from 'svelte-icons/fa/FaPen.svelte';
+	import FaUserTag from 'svelte-icons/fa/FaUserTag.svelte';
+	import FaUserSecret from 'svelte-icons/fa/FaUserSecret.svelte';
+	import FaEnvelope from 'svelte-icons/fa/FaEnvelope.svelte';
 	import { onMount } from 'svelte';
+	import { bind } from 'svelte/internal';
+	import { first } from 'lodash';
 
 	// @ts-ignore
 	let loggedIn = supabase.auth.currentUser?.aud === 'authenticated';
@@ -14,6 +20,13 @@
 	$: daysPlayed = boardsCompleted?.length
 		? [...new Set(boardsCompleted.map((x) => x.created_at.substring(0, 10)))].length
 		: 0;
+	let displayName;
+	let firstName;
+	let lastName;
+	let oldName;
+	let messageText = '';
+	let errorColor;
+	let inputDisabled = true;
 
 	// let promise;
 	let logOff = async () => {
@@ -29,7 +42,34 @@
 			.eq('userId', supabase.auth?.currentUser?.id);
 		console.log(BoardsComplete);
 		boardsCompleted = BoardsComplete;
+
+		let { data: Profile } = await supabase
+			.from('Profile')
+			.select('*')
+			// @ts-ignore
+			.eq('userId', supabase.auth?.currentUser?.id)
+			.limit(1)
+			.single();
+		displayName = Profile.displayName;
+		oldName = Profile.displayName;
+		firstName = Profile.firstName;
+		lastName = Profile.lastName;
 	}
+
+	const handleProfileUpdate = async () => {
+		const { data, error } = await supabase
+			.from('Profile')
+			.update({ displayName: displayName, firstName: firstName, lastName: lastName })
+			.eq('userId', supabase.auth?.currentUser?.id);
+		if (error) {
+			displayName = oldName;
+			console.log(error);
+			messageText = 'Something went wrong. Please try again.';
+			errorColor = 'red';
+		} else {
+			messageText = 'Profile updated successfully!';
+		}
+	};
 
 	let promise = getProfile();
 	// onMount(async () => {
@@ -43,9 +83,53 @@
 			<div class="loader">Loading...</div>
 		{:then number}
 			<div class="wrapper">
-				<div class="header">Profile</div>
+				<div class="messageText" style="--textColor: {errorColor ?? 'black'}">{messageText}</div>
+				<div class="header">
+					<div>Profile</div>
+					<div class="svgIcon" on:click={() => (inputDisabled = !inputDisabled)}><FaPen /></div>
+				</div>
 				<div class="profile">
-					{supabase.auth.currentUser?.email}
+					<div class="inputRow">
+						<div class="svgIcon"><FaUserSecret /></div>
+						<input
+							maxlength="30"
+							type="text"
+							size="0"
+							disabled={inputDisabled}
+							class="displayName"
+							bind:value={displayName}
+							on:change={handleProfileUpdate}
+							placeholder="display name"
+						/>
+					</div>
+					<div class="inputRow">
+						<div class="svgIcon"><FaUserTag /></div>
+						<input
+							maxlength="30"
+							type="text"
+							size="0"
+							disabled={inputDisabled}
+							class="displayName inputSmall"
+							bind:value={firstName}
+							on:change={handleProfileUpdate}
+							placeholder="first name"
+						/>
+						<input
+							maxlength="30"
+							type="text"
+							size="0"
+							disabled={inputDisabled}
+							class="displayName inputSmall"
+							bind:value={lastName}
+							on:change={handleProfileUpdate}
+							placeholder="last name"
+						/>
+					</div>
+					<div class="inputRow">
+						<div class="svgIcon"><FaEnvelope /></div>
+						{supabase.auth.currentUser?.email}
+					</div>
+
 					<div class="forgotPassword"><a href="/updatePassword">Update Password</a></div>
 				</div>
 				<div class="header">Stats</div>
@@ -148,16 +232,22 @@
 		cursor: pointer;
 		font-size: 1.6rem;
 		width: 1.5rem;
+		margin-right: 10px;
+		margin-top: 10px;
 	}
 
 	.header {
 		font-size: 24px;
 		font-weight: 900;
-		margin-top: 15px;
+		margin-top: 32px;
 		text-align: center;
 		width: 100%;
 		margin-bottom: 0.5rem;
+		display: flex;
+		justify-content: center;
+		align-items: baseline;
 	}
+
 	.submit {
 		background: hsl(0, 69%, 69%);
 		border-radius: 0.2rem;
@@ -193,10 +283,12 @@
 		box-shadow: 0 0.75rem 2rem 0 rgba(0, 0, 0, 0.2);
 		display: flex;
 		flex-direction: column;
-		height: 500px;
+		height: 100vh;
 		justify-content: flex-start;
 		padding: 10px;
-		width: 400px;
+		width: 100vw;
+		transition: all 0.25s ease-in-out;
+		position: relative;
 	}
 	.wrapper {
 		align-items: center;
@@ -211,7 +303,8 @@
 		width: 70%;
 		color: hsl(205, 10%, 50%);
 		font-weight: 900;
-		margin-top: 0.25rem;
+		text-align: center;
+		width: 100%;
 	}
 	.forgotPassword:hover {
 		color: hsl(205, 10%, 40%);
@@ -235,5 +328,58 @@
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
+	}
+	.messageText {
+		position: absolute;
+		top: 50px;
+		font-weight: bold;
+		color: var(--textColor);
+	}
+
+	.displayName:disabled {
+		background-color: #ddd;
+	}
+	.displayName {
+		background-color: rgba(255, 255, 255, 1);
+		background: none;
+		border-radius: 0.2rem;
+		border: 2px solid #dfdfdf;
+		font-size: 1rem;
+		outline: none;
+		padding: 0.5rem;
+		width: 100%;
+		transition: all 0.25s;
+		color: #333;
+		size: 5;
+	}
+	.inputSmall {
+		width: 40%;
+	}
+	.svgIcon {
+		align-items: center;
+		color: #888;
+		display: flex;
+		height: 1rem;
+		justify-content: center;
+		margin-left: 10px;
+		padding: 0;
+		width: 1rem;
+		transition: all 0.25s;
+	}
+	.inputRow {
+		align-items: center;
+		display: flex;
+		flex-direction: row;
+		width: 100%;
+		justify-content: left;
+		margin-top: 10px;
+		gap: 10px;
+	}
+	@media only screen and (min-width: 500px) and (min-height: 650px) {
+		.innerContainer {
+			width: 400px;
+			height: fit-content;
+			padding-bottom: 25px;
+		}
 	}
 </style>
