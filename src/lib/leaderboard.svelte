@@ -84,7 +84,6 @@
 	}
 	.name {
 		font-size: 0.7rem;
-		height: 2rem;
 	}
 	.circle {
 		border-radius: 10rem;
