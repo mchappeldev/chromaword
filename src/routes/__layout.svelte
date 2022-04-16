@@ -37,7 +37,7 @@
 				]);
 			}
 			if (!dev) {
-				LogRocket.init('icx8mc/chromaword');
+				LogRocket.init('ghbtih/chromaword');
 				LogRocket.identify(localStorage.getItem('deviceId'), {
 					userId: supabase.auth?.currentUser?.id,
 					email: supabase.auth?.currentUser?.email
