@@ -144,6 +144,7 @@
 		user-select: none;
 		gap: 10px;
 		width: 90vw;
+		text-align: center;
 	}
 
 	.playerTile {
