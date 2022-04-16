@@ -84,6 +84,7 @@
 	}
 	.name {
 		font-size: 0.7rem;
+		align-items: center;
 	}
 	.circle {
 		border-radius: 10rem;
@@ -132,7 +133,7 @@
 		box-sizing: border-box;
 		color: white;
 		display: flex;
-		flex-direction: column;
+		flex-direction: row;
 		filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 		font-weight: 900;
 		padding: 15px;
@@ -273,8 +274,9 @@
 			gap: 20px;
 		}
 		.topTile {
-			height: 150px;
-			width: 150px;
+			height: 160px;
+			width: 160px;
+			flex-direction: column;
 		}
 		.name {
 			font-size: 0.9rem;

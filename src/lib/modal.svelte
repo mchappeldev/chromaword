@@ -61,7 +61,7 @@
 		right: 1rem;
 		top: 1rem;
 		width: 1.5rem;
-		color: #333;
+		color: #444;
 	}
 	@media only screen and (min-width: 500px) and (min-height: 650px) {
 		.modal {
