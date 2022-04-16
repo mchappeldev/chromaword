@@ -6,12 +6,8 @@
 	import FaUserTag from 'svelte-icons/fa/FaUserTag.svelte';
 	import FaUserSecret from 'svelte-icons/fa/FaUserSecret.svelte';
 	import FaEnvelope from 'svelte-icons/fa/FaEnvelope.svelte';
-	import { onMount } from 'svelte';
-	import { bind } from 'svelte/internal';
-	import { first } from 'lodash';
 
 	// @ts-ignore
-	let loggedIn = supabase.auth.currentUser?.aud === 'authenticated';
 	let boardsCompleted;
 	$: correctBoards = boardsCompleted?.filter((x) => x.success)?.length ?? 0;
 	$: failedBoards = boardsCompleted?.filter((x) => !x.success)?.length ?? 0;
@@ -72,8 +68,6 @@
 	};
 
 	let promise = getProfile();
-	// onMount(async () => {
-	// });
 </script>
 
 <div class="outerContainer">
