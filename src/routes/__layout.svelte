@@ -1,11 +1,14 @@
 <script>
+	// @ts-nocheck
+
 	import { v4 as newGuid } from 'uuid';
 	import { page } from '$app/stores';
 	import { supabase } from '../utils/supabase';
 	import { onMount } from 'svelte';
-	import { browser } from '$app/env';
+	import { browser, dev } from '$app/env';
 	import parser from 'ua-parser-js';
 	import { boardData, knownLetters } from '../store';
+	import LogRocket from 'logrocket';
 
 	$: {
 		$boardData = $boardData;
@@ -32,6 +35,13 @@
 						os: `${ua.os.name ?? ''} ${ua.os.version ?? ''}`
 					}
 				]);
+			}
+			if (!dev) {
+				LogRocket.init('icx8mc/chromaword');
+				LogRocket.identify(localStorage.getItem('deviceId'), {
+					userId: supabase.auth?.currentUser?.id,
+					email: supabase.auth?.currentUser?.email
+				});
 			}
 		}
 	});

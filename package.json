@@ -25,6 +25,7 @@
 		"eslint-config-prettier": "^8.5.0",
 		"firebase": "^9.6.9",
 		"lodash": "^4.17.21",
+		"logrocket": "^2.2.1",
 		"rxfire": "^6.0.3",
 		"svelte-icons": "^2.1.0",
 		"ua-parser-js": "^1.0.2",
