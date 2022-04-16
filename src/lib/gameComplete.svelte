@@ -8,55 +8,58 @@
 	import { supabase, loggedIn, userId } from '../utils/supabase';
 	import LoadNextBoard from '../utils/boards/loadNextBoard.svelte';
 	import { browser } from '$app/env';
+	import { onDestroy } from 'svelte';
 	export let visible = true;
 	$: correct = $boardData.boardAnswers.join('') == $guesses.join('').toLowerCase();
 
-	$: {
-		$reviewEnjoyment = $reviewEnjoyment;
-		$reviewDifficulty = $reviewDifficulty;
-		if (loggedIn() && $boardData.boardId && $reviewEnjoyment != 0) {
-			(async () => {
-				await supabase.rpc('upsertboardreview', {
-					_userId: userId(),
-					_boardId: $boardData.boardId,
-					_enjoyment: $reviewEnjoyment,
-					_difficulty: $reviewDifficulty
-				});
-			})();
-		} else if ($reviewEnjoyment === 3 && !$boardData.boardId) {
-			(async () => {
-				const { data } = await supabase.from('Boards').insert({
-					answers: $boardData.boardAnswers,
-					words: $boardData.boardWords,
-					...$boardData.analysis
-				});
-				$boardData.boardId = data[0].id;
-				if (loggedIn()) {
-					await supabase.rpc('upsertboardreview', {
-						_userId: userId(),
-						_boardId: $boardData.boardId,
-						_enjoyment: $reviewEnjoyment,
-						_difficulty: $reviewDifficulty
-					});
-				}
-				// We already recorded that you completed this board, but didn't have a boardId at the time. Must add it now.
-				if (browser) {
-					const { data: lastBoardComplete } = await supabase
-						.from('BoardsComplete')
-						.select('id')
-						.eq('deviceId', localStorage.getItem('deviceId'))
-						.is('boardId', null)
-						.order('created_at', { ascending: false })
-						.limit(1)
-						.single();
-					await supabase
-						.from('BoardsComplete')
-						.update({ boardId: $boardData.boardId })
-						.eq('id', lastBoardComplete.id);
-				}
-			})();
-		}
+	let readyForNextBoard = false;
+
+	async function addBoard() {
+		const { data } = await supabase.from('Boards').insert({
+			answers: $boardData.boardAnswers,
+			words: $boardData.boardWords,
+			...$boardData.analysis
+		});
+		$boardData.boardId = data[0].id;
 	}
+
+	async function submitReview() {
+		await supabase.rpc('upsertboardreview', {
+			_userId: userId(),
+			_boardId: $boardData.boardId,
+			_enjoyment: $reviewEnjoyment,
+			_difficulty: $reviewDifficulty
+		});
+	}
+
+	async function addBoardIdToGameComplete() {
+		const { data: lastBoardComplete } = await supabase
+			.from('BoardsComplete')
+			.select('id')
+			.eq('deviceId', localStorage.getItem('deviceId'))
+			.is('boardId', null)
+			.order('created_at', { ascending: false })
+			.limit(1)
+			.single();
+		await supabase
+			.from('BoardsComplete')
+			.update({ boardId: $boardData.boardId })
+			.eq('id', lastBoardComplete.id);
+	}
+
+	onDestroy(async () => {
+		if (browser && ($reviewDifficulty || $reviewEnjoyment)) {
+			if (loggedIn() && $boardData.boardId && $reviewEnjoyment != 0) {
+				await submitReview();
+			} else if ($reviewEnjoyment === 3 && !$boardData.boardId) {
+				await addBoard();
+				if (loggedIn()) await submitReview();
+				await addBoardIdToGameComplete();
+			}
+		}
+		if (readyForNextBoard) nextBoard.load();
+	});
+
 	let nextBoard;
 </script>
 
@@ -88,9 +91,7 @@
 				{/each}
 			</div>
 		</div>
-		<!-- {`You guessed the following: ${$guesses} and it was actually: ${$boardData.boardAnswers}! The words were ${$boardData.boardWords}.`} -->
 	{/if}
-	<!-- <button on:click={sync}>Do Stuff</button> -->
 	<div class="ratings flex">
 		<h2>How was this board?</h2>
 		<div class="flex enjoy">
@@ -142,7 +143,7 @@
 </div>
 <button
 	on:click={() => {
-		nextBoard.load();
+		readyForNextBoard = true;
 		visible = false;
 	}}>Next Board</button
 >
