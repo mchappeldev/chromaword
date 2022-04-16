@@ -6,7 +6,8 @@
 	import FaLongArrowAltRight from 'svelte-icons/fa/FaLongArrowAltRight.svelte';
 	import { guesses, boardData, reviewEnjoyment, reviewDifficulty } from '../store.js';
 	import { supabase, loggedIn, userId } from '../utils/supabase';
-	import LoadNextBoard from '../utils/boards/loadNextBoard.svelte';
+	// import LoadNextBoard from '../utils/boards/loadNextBoard.svelte';
+	import { load } from '../utils/boards/loadNextBoard.js';
 	import { browser } from '$app/env';
 	import { onDestroy } from 'svelte';
 	export let visible = true;
@@ -15,25 +16,27 @@
 	let readyForNextBoard = false;
 
 	async function addBoard() {
-		const { data } = await supabase.from('Boards').insert({
+		const { data, error } = await supabase.from('Boards').insert({
 			answers: $boardData.boardAnswers,
 			words: $boardData.boardWords,
 			...$boardData.analysis
 		});
+		if (error) console.error(error);
 		$boardData.boardId = data[0].id;
 	}
 
 	async function submitReview() {
-		await supabase.rpc('upsertboardreview', {
+		const { error } = await supabase.rpc('upsertboardreview', {
 			_userId: userId(),
 			_boardId: $boardData.boardId,
 			_enjoyment: $reviewEnjoyment,
 			_difficulty: $reviewDifficulty
 		});
+		if (error) console.error(error);
 	}
 
 	async function addBoardIdToGameComplete() {
-		const { data: lastBoardComplete } = await supabase
+		const { data: lastBoardComplete, error: error1 } = await supabase
 			.from('BoardsComplete')
 			.select('id')
 			.eq('deviceId', localStorage.getItem('deviceId'))
@@ -41,10 +44,12 @@
 			.order('created_at', { ascending: false })
 			.limit(1)
 			.single();
-		await supabase
+		if (error1) console.error(error1);
+		const { error: error2 } = await supabase
 			.from('BoardsComplete')
 			.update({ boardId: $boardData.boardId })
 			.eq('id', lastBoardComplete.id);
+		if (error2) console.error(error2);
 	}
 
 	onDestroy(async () => {
@@ -57,10 +62,8 @@
 				await addBoardIdToGameComplete();
 			}
 		}
-		if (readyForNextBoard) nextBoard.load();
+		if (readyForNextBoard) load();
 	});
-
-	let nextBoard;
 </script>
 
 <div class="header">{correct ? 'Nailed it!' : 'You Failed!'}</div>
@@ -155,7 +158,6 @@
 		<div class="signupLink"><a href="/signup">Create a free account</a></div>
 	</div>
 {/if}
-<LoadNextBoard bind:this={nextBoard} />
 
 <style>
 	h2 {
