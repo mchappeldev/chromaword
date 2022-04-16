@@ -65,12 +65,10 @@
 
 <style>
 	.submit {
-		background: hsl(0, 69%, 69%) !important;
+		background: hsl(144, 50%, 62%) !important;
 		border-radius: 0.2rem;
 		border: none !important;
-
 		cursor: pointer;
-		font-weight: bold;
 		justify-self: flex-end;
 	}
 

@@ -3,9 +3,10 @@
 	import FaUser from 'svelte-icons/fa/FaUser.svelte';
 	import FaShareAlt from 'svelte-icons/fa/FaShareAlt.svelte';
 	import FaQuestionCircle from 'svelte-icons/fa/FaQuestionCircle.svelte';
-	import GiPodium from 'svelte-icons/gi/GiPodium.svelte';
 	import FaMedal from 'svelte-icons/fa/FaMedal.svelte';
 	import Instructions from '$lib/instructions.svelte';
+	// @ts-ignore
+	import Leaderboard from '$lib/leaderboard.svelte';
 	import Modal from '$lib/modal.svelte';
 	import { boardData, boardFinished } from '../store';
 	import { fly, fade } from 'svelte/transition';
@@ -14,6 +15,7 @@
 	// @ts-ignore
 	let loggedIn = supabase.auth.currentUser?.aud === 'authenticated';
 	let showInstructions = false;
+	let showLeaderboard = false;
 	let shareMessage;
 	let sharingLink;
 
@@ -72,7 +74,7 @@
 		<a class={loggedIn ? 'loggedIn icon' : 'icon'} href={loggedIn ? '/profile' : '/login'}
 			><FaUser /></a
 		>
-		<a class="icon" href={loggedIn ? '/profile' : '/login'}><FaMedal /></a>
+		<div class="icon" on:click={() => (showLeaderboard = true)}><FaMedal /></div>
 	</div>
 	<div class="header"><h1>ChromaWord</h1></div>
 	<div class="right">
@@ -88,6 +90,11 @@
 			<Instructions bind:visible={showInstructions} />
 		</Modal>
 	{/if}
+	{#if showLeaderboard}
+		<Modal bind:visible={showLeaderboard}>
+			<Leaderboard bind:visible={showLeaderboard} />
+		</Modal>
+	{/if}
 </div>
 
 <style>
@@ -100,7 +107,7 @@
 		padding: 5px;
 		position: absolute;
 		text-align: center;
-		top: 40px;
+		top: 50px;
 		width: 5rem;
 	}
 	.left {

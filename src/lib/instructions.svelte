@@ -139,10 +139,13 @@
 	.header {
 		font-family: 'Open Sans';
 		font-size: 1.75rem;
-		font-weight: 600;
+
 		margin-left: 1rem;
 		margin-right: 1rem;
 		margin-top: 1.5rem;
+		text-transform: uppercase;
+		font-weight: 800;
+		font-size: 1.75rem;
 	}
 	.message {
 		font-family: 'Open Sans';

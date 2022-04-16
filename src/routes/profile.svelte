@@ -92,7 +92,7 @@
 					<div class="inputRow">
 						<div class="svgIcon"><FaUserSecret /></div>
 						<input
-							maxlength="30"
+							maxlength="15"
 							type="text"
 							size="0"
 							disabled={inputDisabled}
@@ -334,6 +334,8 @@
 		top: 50px;
 		font-weight: bold;
 		color: var(--textColor);
+		margin-left: 15px;
+		margin-right: 15px;
 	}
 
 	.displayName:disabled {
