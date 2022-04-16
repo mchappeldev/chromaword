@@ -5,15 +5,13 @@
 	// @ts-nocheck
 	import { onMount } from 'svelte';
 	import Game from '../lib/game.svelte';
-	import LoadNextBoard from '../utils/boards/loadNextBoard.svelte';
-	let nextBoard;
+	import { load } from '../utils/boards/loadNextBoard.js';
 
 	onMount(async () => {
 		if (browser) {
-			if (!$boardData?.boardAnswers?.length) await nextBoard.load();
+			if (!$boardData?.boardAnswers?.length) await load();
 		}
 	});
 </script>
 
-<LoadNextBoard bind:this={nextBoard} />
 <Game />
