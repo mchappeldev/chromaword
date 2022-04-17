@@ -72,7 +72,11 @@
 		<li>You only have to spell words from left to right, not up and down.</li>
 	</ul>
 	<p style="text-align: center;">
-		<br />Questions? <a href="mailto:mikeandmikedevs@gmail.com"> Contact us.</a>
+		<br />Want to ask questions or contribute to the community? <br /><a
+			href="https://discord.gg/ye8jDWUkmT"
+		>
+			Join us on Discord!</a
+		>
 	</p>
 </div>
 
