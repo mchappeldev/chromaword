@@ -2,7 +2,6 @@
 	import { supabase } from '../utils/supabase';
 	export let visible = true;
 	import { colors } from '../store.js';
-	// const players = ['michael', 'jimmy', 'megan', 'melissa', 'frank', 'katie', 'Joe'];
 	let players;
 
 	async function getLeaderboard() {

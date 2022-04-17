@@ -10,8 +10,8 @@
 
 <div class="header">Instructions</div>
 <div class="message">
-	The goal of the game is to fill in the blank colored tiles in order to complete all of the words
-	on the board. For example if you had the following:
+	The goal of the game is to fill in the colored tiles to complete all of the words. For example if
+	you had the following:
 </div>
 
 <div class="flex">
@@ -37,8 +37,7 @@
 	{/each}
 </div>
 <div class="message">
-	Hmmm what could that be? Well one possible answer would be to use 'T' to make the words Cat and
-	Tap like so:
+	Hmmm what could that be? One possible answer would 'T' making the words Cat and Tap:
 </div>
 
 <div class="flex">
@@ -61,9 +60,8 @@
 </div>
 
 <div class="message">
-	But it could also be 'R' making the words 'Car' and 'Rap'. The only way to know for sure is to use
-	the other words on the board. Each board will only have one answer once every letter is filled in.
-	Here's a few other things to keep in mind:
+	Or maybe it is 'R' making the words 'Car' and 'Rap'. The only way to know for sure is to use the
+	other words on the board. Here's a few other things to keep in mind:
 	<ul>
 		<li>
 			Each color will be a different letter and none of them will be the same as any grey letter.
