@@ -1,5 +1,4 @@
 <script>
-	console.log('testing if deployments log you out');
 	export let visible = true;
 	import { colors, seenInstructions } from '../store';
 	import { onDestroy } from 'svelte';

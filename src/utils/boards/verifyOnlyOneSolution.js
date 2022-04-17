@@ -18,7 +18,7 @@ const verifyBoardUnique = (correctWords, possibleMatches, answersArray) => {
 	possibleMatches.forEach((x) => {
 		numCombinations *= x.length;
 	});
-	if (numCombinations > 10000) return false; // If there are over 10k combinations, I'm going to assume it isn't unique and bail
+	if (numCombinations > 10000) throw 'Invalid'; // If there are over 10k combinations, I'm going to assume it isn't unique and bail
 	const combinations = cartesian(...possibleMatches);
 	const correctBoardString = correctWords.join('');
 	var correctPositions = [];
