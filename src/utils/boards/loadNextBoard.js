@@ -56,10 +56,12 @@ const load = async (boardNumberToLoad) => {
 		if (error2) console.error(error2);
 
 		const excludeBoards = boardsComplete.map((board) => board.boardId);
-		const viableBoards = boards.filter((board) => !excludeBoards.includes(board.id));
+		const viableBoards = boards.filter(
+			(board) => !excludeBoards.includes(board.id) && !board.disabled
+		);
 		if (viableBoards.length) {
-			viableBoards.sort((a, b) => a.id < b.id);
-			const board = viableBoards[0];
+			const randomViableBoardIndex = randomIntFromInterval(0, viableBoards.length - 1);
+			const board = viableBoards[randomViableBoardIndex];
 			boardData.set({
 				boardId: board.id,
 				boardWords: board.words,
@@ -73,5 +75,9 @@ const load = async (boardNumberToLoad) => {
 		loadRandomBoard();
 	}
 };
+
+function randomIntFromInterval(min, max) {
+	return Math.floor(Math.random() * (max - min + 1) + min);
+}
 
 export { load };

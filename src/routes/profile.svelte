@@ -1,4 +1,6 @@
 <script>
+	// @ts-nocheck
+
 	import { supabase } from '../utils/supabase';
 	import { goto } from '$app/navigation';
 	import GoX from 'svelte-icons/go/GoX.svelte';
