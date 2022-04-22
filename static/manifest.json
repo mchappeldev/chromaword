@@ -4,19 +4,16 @@
 	"dir": "ltr",
 	"display": "standalone",
 	"name": "Chromaword",
-	"orientation": "any",
+	"orientation": "portrait",
 	"scope": "/",
 	"short_name": "Chromaword",
 	"start_url": "/",
 	"theme_color": "#ffffff",
-	"categories": [],
-	"screenshots": [],
 	"icons": [
 		{
-			"src": "./favicon.png",
+			"src": "images/64x64.png",
 			"type": "image/png",
 			"sizes": "64x64"
 		}
-	],
-	"shortcuts": []
+	]
 }
