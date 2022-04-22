@@ -5,6 +5,36 @@
 	"display": "standalone",
 	"name": "Chromaword",
 	"orientation": "portrait",
+	"screenshots": [
+		{
+			"src": "images/screenshot1.webp",
+			"sizes": "375x667",
+			"type": "image/webp",
+			"platform": "narrow",
+			"label": "Example of unsolved chromaword"
+		},
+		{
+			"src": "images/screenshot2.webp",
+			"sizes": "375x667",
+			"type": "image/webp",
+			"platform": "narrow",
+			"label": "Example of solved chromaword"
+		},
+		{
+			"src": "images/screenshot3.webp",
+			"sizes": "375x667",
+			"type": "image/webp",
+			"platform": "narrow",
+			"label": "Example of another unsolved chromaword"
+		},
+		{
+			"src": "images/screenshot4.webp",
+			"sizes": "375x667",
+			"type": "image/webp",
+			"platform": "narrow",
+			"label": "Example of another solved chromaword"
+		}
+	],
 	"scope": "/",
 	"short_name": "Chromaword",
 	"start_url": "/",

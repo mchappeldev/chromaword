@@ -11,7 +11,7 @@ const config = {
 		lib: 'src/lib',
 		params: 'src/params',
 		routes: 'src/routes',
-		serviceWorker: 'src/pwabuilder-sw.js',
+		serviceWorker: 'static/pwabuilder-sw.js',
 		template: 'src/app.html'
 	}
 };
