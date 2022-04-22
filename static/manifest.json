@@ -1,0 +1,22 @@
+{
+	"background_color": "#ffffff",
+	"description": "Chromaword is a fun word game where you decipher which letter each color represents. Each color is a different letter. Find which combination makes all 6 rows into words!",
+	"dir": "ltr",
+	"display": "standalone",
+	"name": "Chromaword",
+	"orientation": "any",
+	"scope": "/",
+	"short_name": "Chromaword",
+	"start_url": "/",
+	"theme_color": "#ffffff",
+	"categories": [],
+	"screenshots": [],
+	"icons": [
+		{
+			"src": "./favicon.png",
+			"type": "image/png",
+			"sizes": "64x64"
+		}
+	],
+	"shortcuts": []
+}
