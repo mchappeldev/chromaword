@@ -1,0 +1,6 @@
+[{
+        "relation": ["delegate_permission/common.handle_all_urls"],
+        "target" : { "namespace": "android_app", "package_name": "com.sveltey.www.chromaword",
+                     "sha256_cert_fingerprints": ["0A:27:4D:B3:FA:E2:AD:4A:33:4C:84:7E:D7:67:8D:61:49:12:D4:58:BE:04:47:87:89:0B:6F:BF:DD:D3:32:3C"] }
+      }
+]
