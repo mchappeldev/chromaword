@@ -121,6 +121,7 @@
 		padding-right: 5px;
 		position: relative;
 		width: 100%;
+		user-select: none;
 	}
 
 	.key:active {

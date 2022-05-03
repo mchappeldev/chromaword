@@ -137,6 +137,7 @@
 		margin-top: 0px;
 		text-align: center;
 		text-transform: uppercase;
+		user-select: none;
 
 		background: linear-gradient(
 			90deg,
