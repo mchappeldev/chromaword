@@ -1,3 +1,3 @@
-![ChromawordLogo]([http://url/to/img.png](https://www.dropbox.com/s/md8sqrleq93knly/ChromawordLogo.png?dl=1))
+![ChromawordLogo](https://www.dropbox.com/s/md8sqrleq93knly/ChromawordLogo.png?dl=1)
 # ChromaWord
 More Coming Soon...
