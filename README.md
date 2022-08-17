@@ -1,4 +1,4 @@
-![ChromawordLogo](/logo.png)
+![ChromawordLogo](/logo.png)  
 An addictive puzzle logic game with colorful aesthetic.
 
 # Getting Started
